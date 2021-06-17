@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 ggplot2 for data visualization | 2021 연구데이터 분석과정</title>
+  <meta name="description" content="Lecture" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 ggplot2 for data visualization | 2021 연구데이터 분석과정" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Lecture" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 ggplot2 for data visualization | 2021 연구데이터 분석과정" />
+  
+  <meta name="twitter:description" content="Lecture" />
+  
+
+<meta name="author" content="한국생명공학연구원 김하성" />
+
+
+<meta name="date" content="2021-06-17" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tidyverse-for-data-science.html"/>
+
+<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">[2021 KRIBB 특강] R을 이용한 생명데이터 분석</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 강의 개요</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#References_n_books"><i class="fa fa-check"></i><b>1.1</b> 참고 교제</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#References"><i class="fa fa-check"></i><b>1.2</b> 참고 자료</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#Schedule"><i class="fa fa-check"></i><b>1.3</b> 강의 계획</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html"><i class="fa fa-check"></i><b>2</b> R/Rstudio basics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#what-is-r-rstudio"><i class="fa fa-check"></i><b>2.1</b> What is R / Rstudio</a></li>
+<li class="chapter" data-level="2.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-rstudio-installation"><i class="fa fa-check"></i><b>2.2</b> R / Rstudio Installation</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-설치"><i class="fa fa-check"></i><b>2.2.1</b> R 설치</a></li>
+<li class="chapter" data-level="2.2.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#rstudio-설치"><i class="fa fa-check"></i><b>2.2.2</b> Rstudio 설치</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#rstudio-interface"><i class="fa fa-check"></i><b>2.3</b> Rstudio interface</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#keyboard-shortcuts"><i class="fa fa-check"></i><b>2.3.1</b> Keyboard shortcuts</a></li>
+<li class="chapter" data-level="2.3.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise"><i class="fa fa-check"></i><b>2.3.2</b> Exercise</a></li>
+<li class="chapter" data-level="2.3.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#set-a-project"><i class="fa fa-check"></i><b>2.3.3</b> Set a project</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-programming"><i class="fa fa-check"></i><b>2.4</b> R programming</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#console-calculator"><i class="fa fa-check"></i><b>2.4.1</b> Console calculator</a></li>
+<li class="chapter" data-level="2.4.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-1"><i class="fa fa-check"></i><b>2.4.2</b> Exercise</a></li>
+<li class="chapter" data-level="2.4.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#variables-and-values"><i class="fa fa-check"></i><b>2.4.3</b> Variables and values</a></li>
+<li class="chapter" data-level="2.4.4" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-2"><i class="fa fa-check"></i><b>2.4.4</b> Exercise</a></li>
+<li class="chapter" data-level="2.4.5" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#functions"><i class="fa fa-check"></i><b>2.4.5</b> Functions</a></li>
+<li class="chapter" data-level="2.4.6" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-3"><i class="fa fa-check"></i><b>2.4.6</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#terminology"><i class="fa fa-check"></i><b>2.5</b> Terminology</a></li>
+<li class="chapter" data-level="2.6" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#supports"><i class="fa fa-check"></i><b>2.6</b> Supports</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
+<li class="chapter" data-level="2.6.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#cheatsheet"><i class="fa fa-check"></i><b>2.6.2</b> Cheatsheet</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-packages-and-dataset"><i class="fa fa-check"></i><b>2.7</b> R packages and Dataset</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-packages"><i class="fa fa-check"></i><b>2.7.1</b> R packages</a></li>
+<li class="chapter" data-level="2.7.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#data-sets"><i class="fa fa-check"></i><b>2.7.2</b> Data sets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html"><i class="fa fa-check"></i><b>3</b> Tidyverse for Data science</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#tibble-object-type"><i class="fa fa-check"></i><b>3.1</b> Tibble object type</a></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#tidy-data-structure"><i class="fa fa-check"></i><b>3.2</b> Tidy data structure</a></li>
+<li class="chapter" data-level="3.3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#pivoting"><i class="fa fa-check"></i><b>3.3</b> Pivoting</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex7.3.1"><i class="fa fa-check"></i><b>3.3.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#separating-and-uniting"><i class="fa fa-check"></i><b>3.4</b> Separating and uniting</a></li>
+<li class="chapter" data-level="3.5" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#dplyr-and-pipe-operator"><i class="fa fa-check"></i><b>3.5</b> dplyr and pipe operator</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex7.5.1"><i class="fa fa-check"></i><b>3.5.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#dplyr---important-functions"><i class="fa fa-check"></i><b>3.6</b> dplyr - Important functions</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#filter"><i class="fa fa-check"></i><b>3.6.1</b> filter</a></li>
+<li class="chapter" data-level="3.6.2" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#arrange"><i class="fa fa-check"></i><b>3.6.2</b> arrange</a></li>
+<li class="chapter" data-level="3.6.3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#select"><i class="fa fa-check"></i><b>3.6.3</b> select</a></li>
+<li class="chapter" data-level="3.6.4" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#mutate"><i class="fa fa-check"></i><b>3.6.4</b> mutate</a></li>
+<li class="chapter" data-level="3.6.5" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#summarise"><i class="fa fa-check"></i><b>3.6.5</b> summarise</a></li>
+<li class="chapter" data-level="3.6.6" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#join"><i class="fa fa-check"></i><b>3.6.6</b> join</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#airquality-example"><i class="fa fa-check"></i><b>3.7</b> Airquality example</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex8.3.1"><i class="fa fa-check"></i><b>3.7.1</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html"><i class="fa fa-check"></i><b>4</b> ggplot2 for data visualization</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#basics"><i class="fa fa-check"></i><b>4.1</b> Basics</a></li>
+<li class="chapter" data-level="4.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#bar-graph"><i class="fa fa-check"></i><b>4.2</b> Bar graph</a></li>
+<li class="chapter" data-level="4.3" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#line-graph"><i class="fa fa-check"></i><b>4.3</b> Line graph</a></li>
+<li class="chapter" data-level="4.4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#smoothing"><i class="fa fa-check"></i><b>4.4</b> Smoothing</a></li>
+<li class="chapter" data-level="4.5" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#statstics-and-positions"><i class="fa fa-check"></i><b>4.5</b> Statstics and positions</a></li>
+<li class="chapter" data-level="4.6" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#facets"><i class="fa fa-check"></i><b>4.6</b> Facets</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.1"><i class="fa fa-check"></i><b>4.6.1</b> Exercise</a></li>
+<li class="chapter" data-level="4.6.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.2"><i class="fa fa-check"></i><b>4.6.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#themes-labels-and-scales"><i class="fa fa-check"></i><b>4.7</b> Themes, Labels, and Scales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.3"><i class="fa fa-check"></i><b>4.7.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ggplot-examples"><i class="fa fa-check"></i><b>4.8</b> ggplot examples</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#violin-plot"><i class="fa fa-check"></i><b>4.8.1</b> Violin plot</a></li>
+<li class="chapter" data-level="4.8.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#bubble-plot"><i class="fa fa-check"></i><b>4.8.2</b> Bubble plot</a></li>
+<li class="chapter" data-level="4.8.3" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#barplot-with-errorbars"><i class="fa fa-check"></i><b>4.8.3</b> Barplot with errorbars</a></li>
+<li class="chapter" data-level="4.8.4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#horizontal-barplot"><i class="fa fa-check"></i><b>4.8.4</b> horizontal barplot</a></li>
+<li class="chapter" data-level="4.8.5" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#circular-barplot"><i class="fa fa-check"></i><b>4.8.5</b> Circular barplot</a></li>
+<li class="chapter" data-level="4.8.6" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#stacked-area-chart"><i class="fa fa-check"></i><b>4.8.6</b> Stacked area chart</a></li>
+<li class="chapter" data-level="4.8.7" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#density-plot"><i class="fa fa-check"></i><b>4.8.7</b> Density plot</a></li>
+<li class="chapter" data-level="4.8.8" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#waffle-chart"><i class="fa fa-check"></i><b>4.8.8</b> Waffle chart</a></li>
+<li class="chapter" data-level="4.8.9" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#marginal-histogram"><i class="fa fa-check"></i><b>4.8.9</b> Marginal histogram</a></li>
+<li class="chapter" data-level="4.8.10" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#density-ridgeline-plots"><i class="fa fa-check"></i><b>4.8.10</b> Density ridgeline plots</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">2021 연구데이터 분석과정</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ggplot2-for-data-visualization" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> ggplot2 for data visualization</h1>
+<p>본 장에서는 <code>ggplot2</code>( <a href="https://ggplot2.tidyverse.org/" class="uri">https://ggplot2.tidyverse.org/</a> )를 이용한 시각화에 대해서 알아봅니다. 데이터를 분석할 때 실제 데이터를 눈으로 확인하는 것은 중요합니다. 가능하면 raw 데이터를 보면서 크기 비교나 분포를 대략적으로 예측한다면 tool을 사용해서 나오는 결과를 가늠하는 척도가 될 수도 있습니다. <code>ggplot2</code> 는 Rstudio 개발팀의 해들리위컴이 (Hadley Wickham) 중심이 되어 만든 데이터 시각화 패키지입니다. 몇 가지 새로운 규칙을 학습해야 하지만 그 활용성이나 성능을 고려한다면 꼭 배워야할 패키지 중 하나입니다.</p>
+<div id="basics" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Basics</h2>
+<p><code>iris</code> 데이터를 이용해서 간단하게 barplot을 그려봅니다. <code>iris</code> 데이터는 3가지 품종별 꽃잎과 꽃받침의 길이와 넓이를 측정한 데이터 입니다. 다음은 꽃잎의 길이와 넓이의 관계를 볼 수 있는 산점도 입니다.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="ggplot2-for-data-visualization.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb38-2"><a href="ggplot2-for-data-visualization.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span>
+<span id="cb38-3"><a href="ggplot2-for-data-visualization.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="ggplot2-for-data-visualization.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width))</span></code></pre></div>
+<p>눈에 띄이는 부분은 <code>+</code>를 이용한 레이어들의 연결입니다. <code>ggplot()</code> 함수 뒤에 다양한 레이어들을 연결할 수 있고 <code>geom_point()</code> 함수는 지정한 위치에 산점도 레이어를 추가하는 기능을 합니다. 각 레이어들은 다음과 같은 다양한 기능을 갖는 함수들로 구성될 수 있습니다.</p>
+<ul>
+<li>데이터 지정 (ggplot)</li>
+<li>색상, 크기, x축의 값, y축의 값 등 심미적 요소 지정 (aes)</li>
+<li>점, 선, 면 등 기하학적 요소 지정 (geoms)</li>
+<li>그릴 통계량 지정 (stats)</li>
+<li>테마, 스케일 지정 (theme)</li>
+</ul>
+<p>일반적으로 <code>ggplot</code>을 이용하여 그래프를 그리는 순서는 다음과 같습니다.</p>
+<ul>
+<li>어떤 그래프를 그릴지 결정</li>
+<li>ggplot의 데이터셋과 aesthetic 설정</li>
+<li>geometric 요소와 적절한 statistics를 설정한 레이어 추가</li>
+<li>스케일과 테마를 설정한 레이어 추가</li>
+</ul>
+<p>ggplot만을 실행할 경우 데이터와 x, y 축만 지정한 상태로 어떤 그래프 (히스토그램인지, 산포도인지 등)를 그릴지 명시되어 있지 않아서 아무것도 그리지 않은 상태의 빈 켄버스만 그려지게 되며 <code>geom_point()</code> 함수를 즉, 점을 그릴지 선을 그릴지 어떤 통계량을 그릴지 아니면 값 자체를 그릴지 등을 지정해 주고 나서야 비로서 그래프가 그려집니다.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="ggplot2-for-data-visualization.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width))</span>
+<span id="cb39-2"><a href="ggplot2-for-data-visualization.html#cb39-2" aria-hidden="true" tabindex="-1"></a>?ggplot</span>
+<span id="cb39-3"><a href="ggplot2-for-data-visualization.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width))</span>
+<span id="cb39-4"><a href="ggplot2-for-data-visualization.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><code>geom_point()</code>의 도움말을 보면 다음과 같이 <code>data</code>, <code>mapping</code>, <code>stat</code> 등의 파라메터들이 있습니다. 이는 <code>ggplot</code>함수에서 설정한 <code>data</code>나 <code>mapping</code> 정보를 <code>geom_point</code>에서 설정 하거나 완전히 다른 데이터를 x축과 y축에 그릴 수 있다는 뜻 이기도 합니다.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="ggplot2-for-data-visualization.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb40-2"><a href="ggplot2-for-data-visualization.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>iris, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width)) </span></code></pre></div>
+<p>그런데 위 꽃잎의 길이와 넓이는 세 가지 다른 종류의 붓꽃에 대한 정보입니다. 따라서 각 종에 따라 다른 색이나 기호를 할당하는 것도 <code>mapping</code>에서 설정할 수 있습니다.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="ggplot2-for-data-visualization.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, </span>
+<span id="cb41-2"><a href="ggplot2-for-data-visualization.html#cb41-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y=</span>Petal.Width, </span>
+<span id="cb41-3"><a href="ggplot2-for-data-visualization.html#cb41-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color=</span>Species, </span>
+<span id="cb41-4"><a href="ggplot2-for-data-visualization.html#cb41-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb41-5"><a href="ggplot2-for-data-visualization.html#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb41-6"><a href="ggplot2-for-data-visualization.html#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="ggplot2-for-data-visualization.html#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width)) <span class="sc">+</span> </span>
+<span id="cb41-8"><a href="ggplot2-for-data-visualization.html#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species, <span class="at">shape=</span>Species))</span></code></pre></div>
+<p>위 산점도들의 <code>stat</code>은 <code>identity</code> 입니다. 즉, 따로 통계량을 계산할 필요 없이 값 그 자체를 사용하겠다는 것 입니다. 히스토그램의 경우 <code>geom_bar()</code> 함수로 막대그래프를 그릴 수 있습니다. <code>geom_bar</code>의 help페이지를 보면 <code>stat="count"</code>로 설정되어 있는 것을 알 수 있습니다. 꽃잎의 넓이에 대한 분포를 예로 구해봅니다. 히스토그램을 그릴경우 변수 한 개의 데이터만 필요하고 y축에는 자동으로 빈도수가 들어가게 되므로 <code>aes</code>에서 x만 mapping 해 주면 됩니다.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="ggplot2-for-data-visualization.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Width)) <span class="sc">+</span>  </span>
+<span id="cb42-2"><a href="ggplot2-for-data-visualization.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+</div>
+<div id="bar-graph" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Bar graph</h2>
+<p>ggplot을 이용한 막대그래프 그리는 방법에 대해서 좀 더 알아보겠습니다. 앞서와 같이 ggplot 함수로 먼저 데이터와 aes로 x축 y축 등을 명시하고 <code>+</code> 오퍼레이터를 사용하여 필요한 레이어를 차례로 추가하면서 그래프를 그릴 수 있습니다. <code>geom_bar()</code> 함수의 경우 x가 연속형일 경우는 아래와 같이 히스토그램을 그려주기 어렵습니다 (위 iris 예제에서 <code>geom_bar()</code> 그래프에서는 실제 꽃받침의 width 값은 연속형이 맞으나 관측된 iris 데이터들이 같은 값들이 많은 범주형처럼 되어 있어 히스토그램 그림이 그려졌습니다) 이럴 경우 stat을 <code>bin</code>으로 바꿔주면 해당 범위 안에 있는 값들의 빈도수를 계산하여 히스토그램을 그릴 수 있습니다.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="ggplot2-for-data-visualization.html#cb43-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1=</span><span class="fu">rnorm</span>(<span class="dv">100</span>))</span>
+<span id="cb43-2"><a href="ggplot2-for-data-visualization.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="ggplot2-for-data-visualization.html#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb43-4"><a href="ggplot2-for-data-visualization.html#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="ggplot2-for-data-visualization.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1)) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="ggplot2-for-data-visualization.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;bin&quot;</span>, <span class="at">bins=</span><span class="dv">30</span>)</span></code></pre></div>
+<p>x가 이산형인 경우는 stat을 디폴트 값인 <code>count</code>로 설정하여 해당 값들의 빈도수를 그려줄 수 있습니다. 이는 앞서 <code>iris</code>에서 배운 예제와 같습니다.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="ggplot2-for-data-visualization.html#cb44-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb44-2"><a href="ggplot2-for-data-visualization.html#cb44-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span>x1)</span>
+<span id="cb44-3"><a href="ggplot2-for-data-visualization.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
+<span id="cb44-4"><a href="ggplot2-for-data-visualization.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;count&quot;</span>)</span></code></pre></div>
+<p>이제 두 개의 변수가 있는 경우를 생각해 봅니다. 두 변수에 대해서 막대그래프를 그릴 경우 다음과 같이 <code>Error: stat_count() must not be used with a y aesthetic.</code> 에러가 발생할 수 있습니다.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="ggplot2-for-data-visualization.html#cb45-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb45-2"><a href="ggplot2-for-data-visualization.html#cb45-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb45-3"><a href="ggplot2-for-data-visualization.html#cb45-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, x2)</span>
+<span id="cb45-4"><a href="ggplot2-for-data-visualization.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1, <span class="at">y=</span>x2)) <span class="sc">+</span></span>
+<span id="cb45-5"><a href="ggplot2-for-data-visualization.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p>이는 <code>geom_bar()</code>의 <code>stat</code>이 기본적으로 <code>count</code>로 설정되어 있으므로 생기는 에러 입니다. <code>stat</code>을 <code>identity</code>로 설정하면 x1값에 해당하는 x2값을 그려주는 막대 그래프를 그릴 수 있습니다. 참고로 이 그래프는 <code>geom_point</code>와 비슷한 정보를 보여 주게 됩니다.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="ggplot2-for-data-visualization.html#cb46-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb46-2"><a href="ggplot2-for-data-visualization.html#cb46-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb46-3"><a href="ggplot2-for-data-visualization.html#cb46-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, x2)</span>
+<span id="cb46-4"><a href="ggplot2-for-data-visualization.html#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1, <span class="at">y=</span>x2)) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="ggplot2-for-data-visualization.html#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)</span>
+<span id="cb46-6"><a href="ggplot2-for-data-visualization.html#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="ggplot2-for-data-visualization.html#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1, <span class="at">y=</span>x2)) <span class="sc">+</span></span>
+<span id="cb46-8"><a href="ggplot2-for-data-visualization.html#cb46-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p>다음과 같이 레이어를 추가하여 두 그래프를 같은 화면에 그릴 수도 있습니다. 여기서 <code>col</code>과 <code>size</code>는 <code>aes</code>함수안에서 쓰이지 않았음을 주의하시기 바랍니다. <code>aes</code>에서는 데이터와 특정 모양, 색깔을 mapping 해주는 역할을 하고 아래와 같이 지정해 줄 경우 데이터와 상관 없이 해당 레이어의 모든 그래프에 대해서 일괄적으로 적용되게 됩니다.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="ggplot2-for-data-visualization.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1, <span class="at">y=</span>x2)) <span class="sc">+</span></span>
+<span id="cb47-2"><a href="ggplot2-for-data-visualization.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb47-3"><a href="ggplot2-for-data-visualization.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">col=</span><span class="st">&quot;red&quot;</span>, <span class="at">size=</span><span class="dv">5</span>)</span></code></pre></div>
+<p>또한 다음과 같이 다양한 레이어를 추가하여 필요한 기능을 사용할 수 있습니다. <code>fill=x1</code> 이라는 코드는 막대그래프의 색을 채울 때 x1에 따라서 다른 값들을 채우는 역할을 한다고 보면 되겠습니다.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="ggplot2-for-data-visualization.html#cb48-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb48-2"><a href="ggplot2-for-data-visualization.html#cb48-2" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">tabulate</span>(<span class="fu">sample</span>(x1, <span class="dv">100</span>, <span class="at">replace=</span>T))</span>
+<span id="cb48-3"><a href="ggplot2-for-data-visualization.html#cb48-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, y1)</span>
+<span id="cb48-4"><a href="ggplot2-for-data-visualization.html#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1, <span class="at">y=</span>y1, <span class="at">fill=</span>x1)) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="ggplot2-for-data-visualization.html#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb48-6"><a href="ggplot2-for-data-visualization.html#cb48-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb48-7"><a href="ggplot2-for-data-visualization.html#cb48-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb48-8"><a href="ggplot2-for-data-visualization.html#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb48-9"><a href="ggplot2-for-data-visualization.html#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>))<span class="sc">+</span></span>
+<span id="cb48-10"><a href="ggplot2-for-data-visualization.html#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Bar graph for x:discrete and y:value&quot;</span>)</span></code></pre></div>
+</div>
+<div id="line-graph" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Line graph</h2>
+<p>다음으로 ggplot을 이용한 line graph를 그리는 방법을 알아 봅니다. Line graph는 geom_line이라는 함수를 사용해서 그릴 수 있으며 stat의 사용법은 앞서 bar graph와 같습니다.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="ggplot2-for-data-visualization.html#cb49-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">21</span>, <span class="dv">40</span>)</span>
+<span id="cb49-2"><a href="ggplot2-for-data-visualization.html#cb49-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">33</span>, <span class="dv">10</span>, <span class="dv">82</span>)</span>
+<span id="cb49-3"><a href="ggplot2-for-data-visualization.html#cb49-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, x2)</span>
+<span id="cb49-4"><a href="ggplot2-for-data-visualization.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(x1, x2)) <span class="sc">+</span></span>
+<span id="cb49-5"><a href="ggplot2-for-data-visualization.html#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p>아래와 같이 그려지는 선의 두께를 조절하거나 레이어를 추가하는 방법으로 점을 추가로 그려볼 수 있습니다. <code>fill</code>의 경우 특정 도형에 채워지는 색을 의미합니다. 도형에 대한 자세한 종류는 <code>?pch</code> 라는 도움말로 살펴보실 수 있습니다.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="ggplot2-for-data-visualization.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1, <span class="at">y=</span>x2)) <span class="sc">+</span></span>
+<span id="cb50-2"><a href="ggplot2-for-data-visualization.html#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="ggplot2-for-data-visualization.html#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>, <span class="at">pch=</span><span class="dv">21</span>, <span class="at">fill=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb50-4"><a href="ggplot2-for-data-visualization.html#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb50-5"><a href="ggplot2-for-data-visualization.html#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>)) <span class="sc">+</span></span>
+<span id="cb50-6"><a href="ggplot2-for-data-visualization.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Continuous cases&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb50-7"><a href="ggplot2-for-data-visualization.html#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Line graph for x:continuous and y:continuous&quot;</span>)</span></code></pre></div>
+<p>위 경우는 x와 y가 모두 연속형 데이터일 경우 입니다. x는 이산형, y가 연속형일 경우 앞에서와 같이 bar graph를 이용하여 그래프를 그리게 됩니다. 그런데 이런 bar의 높이에 해당하는 값들을 서로 선으로 연결하고 싶은 경우가 있습니다. 이 때는 다음과 같이 <code>aes</code>의 <code>group</code> 이라는 파라미터를 설정하여 두 점 이상을 연결할 수 있습니다. 만약 group으로 나타낼 수 있는 변수가 없을 경우 <code>group=1</code>이라고 명시해 주고 선을 그릴 수 있으며 이 경우 모든 값들이 같은 <code>1</code> 그룹에 있는 것으로 간주됩니다. <code>1</code>이라는 것은 하나의 예이며 어떤 숫자나 문자가 와도 괜찮습니다.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="ggplot2-for-data-visualization.html#cb51-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>))</span>
+<span id="cb51-2"><a href="ggplot2-for-data-visualization.html#cb51-2" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">33</span>, <span class="dv">10</span>, <span class="dv">82</span>)</span>
+<span id="cb51-3"><a href="ggplot2-for-data-visualization.html#cb51-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1, y1)</span>
+<span id="cb51-4"><a href="ggplot2-for-data-visualization.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dat)</span>
+<span id="cb51-5"><a href="ggplot2-for-data-visualization.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1, <span class="at">y=</span>y1, <span class="at">group=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb51-6"><a href="ggplot2-for-data-visualization.html#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb51-7"><a href="ggplot2-for-data-visualization.html#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb51-8"><a href="ggplot2-for-data-visualization.html#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb51-9"><a href="ggplot2-for-data-visualization.html#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))<span class="sc">+</span></span>
+<span id="cb51-10"><a href="ggplot2-for-data-visualization.html#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Line plot for x:discrete and y:continuous&quot;</span>)</span></code></pre></div>
+<p>위에서와 같은 방법으로 point와 bar 등을 같이 그려줄 수 있습니다.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="ggplot2-for-data-visualization.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x=</span>x1, <span class="at">y=</span>y1, <span class="at">group=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb52-2"><a href="ggplot2-for-data-visualization.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">fill=</span>x1) <span class="sc">+</span></span>
+<span id="cb52-3"><a href="ggplot2-for-data-visualization.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb52-4"><a href="ggplot2-for-data-visualization.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>, <span class="at">pch=</span><span class="dv">21</span>, <span class="at">fill=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb52-5"><a href="ggplot2-for-data-visualization.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb52-6"><a href="ggplot2-for-data-visualization.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Discrete cases&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb52-7"><a href="ggplot2-for-data-visualization.html#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))<span class="sc">+</span></span>
+<span id="cb52-8"><a href="ggplot2-for-data-visualization.html#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Line for x:discrete and y:value&quot;</span>)</span></code></pre></div>
+<p>여기서는 fill 옵션이 geom_bar에 하나 geom_point에 하나씩 쓰였는데 geom_bar에서 사용된 fill은 bar에 채워지는 색을 x1의 값에 따라 바꾸겠다는 것을 의미하고 <code>geom_point</code>의 fill은 데이터에 상관 없이 모두 white로 채우라는 명령 입니다. 각 geometry에 따라서 필요한 옵션이 다르므로 각각의 geom_xxx를 사용할 때 상황에 맞게 사용하시면 되겠습니다.</p>
+</div>
+<div id="smoothing" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Smoothing</h2>
+<p>산포도는 앞서와 같이 데이터를 점으로 표현한 그래프입니다. Smoothing은 관측된 데이터를 이용하여 모형을 추정하는데 사용되는 통계적 방법이며 이를 그래프로 표현하여 추세선을 그릴 수 있습니다. 예를 들어 몸무게와 키라는 두 변수의 관계를 알아보고자 할 때 산포도를 그리고 Smoothing을 통해 점들의 평균값을 이어주는 방법으로 모형을 추정하고 추세선을 그릴 수 있습니다.</p>
+<p><code>mtcars</code> 데이터는 1974년 미국 자동차 잡지에서 추출한 데이터로서 당시 다양한 모델의 자동차에대한 성능을 저장하고 있습니다 (<code>?mtcars</code>로 자세한 정보를 볼 수 있음). 이 데이터를 이용해서 연비와 마력 (horsepower) 두 변수의 관계를 그래프로 그려보겠습니다. 직관적으로 생각하면 두 변수는 반비례 할 것으로 기대됩니다. <code>ggplot</code>을 활용해서 두 변수의 산포도를 그리고 smoothing을 수행해 보도록 하겠습니다.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="ggplot2-for-data-visualization.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>mpg, <span class="at">y=</span>hp)) <span class="sc">+</span></span>
+<span id="cb53-2"><a href="ggplot2-for-data-visualization.html#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p>위와 같이 <code>mtcars</code>는 <code>data.frame</code>이므로 <code>ggplot</code>으로 바로 받아서 x축과 y축 mapping에 필요한 변수들 이름을 직접 할당하고 <code>geom_point</code>함수를 이용해서 간단히 산포도를 그릴 수 있습니다. 이 산포도만으로도 mpg와 hp 두 변수간의 관계가 역함수 관계임을 알 수 있고 또한 선형이 아닌 것도 알 수 있습니다. 이제 위 그림에 <code>geom_smooth()</code>함수를 이용해서 (모형) 적합 곡선 (또는 추세선)을 그려봅니다.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="ggplot2-for-data-visualization.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>mpg, <span class="at">y=</span>hp)) <span class="sc">+</span></span>
+<span id="cb54-2"><a href="ggplot2-for-data-visualization.html#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb54-3"><a href="ggplot2-for-data-visualization.html#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
+<p>간단히 <code>geom_smooth()</code> 한 줄을 추가하여 추세선을 그렸으며 경고 메세지에서 볼 수 있듯이 알고리즘은 <code>loess</code> 모형을 사용했고 공식은 (formula는) <code>y~x</code>로, 즉, y축 변수를 반응변수로 x축 변수를 설명변수로 설정하여 그려졌습니다. 직선의 공식 <code>y=ax+b</code>를 생각해 보시면 무슨 의미인지 이해가 더 쉬울듯 합니다. <code>?geom_smooth</code>로 보면 알 수 있듯이 모형을 적합하는 알고리즘 옵션을 <code>lm</code>, <code>glm</code>, <code>loess</code> 등 다양하게 설정할 수 있으며 <code>auto</code>로 하게 되면 데이터의 크기나 형식에 맞춰서 방법을 자동으로 선택해서 그려주게 됩니다. <code>se</code> 옵션은 기본적으로 <code>TRUE</code> 값을 가지며 위 그림에서 볼 수 있는 선분 주위의 회색 구간으로 신뢰구간을 그려주는 옵션 입니다. <code>span</code> 옵션은 loess 모형의 smoothing 정도를 조절할 수 있는데 이는 직접 바꿔가면서 실습을 해보면 이해에 도움이 되겠습니다.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="ggplot2-for-data-visualization.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="at">x=</span>mpg, <span class="at">y=</span>hp)) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="ggplot2-for-data-visualization.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb55-3"><a href="ggplot2-for-data-visualization.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">span=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<p>위와 같이 <code>span</code> 옵션을 작게 설정할 수록 관측된 데이터(점)에 선분(모형)이 가까이 붙게 됩니다. 이를 과대적합 (overfitting)이라고 하며 간단히 설명하면 관측된 데이터에만 너무 잘맞는 모형을 만드는 경우를 말합니다. 이럴 경우 새롭게 관측된 데이터는 모형의 예측값과 잘 맞지 않게 됩니다.</p>
+<p>이번에는 모의 데이터를 생성해서 그래프를 그려보겠습니다. 네 개 학급에 있는 학생들의 키와 몸무게를 저장한 데이터를 만들어 봅니다. 이 경우 몇 개의 변수가 필요할지 생각해 보시기 바랍니다. 키와 몸무게 그리고 학급을 나타내는 변수 3개가 필요하며 키와 몸무게는 정수형, 그룹을 나타내는 변수는 문자형이나 factor형으로 나타내면 되겠습니다. 각 학급의 학생수는 50명으로 총 200명의 학생이 있는 것으로 하며 각 그룹별로 키나 몸무게의 차이는 없고 키가 큰 사람은 몸무게가 많이 나가는 것으로 합니다. 키와 몸무게 사이에는 다음과 같은 연관성을 만들어 줍니다. <span class="math inline">\(height= weight + N(100, 10)\)</span></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="ggplot2-for-data-visualization.html#cb56-1" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">75</span>, <span class="dv">5</span>)</span>
+<span id="cb56-2"><a href="ggplot2-for-data-visualization.html#cb56-2" aria-hidden="true" tabindex="-1"></a>heights <span class="ot">&lt;-</span> weights <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">100</span>, <span class="dv">5</span>)</span>
+<span id="cb56-3"><a href="ggplot2-for-data-visualization.html#cb56-3" aria-hidden="true" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>), <span class="at">size=</span><span class="fu">length</span>(heights), <span class="at">replace =</span> T)</span>
+<span id="cb56-4"><a href="ggplot2-for-data-visualization.html#cb56-4" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(heights, weights, classes)</span>
+<span id="cb56-5"><a href="ggplot2-for-data-visualization.html#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mydata)</span></code></pre></div>
+<p>이제 위 데이터를 이용해서 몸무게와 키의 산포도와 추세선을 그려보고 추가로 그룹별로 다른 색의 점으로 표현해 보겠습니다.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="ggplot2-for-data-visualization.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x=</span>weights, <span class="at">y=</span>heights, <span class="at">color=</span>classes)) <span class="sc">+</span></span>
+<span id="cb57-2"><a href="ggplot2-for-data-visualization.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb57-3"><a href="ggplot2-for-data-visualization.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
+<p>그런데 위와 같은 코드를 실행하면 그룹마다 다른 점과 smooth 선분이 그려집니다. 우리가 원하는 그림은 단지 점만 그룹별로 다른 색으로 표현하고 추세선은 전체 학생들에 대해서 하나의 선분만 그려지길 원합니다. 이제 우리가 알아야할 부분은 각 레이어마다 mapping을 지정할 수 있다는 것이고 이 원리를 이해한다면 다음과 같이 <code>geom_point</code>에서는 <code>color</code>를 mapping해 주고 <code>geom_smooth</code>에서는 지정해주지 않으면 됩니다.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="ggplot2-for-data-visualization.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb58-2"><a href="ggplot2-for-data-visualization.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>weights, <span class="at">y=</span>heights, <span class="at">color=</span>classes)) <span class="sc">+</span></span>
+<span id="cb58-3"><a href="ggplot2-for-data-visualization.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">x=</span>weights, <span class="at">y=</span>heights))</span></code></pre></div>
+<p>그리고 중복되는 부분을 줄여줄 수도 있습니다. 즉, ggplot에서 지정하는 mapping은 하위 layer에 모두 적용이 되며 각 layer마다 다른 mapping 특성을 부여하고 싶을 경우 해당 layer의 mapping 함수 (aes)를 이용하여 설정할 수 있다는 점을 기억하시기 바랍니다.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="ggplot2-for-data-visualization.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x=</span>weights, <span class="at">y=</span>heights)) <span class="sc">+</span></span>
+<span id="cb59-2"><a href="ggplot2-for-data-visualization.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>classes)) <span class="sc">+</span></span>
+<span id="cb59-3"><a href="ggplot2-for-data-visualization.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
+</div>
+<div id="statstics-and-positions" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Statstics and positions</h2>
+<p>앞서 smoothing 곡선은 실제 데이터에서 관측된 값이 아닌 계산된 값을 그래프에 표현한 것 입니다. 막대그래프에서도 y축 count 값은 관측된 값이 아닌 빈도수를 계산한 값이고 boxplot의 경우도 중간값 1,3사분위수 등 통계량을 표현해 주는 그래프 입니다. 이는 대부분 통계 분석용 소프트웨어에서 제공되는 기능으로 통계량을 가시화 해주는 역할을 합니다. <code>ggplot2</code>에서도 각 geom 레이어에 <code>stat</code>이라는 옵션을 통해 이러한 통계량을 그래프로 표현할 수 있습니다. 예를 들어 앞서 생성한 키, 몸무게 데이터에서 키의 분포를 보기 위한 히스토그램을 그리면 <code>geom_histogram</code>을 사용할 수 있고 이 레이어의 <code>stat</code> 옵션의 기본값은 <code>"bin"</code> 입니다 (<code>?geom_histogram</code> 참고).</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="ggplot2-for-data-visualization.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb60-2"><a href="ggplot2-for-data-visualization.html#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="ggplot2-for-data-visualization.html#cb60-3" aria-hidden="true" tabindex="-1"></a>weights <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">75</span>, <span class="dv">5</span>)</span>
+<span id="cb60-4"><a href="ggplot2-for-data-visualization.html#cb60-4" aria-hidden="true" tabindex="-1"></a>heights <span class="ot">&lt;-</span> weights <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">200</span>, <span class="dv">100</span>, <span class="dv">5</span>)</span>
+<span id="cb60-5"><a href="ggplot2-for-data-visualization.html#cb60-5" aria-hidden="true" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>), <span class="at">size=</span><span class="fu">length</span>(heights), <span class="at">replace =</span> T)</span>
+<span id="cb60-6"><a href="ggplot2-for-data-visualization.html#cb60-6" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(heights, weights, classes)</span>
+<span id="cb60-7"><a href="ggplot2-for-data-visualization.html#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mydata)</span>
+<span id="cb60-8"><a href="ggplot2-for-data-visualization.html#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="ggplot2-for-data-visualization.html#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x=</span>heights)) <span class="sc">+</span></span>
+<span id="cb60-10"><a href="ggplot2-for-data-visualization.html#cb60-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<p>경고 문구의 <code>bins=30</code>은 기본 <code>stat</code>옵션이 <code>bin</code>인데 <code>bins</code>옵션은 null로 되어 있기 때문에 경고가 발생한 것이고 30으로 강제 할당해서 그린다는 메세지 입니다. bins 옵션을 다르게 해서 테스트 해보시기 바랍니다. 또한 <code>stat="identity"</code>로 그래프를 그린 경우는 데이터 값을 그대로 그린다는 것도 다시 기억해 보시기 바랍니다.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="ggplot2-for-data-visualization.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x=</span>heights)) <span class="sc">+</span></span>
+<span id="cb61-2"><a href="ggplot2-for-data-visualization.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)</span>
+<span id="cb61-3"><a href="ggplot2-for-data-visualization.html#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="ggplot2-for-data-visualization.html#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="at">x=</span>heights, <span class="at">y=</span>weights)) <span class="sc">+</span></span>
+<span id="cb61-5"><a href="ggplot2-for-data-visualization.html#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<p>또 다른 예를위해 앞서 키 몸무게 데이터에 혈액형 변수를 추가해 보겠습니다. 혈액형은 위 4개 학급에 관계 없이 A, B, O, AB 네 그룹으로 나눌 수 있으며 200명의 학생들에게 랜덤하게 할당하도록 합니다.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="ggplot2-for-data-visualization.html#cb62-1" aria-hidden="true" tabindex="-1"></a>bloodtype <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;O&quot;</span>, <span class="st">&quot;AB&quot;</span>), <span class="fu">nrow</span>(mydata), <span class="at">replace=</span>T)</span>
+<span id="cb62-2"><a href="ggplot2-for-data-visualization.html#cb62-2" aria-hidden="true" tabindex="-1"></a>mynewdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(mydata, bloodtype)</span>
+<span id="cb62-3"><a href="ggplot2-for-data-visualization.html#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mynewdata)</span></code></pre></div>
+<p>위와 같이 새로운 변수 bloodtype 이 <code>factor</code>형으로 추가되어 새로운 <code>data.frame</code>을 생성하도록 했습니다. 이제 각 학급별로 몇 명의 혈액형 타입을 갖는 학생들이 있는지를 막대그래프로 표현해 보도록 하겠습니다. 혈액형의 타입별로 다른 색으로 막대를 칠하도록 해봅니다. 막대그래프의 색은 <code>fill</code>옵션으로 채울수 있고 막대그래프는 <code>geom_bar</code>그리고 이 레이어의 <code>stat</code>은 기본값이 <code>count</code>이므로 따로 명시하지 않은채로 다음과 같이 코드를 작성할 수 있습니다.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="ggplot2-for-data-visualization.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mynewdata, <span class="fu">aes</span>(<span class="at">x=</span>classes, <span class="at">fill=</span>bloodtype)) <span class="sc">+</span></span>
+<span id="cb63-2"><a href="ggplot2-for-data-visualization.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<p>그런데 위와같이 그래프가 위로 쌓여서 보입니다. 이는 <code>geom_bar</code>의 <code>position</code> 기본값이 <code>stack</code>으로 되어있어서 보이는 현상입니다 (<code>?geom_bar</code>참고). 옆으로 나란히 막대를 위치시킨 후 크기를 비교하기 위해서 <code>position="dodge"</code>를 사용합니다. 또한 막대그래프에 칠해지는 색의 투명도를 <code>alpha</code> 옵션을 사용해 변경할 수 있습니다.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="ggplot2-for-data-visualization.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mynewdata, <span class="fu">aes</span>(<span class="at">x=</span>classes, <span class="at">fill=</span>bloodtype)) <span class="sc">+</span></span>
+<span id="cb64-2"><a href="ggplot2-for-data-visualization.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">position=</span><span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p>다음과 같이 간단히 한 줄만 추가하여 위 막대그래프의 위치를 가로로 전환하거나 Coxcomb chart로 그릴수도 있습니다.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="ggplot2-for-data-visualization.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mynewdata, <span class="fu">aes</span>(<span class="at">x=</span>classes, <span class="at">fill=</span>bloodtype)) <span class="sc">+</span></span>
+<span id="cb65-2"><a href="ggplot2-for-data-visualization.html#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-3"><a href="ggplot2-for-data-visualization.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="ggplot2-for-data-visualization.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mynewdata, <span class="fu">aes</span>(<span class="at">x=</span>classes, <span class="at">fill=</span>bloodtype)) <span class="sc">+</span></span>
+<span id="cb66-2"><a href="ggplot2-for-data-visualization.html#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb66-3"><a href="ggplot2-for-data-visualization.html#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>()</span></code></pre></div>
+<p>참고로 위 Coxcomb 그래프의 경우는 해석이 어렵거나 x, y축의 라벨링에 혼돈이 올수 있으니 정보 전달이 명확하도록 그래프의 옵션들을 추가하거나 용도에 맞게 사용할 필요가 있습니다.</p>
+</div>
+<div id="facets" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Facets</h2>
+<p>산점도의 예에서 위와 같이 다른 색이나 모양으로 그리기 보다는 종 별로 다른 켄버스에 별도의 산점도를 그려야 할 경우가 있습니다. 이럴때 사용하는 함수가 <code>facet_wrap()</code>이나 <code>facet_grid()</code> 입니다. 보통 범주형 자료에 대해서 적용할 수 있으며 <code>facet_wrap()</code>은 하나의 변수에 대해서 그림을 나눠그릴때 사용하고 <code>facet_grid()</code>는 두 개 변수의 조합에 의한 그래프들을 그릴 때 사용합니다. 위 붓꽃 예에서는 3가지 종을 나타내는 변수 <code>Species</code>를 이용하면 되겠습니다. <code>facet_wrap()</code>함수에는 <code>~</code>를 이용한 formula를 사용합니다.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="ggplot2-for-data-visualization.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width)) <span class="sc">+</span> </span>
+<span id="cb67-2"><a href="ggplot2-for-data-visualization.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species, <span class="at">shape=</span>Species)) <span class="sc">+</span></span>
+<span id="cb67-3"><a href="ggplot2-for-data-visualization.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Species, <span class="at">nrow=</span><span class="dv">2</span>)</span></code></pre></div>
+<p>만약 두 개의 범주형 변수에 대해서 x, y축 각각으로 나누고 싶을 때는 <code>facet_grid()</code>를 사용할 수 있습니다. <code>iris</code> 데이터는 하나의 범주형 변수와 네 개의 숫자형 변수로 구성되어 있습니다 (<code>str(iris)</code> 확인). 여기에 랜덤하게 0과 1을 갖는 범주형 변수 하나를 추가해 보겠습니다.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="ggplot2-for-data-visualization.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(iris)</span>
+<span id="cb68-2"><a href="ggplot2-for-data-visualization.html#cb68-2" aria-hidden="true" tabindex="-1"></a>mycate <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="fu">nrow</span>(iris), <span class="at">replace=</span>T)</span>
+<span id="cb68-3"><a href="ggplot2-for-data-visualization.html#cb68-3" aria-hidden="true" tabindex="-1"></a>myiris <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(iris, mycate)</span>
+<span id="cb68-4"><a href="ggplot2-for-data-visualization.html#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(myiris)</span></code></pre></div>
+<p>이제 mycate와 Species 두 범주형 변수에 대해서 facet 그래프를 그려보면 다음과 같습니다. <code>facet_grid()</code>함수를 사용하면 되며 x와 y축의 변수는 <code>~</code>를 활용한 formula를 사용합니다. 즉 <code>~</code> 왼편의 변수는 y축 오른편의 변수는 x축으로 구성되어집니다. 새로운 <code>myiris</code>라는 데이터를 만들었으므로 iris 대신 myiris를 사용합니다.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="ggplot2-for-data-visualization.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(myiris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width)) <span class="sc">+</span> </span>
+<span id="cb69-2"><a href="ggplot2-for-data-visualization.html#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species, <span class="at">shape=</span>Species)) <span class="sc">+</span></span>
+<span id="cb69-3"><a href="ggplot2-for-data-visualization.html#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Species<span class="sc">~</span>mycate)</span></code></pre></div>
+<p>만약 하나의 변수에 대해서 x축이나 y축 하나에만 나열하고 싶은 경우 다음처럼 <code>.</code> 을 사용하면 됩니다.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="ggplot2-for-data-visualization.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(myiris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width)) <span class="sc">+</span> </span>
+<span id="cb70-2"><a href="ggplot2-for-data-visualization.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species, <span class="at">shape=</span>Species)) <span class="sc">+</span></span>
+<span id="cb70-3"><a href="ggplot2-for-data-visualization.html#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>mycate)</span>
+<span id="cb70-4"><a href="ggplot2-for-data-visualization.html#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-5"><a href="ggplot2-for-data-visualization.html#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(myiris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width)) <span class="sc">+</span> </span>
+<span id="cb70-6"><a href="ggplot2-for-data-visualization.html#cb70-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species, <span class="at">shape=</span>Species)) <span class="sc">+</span></span>
+<span id="cb70-7"><a href="ggplot2-for-data-visualization.html#cb70-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Species<span class="sc">~</span>.)</span>
+<span id="cb70-8"><a href="ggplot2-for-data-visualization.html#cb70-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-9"><a href="ggplot2-for-data-visualization.html#cb70-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(myiris, <span class="fu">aes</span>(<span class="at">x=</span>Petal.Length, <span class="at">y=</span>Petal.Width)) <span class="sc">+</span> </span>
+<span id="cb70-10"><a href="ggplot2-for-data-visualization.html#cb70-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span>Species, <span class="at">shape=</span>Species)) <span class="sc">+</span></span>
+<span id="cb70-11"><a href="ggplot2-for-data-visualization.html#cb70-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(.<span class="sc">~</span>Species)</span></code></pre></div>
+<div id="ex10.1" class="section level3" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> Exercise</h3>
+<p><code>Orange</code> 데이터셋은 다섯 그루의 오랜지 나무에 대한 시간에(age-days) 따른 성장을(circumference) 기록한 데이터임.</p>
+<ol style="list-style-type: decimal">
+<li><p>age와 circumference 를 각각 x와 y축으로 하는 산점도를 그리는 코드를 작성하시오 (ggplot 이용, 나무별로 다른 색 사용)</p></li>
+<li><p>나무별로 다른 켄버스에 age와 circumference를 x와 y축으로 하는 산점도를 그리는 코드를 작성하시오 (ggplot, facet_grid이용)</p></li>
+<li><p>2)에서 그려진 나무별 산점도에 다음과 같이 선분을 추가한 그래프를 그리는 코드를 작성 하시오</p></li>
+</ol>
+</div>
+<div id="ex10.2" class="section level3" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> Exercise</h3>
+<p><code>InsectSprays</code>는 제초제의 효능에 관한 데이터이다. 다음과 같은 plot을 그리는 코드를 작성 하시오</p>
+</div>
+</div>
+<div id="themes-labels-and-scales" class="section level2" number="4.7">
+<h2><span class="header-section-number">4.7</span> Themes, Labels, and Scales</h2>
+<p>Theme은 data관련 요소들 외의 것들에 대한 설정을 위해서 사용됩니다. 즉, 제목이나 라벨, 배경, 범례 등의 색, 위치, 크기, 모양 등을 설정하는데 사용합니다. 주의할 부분은 해당 택스트 등 데이터를 변경하는 것이 아니고 보여지는 모습만을 바꿀 수 있다는 것 입니다. 택스트 설정은 <code>labs</code>를 사용합니다. 예제를 가지고 몇 가지 실습을 해 보겠습니다. 먼저 <code>labs</code>라는 명령어로 x축, y축, Title 등을 설정할 수 있습니다. 참고로 <code>xlab()</code>, <code>ylab()</code> 등의 함수도 x축, y축 라벨을 설정하는데 사용될 수 있지만 여기서는 <code>labs</code>만을 사용하도록 합니다.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="ggplot2-for-data-visualization.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mynewdata, <span class="fu">aes</span>(<span class="at">x=</span>classes, <span class="at">fill=</span>bloodtype)) <span class="sc">+</span></span>
+<span id="cb71-2"><a href="ggplot2-for-data-visualization.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb71-3"><a href="ggplot2-for-data-visualization.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;Four classes&#39;</span>,</span>
+<span id="cb71-4"><a href="ggplot2-for-data-visualization.html#cb71-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&#39;Number of students&#39;</span>,</span>
+<span id="cb71-5"><a href="ggplot2-for-data-visualization.html#cb71-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&#39;Blood type distribution&#39;</span>,</span>
+<span id="cb71-6"><a href="ggplot2-for-data-visualization.html#cb71-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&#39;Blood type distribution from the 200 students&#39;</span>,</span>
+<span id="cb71-7"><a href="ggplot2-for-data-visualization.html#cb71-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">&#39;Blood Types&#39;</span>) </span></code></pre></div>
+<p>위 코드에서 <code>labs</code>에서 설정할 수 있는 옵션은 <code>title</code>, <code>subtitle</code>과 x축, y축 라벨 그리고 범례의 title까지 가능합니다. 특히 <code>ggplot</code> 명령에서 <code>aes(fill=bloodtype)</code>이 사용되었으므로 범례의 title은 <code>fill="Blood types"</code>로 설정해야 하며 만약 <code>aes(color=bloodtype)</code>으로 사용되었을 경우에는 <code>color="Blood types"</code>으로 설정합니다. 참고로 범례의 label을 설정하는 방법은 다음과 같이 <code>scale_fill_discrete</code> 함수의 <code>labels</code> 옵션을 사용하면 됩니다. <code>element_blank()</code>는 택스트를 공백으로 설정할 때 사용합니다. 아래 나올 <code>scale</code> 관련 내용과 함께 이해하시면 좋습니다.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="ggplot2-for-data-visualization.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mynewdata, <span class="fu">aes</span>(<span class="at">x=</span>classes, <span class="at">fill=</span>bloodtype)) <span class="sc">+</span></span>
+<span id="cb72-2"><a href="ggplot2-for-data-visualization.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb72-3"><a href="ggplot2-for-data-visualization.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_discrete</span>(<span class="at">name=</span><span class="fu">element_blank</span>(), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;A type&quot;</span>, <span class="st">&quot;AB type&quot;</span>, <span class="st">&quot;B type&quot;</span>, <span class="st">&quot;O type&quot;</span>))</span></code></pre></div>
+<p>이제 본격적으로 Theme으로 그래프를 장식해 보도록 합니다. <code>Theme</code> 관련된 옵션들은 <a href="https://ggplot2.tidyverse.org/reference/theme.html" class="uri">https://ggplot2.tidyverse.org/reference/theme.html</a> 이곳을 참고하시기 바랍니다. 여기서 mapping은 그대로인채로 모양 등의 설정을 바꿔가면서 그래프의 형태를 확인하는 작업이 반복되므로 다음과 같이 <code>myplot</code>이라는 변수에 기본이 되는 ggplot 코드를 저장하고 이후 <code>+</code> 연산자를 사용해서 옵션을 바꿔가며 편리하게 코드를 재사용 할 수도 있습니다.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="ggplot2-for-data-visualization.html#cb73-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mynewdata, <span class="fu">aes</span>(<span class="at">x=</span>classes, <span class="at">fill=</span>bloodtype)) <span class="sc">+</span></span>
+<span id="cb73-2"><a href="ggplot2-for-data-visualization.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb73-3"><a href="ggplot2-for-data-visualization.html#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&#39;Four classes&#39;</span>,</span>
+<span id="cb73-4"><a href="ggplot2-for-data-visualization.html#cb73-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&#39;Number of students&#39;</span>,</span>
+<span id="cb73-5"><a href="ggplot2-for-data-visualization.html#cb73-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&#39;Blood type distribution&#39;</span>,</span>
+<span id="cb73-6"><a href="ggplot2-for-data-visualization.html#cb73-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&#39;Blood type distribution from the 200 students&#39;</span>,</span>
+<span id="cb73-7"><a href="ggplot2-for-data-visualization.html#cb73-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill=</span><span class="st">&#39;Blood Types&#39;</span>) </span>
+<span id="cb73-8"><a href="ggplot2-for-data-visualization.html#cb73-8" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p>위 <code>theme_bw()</code> 함수는 theme의 세부 사항 몇 가지를 미리 설정해 놓아서 (배경을 white 색, 눈금을 회색으로 바꾸는 등) theme 설정을 위한 일련의 과정을 한번에 수행하도록 만든 함수 입니다. theme을 이용한 설정은 plot, axis, legend, panel, facet 등에 적용할 수 있으며 따라서 다음 코드와 같이 해당하는 요소를 참고할 때 <code>.</code> 기호로 구분된 옵션 이름을 사용합니다. 값을 지정할 때에는 <code>element_xxx</code>의 패턴으로 이루어진 함수를 사용합니다. 다음은 각각 plot과 panel 배경색을 바꾸는 코드 입니다.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="ggplot2-for-data-visualization.html#cb74-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span><span class="st">&quot;gray&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="ggplot2-for-data-visualization.html#cb75-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span><span class="st">&quot;gray&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="ggplot2-for-data-visualization.html#cb76-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> </span>
+<span id="cb76-2"><a href="ggplot2-for-data-visualization.html#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb76-3"><a href="ggplot2-for-data-visualization.html#cb76-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span><span class="st">&quot;gray&quot;</span>),</span>
+<span id="cb76-4"><a href="ggplot2-for-data-visualization.html#cb76-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span><span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb76-5"><a href="ggplot2-for-data-visualization.html#cb76-5" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<p>또한 축이나 라벨 택스트의 모양도 바꿀 수 있습니다.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="ggplot2-for-data-visualization.html#cb77-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> </span>
+<span id="cb77-2"><a href="ggplot2-for-data-visualization.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb77-3"><a href="ggplot2-for-data-visualization.html#cb77-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">angle =</span> <span class="dv">15</span>, <span class="at">length =</span> <span class="fu">unit</span>(.<span class="dv">15</span>,<span class="st">&quot;inches&quot;</span>))),</span>
+<span id="cb77-4"><a href="ggplot2-for-data-visualization.html#cb77-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">angle =</span> <span class="dv">30</span>),</span>
+<span id="cb77-5"><a href="ggplot2-for-data-visualization.html#cb77-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">&quot;blue&quot;</span>, <span class="at">size=</span><span class="dv">18</span>)</span>
+<span id="cb77-6"><a href="ggplot2-for-data-visualization.html#cb77-6" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="ggplot2-for-data-visualization.html#cb78-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> </span>
+<span id="cb78-2"><a href="ggplot2-for-data-visualization.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb78-3"><a href="ggplot2-for-data-visualization.html#cb78-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb78-4"><a href="ggplot2-for-data-visualization.html#cb78-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>, <span class="at">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="at">color=</span><span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb78-5"><a href="ggplot2-for-data-visualization.html#cb78-5" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
+<p>위 예제 외에도 다양한 그래프를 그릴 수 있으며 모든 사용법을 외워서 사용하기 보다는 사용할 때 마다 필요한 함수와 옵션을 찾아서 사용하다 보면 점차 익숙해질 것 입니다. 가장 정확한 참고 자료는 공식 reference 페이지를 참고하면 좋으며 <a href="https://ggplot2.tidyverse.org/reference/index.html" class="uri">https://ggplot2.tidyverse.org/reference/index.html</a> 이 외에도 다른 사람들이 만들어 놓은 그래프를 <a href="https://exts.ggplot2.tidyverse.org/" class="uri">https://exts.ggplot2.tidyverse.org/</a> 참고해서 원하는 목적에 맞는 코드를 가져다 사용할 수 있습니다.</p>
+<p>본 장에서 마지막으로 소개할 내용은 <code>Scale</code> 입니다. 앞서 어떤 데이터를 x축, y축 또는 group이나 color로 맵핑할지를 결정하는 함수가 <code>aes</code>였다면 scale은 어떻게 (위치, 색상, 크기, 모양 등) 맵핑할 것인가를 설정하는 방법입니다. 함수 형태는 <code>scale_&lt;aesthetic&gt;_&lt;type&gt;</code> 이며 <code>&lt;aesthetic&gt;</code>과 <code>&lt;type&gt;</code>에 해당하는 (미리 지정된) 단어를 넣어주면 되겠습니다. 예를 들어 앞서 예제에서 <code>fill=bloodtype</code>로 혈액형 데이터를 막대그래프의 색을 칠하는데 사용했다면 <code>scale_fill_manual</code> 함수로 어떤 색을 칠할지를 정해주는 방식입니다. 다음 몇 가지 예를 실습해 보고 이해해 봅니다.</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="ggplot2-for-data-visualization.html#cb79-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> </span>
+<span id="cb79-2"><a href="ggplot2-for-data-visualization.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;orange&quot;</span>, <span class="st">&quot;skyblue&quot;</span>, <span class="st">&quot;royalblue&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span>
+<span id="cb79-3"><a href="ggplot2-for-data-visualization.html#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-4"><a href="ggplot2-for-data-visualization.html#cb79-4" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> </span>
+<span id="cb79-5"><a href="ggplot2-for-data-visualization.html#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;BrBG&quot;</span>)</span></code></pre></div>
+<p>두 번째 <code>scale_fill_brewer</code>의 경우는 <code>brewer</code>라는 (<a href="https://colorbrewer2.org/" class="uri">https://colorbrewer2.org/</a>) 미리 지정된 색의 조합을 가져와 사용하는 방식입니다. <code>?scale_fill_brewer</code>의 Palettes 섹션을 보시면 사용 가능한 팔레트의 이름이 나와 있으며 위 예제 에서는 BrBG라는 이름의 팔레트를 사용했습니다. 아래는 viridis 라는 이름의 팔레트이며 (<a href="https://bids.github.io/colormap/" class="uri">https://bids.github.io/colormap/</a>) 이러한 팔레트는 R 뿐만 아니라 python, Matlab 등의 다른 프로그래밍 언어에서도 사용할 수 있도록 라이브러리를 제공하고 있습니다.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="ggplot2-for-data-visualization.html#cb80-1" aria-hidden="true" tabindex="-1"></a>myplot <span class="sc">+</span> </span>
+<span id="cb80-2"><a href="ggplot2-for-data-visualization.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code></pre></div>
+<p>참고로 앞서 설명한 바와 같이 <code>aes(fill=bloodtype)</code>이 사용되었으므로 <code>scale_fill_viridis_d</code>을 사용했으며 만약 <code>aes(color=bloodtype)</code>으로 사용되었을 경우에는 이에 맞는 <code>scale_fill_viridis_d</code>으로 설정해야 합니다. 맵핑된 데이터가 연속형일 경우에는 (위 학급 예제의 혈액형은 4개의 혈액형으로 나뉘는 범주형 데이터임) <code>scale_fill_gradient</code>, <code>scale_fill_distiller</code> 등의 연속형 데이터에 맞는 scale 함수를 사용해야 합니다. 또한 데이터의 스케일이 log나 지수 단위일 경우에도 일 때에도 <code>scale_x_log10()</code> 등의 함수를 이용해서 x축 또는 y축의 스케일을 변경해줄 수 있습니다. 다음은 간단한 형태의 로그 분포 데이터를 생성하고 히스토그램을 그리는 코드입니다.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="ggplot2-for-data-visualization.html#cb81-1" aria-hidden="true" tabindex="-1"></a>mydf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">rlnorm</span>(<span class="dv">1000</span>, <span class="fu">log</span>(<span class="dv">10</span>), <span class="fu">log</span>(<span class="fl">2.5</span>)))</span>
+<span id="cb81-2"><a href="ggplot2-for-data-visualization.html#cb81-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydf, <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span></span>
+<span id="cb81-3"><a href="ggplot2-for-data-visualization.html#cb81-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span>
+<span id="cb81-4"><a href="ggplot2-for-data-visualization.html#cb81-4" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<p>위 히스토그램의 x축을 로그 스케일로 전환하고자 할 때 다음과 같이 <code>scale_x_log10()</code> 함수를 추가하면 됩니다.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="ggplot2-for-data-visualization.html#cb82-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code></pre></div>
+<div id="ex10.3" class="section level3" number="4.7.1">
+<h3><span class="header-section-number">4.7.1</span> Exercise</h3>
+<p><code>mpg</code> 데이터셋은 38종 자동차의 연비 데이터임. 이 데이터셋을 이용하여 다음 그래프를 그리시오</p>
+<ol style="list-style-type: decimal">
+<li><p>엔진 배기량과 (displ) 도심연비 (cty)를 비교하는 산포도를 그리고 어떤 연관성이 있는지 설명하시오</p></li>
+<li><p>위 산포도의 점들은 실제로는 한 개 이상의 데이터가 겹쳐셔 표현된 경우가 많음. ggplot2에서는 이러한 문제를 극복하기 위해서 <code>position="jitter"</code> 라는 옵션을 사용할 수 있음. 이 옵션을 적용한 코드를 작성하시오.</p></li>
+<li><p>위 그래프에 배기량과 (displ) 고속도로연비 (hwy) 산포도를 추가하여 다음과 같이 <code>scale_color_manual()</code> 함수를 사용해서 “red”와 “blue”로 점들을 표현한 그래프를 그리시오.</p></li>
+</ol>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="ggplot2-for-data-visualization.html#cb83-1" aria-hidden="true" tabindex="-1"></a>mydf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">displ=</span>mpg<span class="sc">$</span>displ, <span class="at">cty=</span>mpg<span class="sc">$</span>cty, <span class="at">hwy=</span>mpg<span class="sc">$</span>hwy) <span class="sc">%&gt;%</span> </span>
+<span id="cb83-2"><a href="ggplot2-for-data-visualization.html#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(<span class="st">&quot;cty&quot;</span>, <span class="st">&quot;hwy&quot;</span>), <span class="at">names_to=</span><span class="st">&quot;type&quot;</span>)</span>
+<span id="cb83-3"><a href="ggplot2-for-data-visualization.html#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mydf)</span></code></pre></div>
+<p><img src="images/06/ex6-4-2.png" width="350" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li>다음과 같이 배기량과 고속도로/도심 연비의 관계를 나타내는 추세선을 추가하시오 (<code>geom_smooth</code> 이용)</li>
+</ol>
+<p><img src="images/06/ex6-4-4.png" width="350" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li>아래 그림과 같이 Theme을 <code>theme_bw()</code>를 사용하고 추가로 Title, subtitle, x축, y축 라벨, 그리고 범례의 Title을 변경하시오. (범례의 라벨 설정은 <code>scale_color_manual</code>에서 <code>labels=c("City MPG", "Highway MPG")</code>으로 설정, 범례의 title을 지울때는 <code>name=element_blank()</code>, Title의 택스트 크기는 20, x축, y축의 라벨 텍스트 크기는 18로 설정)</li>
+</ol>
+<p><img src="images/06/ex6-4-5.png" width="350" /></p>
+</div>
+</div>
+<div id="ggplot-examples" class="section level2" number="4.8">
+<h2><span class="header-section-number">4.8</span> ggplot examples</h2>
+<p>인터넷에서 찾은 다음 사이트의 예제를 보면서 다양한 그래프 예제를 실행해 보겠습니다. 코드는 조금씩 변형된 부분이 있으니 참고 부탁 드립니다.</p>
+<ul>
+<li><a href="https://www.r-graph-gallery.com/ggplot2-package.html" class="uri">https://www.r-graph-gallery.com/ggplot2-package.html</a></li>
+<li><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html" class="uri">http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html</a></li>
+<li><a href="https://www.datanovia.com/en/blog/ggplot-examples-best-reference/" class="uri">https://www.datanovia.com/en/blog/ggplot-examples-best-reference/</a></li>
+</ul>
+<div id="violin-plot" class="section level3" number="4.8.1">
+<h3><span class="header-section-number">4.8.1</span> Violin plot</h3>
+<ul>
+<li><a href="https://www.r-graph-gallery.com/violin_and_boxplot_ggplot2.html" class="uri">https://www.r-graph-gallery.com/violin_and_boxplot_ggplot2.html</a></li>
+</ul>
+<p><img src="images/10/000013.png" width="450" /></p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="ggplot2-for-data-visualization.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb84-2"><a href="ggplot2-for-data-visualization.html#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb84-3"><a href="ggplot2-for-data-visualization.html#cb84-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-4"><a href="ggplot2-for-data-visualization.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a dataset</span></span>
+<span id="cb84-5"><a href="ggplot2-for-data-visualization.html#cb84-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb84-6"><a href="ggplot2-for-data-visualization.html#cb84-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">name=</span><span class="fu">c</span>( <span class="fu">rep</span>(<span class="st">&quot;A&quot;</span>,<span class="dv">500</span>), <span class="fu">rep</span>(<span class="st">&quot;B&quot;</span>,<span class="dv">500</span>), <span class="fu">rep</span>(<span class="st">&quot;B&quot;</span>,<span class="dv">500</span>), <span class="fu">rep</span>(<span class="st">&quot;C&quot;</span>,<span class="dv">20</span>), <span class="fu">rep</span>(<span class="st">&#39;D&#39;</span>, <span class="dv">100</span>)  ),</span>
+<span id="cb84-7"><a href="ggplot2-for-data-visualization.html#cb84-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">value=</span><span class="fu">c</span>( <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">10</span>, <span class="dv">5</span>), <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">13</span>, <span class="dv">1</span>), <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">18</span>, <span class="dv">1</span>), <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">4</span>), <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">12</span>, <span class="dv">1</span>) )</span>
+<span id="cb84-8"><a href="ggplot2-for-data-visualization.html#cb84-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb84-9"><a href="ggplot2-for-data-visualization.html#cb84-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-10"><a href="ggplot2-for-data-visualization.html#cb84-10" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> str</span>
+<span id="cb84-11"><a href="ggplot2-for-data-visualization.html#cb84-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-12"><a href="ggplot2-for-data-visualization.html#cb84-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span>name, <span class="at">y=</span>value, <span class="at">fill=</span>name)) <span class="sc">+</span></span>
+<span id="cb84-13"><a href="ggplot2-for-data-visualization.html#cb84-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">width=</span><span class="fl">1.4</span>) <span class="sc">+</span></span>
+<span id="cb84-14"><a href="ggplot2-for-data-visualization.html#cb84-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>, <span class="at">alpha=</span><span class="fl">0.2</span>) </span>
+<span id="cb84-15"><a href="ggplot2-for-data-visualization.html#cb84-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-16"><a href="ggplot2-for-data-visualization.html#cb84-16" aria-hidden="true" tabindex="-1"></a><span class="co"># sample summary</span></span>
+<span id="cb84-17"><a href="ggplot2-for-data-visualization.html#cb84-17" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb84-18"><a href="ggplot2-for-data-visualization.html#cb84-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span> </span>
+<span id="cb84-19"><a href="ggplot2-for-data-visualization.html#cb84-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">num=</span><span class="fu">n</span>()) </span>
+<span id="cb84-20"><a href="ggplot2-for-data-visualization.html#cb84-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-21"><a href="ggplot2-for-data-visualization.html#cb84-21" aria-hidden="true" tabindex="-1"></a>xlab <span class="ot">&lt;-</span> sample_size <span class="sc">%&gt;%</span> </span>
+<span id="cb84-22"><a href="ggplot2-for-data-visualization.html#cb84-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(<span class="dv">1</span>, <span class="cf">function</span>(x)<span class="fu">paste0</span>(x, <span class="at">collapse=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st"> n=&quot;</span>))</span>
+<span id="cb84-23"><a href="ggplot2-for-data-visualization.html#cb84-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-24"><a href="ggplot2-for-data-visualization.html#cb84-24" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(sample_size, <span class="dv">1</span>, <span class="cf">function</span>(x)<span class="fu">paste0</span>(x, <span class="at">collapse=</span><span class="st">&quot;</span><span class="sc">\n</span><span class="st"> n=&quot;</span>))</span>
+<span id="cb84-25"><a href="ggplot2-for-data-visualization.html#cb84-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-26"><a href="ggplot2-for-data-visualization.html#cb84-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span>name, <span class="at">y=</span>value, <span class="at">fill=</span>name)) <span class="sc">+</span></span>
+<span id="cb84-27"><a href="ggplot2-for-data-visualization.html#cb84-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="at">width=</span><span class="fl">1.4</span>) <span class="sc">+</span></span>
+<span id="cb84-28"><a href="ggplot2-for-data-visualization.html#cb84-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.1</span>, <span class="at">alpha=</span><span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb84-29"><a href="ggplot2-for-data-visualization.html#cb84-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb84-30"><a href="ggplot2-for-data-visualization.html#cb84-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span>xlab) <span class="sc">+</span></span>
+<span id="cb84-31"><a href="ggplot2-for-data-visualization.html#cb84-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb84-32"><a href="ggplot2-for-data-visualization.html#cb84-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb84-33"><a href="ggplot2-for-data-visualization.html#cb84-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">11</span>)</span>
+<span id="cb84-34"><a href="ggplot2-for-data-visualization.html#cb84-34" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb84-35"><a href="ggplot2-for-data-visualization.html#cb84-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;A Violin wrapping a boxplot&quot;</span>) <span class="sc">+</span></span>
+<span id="cb84-36"><a href="ggplot2-for-data-visualization.html#cb84-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>)</span></code></pre></div>
+</div>
+<div id="bubble-plot" class="section level3" number="4.8.2">
+<h3><span class="header-section-number">4.8.2</span> Bubble plot</h3>
+<ul>
+<li><a href="https://www.r-graph-gallery.com/320-the-basis-of-bubble-plot.html" class="uri">https://www.r-graph-gallery.com/320-the-basis-of-bubble-plot.html</a></li>
+</ul>
+<p><img src="images/10/000049.png" width="450" /></p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="ggplot2-for-data-visualization.html#cb85-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> str</span>
+<span id="cb85-2"><a href="ggplot2-for-data-visualization.html#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="ggplot2-for-data-visualization.html#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Most basic bubble plot</span></span>
+<span id="cb85-4"><a href="ggplot2-for-data-visualization.html#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x=</span>cty, <span class="at">y=</span>displ, <span class="at">size =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb85-5"><a href="ggplot2-for-data-visualization.html#cb85-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.7</span>, <span class="at">position=</span><span class="st">&quot;jitter&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="ggplot2-for-data-visualization.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x=</span>cty, <span class="at">y=</span>displ, <span class="at">size =</span> hwy)) <span class="sc">+</span></span>
+<span id="cb86-2"><a href="ggplot2-for-data-visualization.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.3</span>, <span class="at">position=</span><span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb86-3"><a href="ggplot2-for-data-visualization.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">1</span>, <span class="dv">7</span>), <span class="at">name=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="ggplot2-for-data-visualization.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x=</span>cty, <span class="at">y=</span>displ, <span class="at">size =</span> hwy, <span class="at">color=</span>year)) <span class="sc">+</span></span>
+<span id="cb87-2"><a href="ggplot2-for-data-visualization.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.3</span>, <span class="at">position=</span><span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb87-3"><a href="ggplot2-for-data-visualization.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">1</span>, <span class="dv">7</span>), <span class="at">name=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="ggplot2-for-data-visualization.html#cb88-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> </span>
+<span id="cb88-2"><a href="ggplot2-for-data-visualization.html#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yearf =</span> <span class="fu">factor</span>(year)) <span class="sc">%&gt;%</span> </span>
+<span id="cb88-3"><a href="ggplot2-for-data-visualization.html#cb88-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>cty, <span class="at">y=</span>displ, <span class="at">size=</span>hwy, <span class="at">color=</span>yearf)) <span class="sc">+</span></span>
+<span id="cb88-4"><a href="ggplot2-for-data-visualization.html#cb88-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.3</span>, <span class="at">position=</span><span class="st">&quot;jitter&quot;</span>) <span class="sc">+</span></span>
+<span id="cb88-5"><a href="ggplot2-for-data-visualization.html#cb88-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">1</span>, <span class="dv">7</span>), <span class="at">name=</span><span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="ggplot2-for-data-visualization.html#cb89-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="sc">%&gt;%</span> </span>
+<span id="cb89-2"><a href="ggplot2-for-data-visualization.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">yearf =</span> <span class="fu">factor</span>(year)) <span class="sc">%&gt;%</span> </span>
+<span id="cb89-3"><a href="ggplot2-for-data-visualization.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>cty, <span class="at">y=</span>displ, <span class="at">size=</span>hwy, <span class="at">fill=</span>yearf)) <span class="sc">+</span></span>
+<span id="cb89-4"><a href="ggplot2-for-data-visualization.html#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">position=</span><span class="st">&quot;jitter&quot;</span>, <span class="at">shape=</span><span class="dv">21</span>) <span class="sc">+</span></span>
+<span id="cb89-5"><a href="ggplot2-for-data-visualization.html#cb89-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">1</span>, <span class="dv">7</span>), <span class="at">name=</span><span class="st">&quot;&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb89-6"><a href="ggplot2-for-data-visualization.html#cb89-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis</span>(<span class="at">discrete=</span><span class="cn">TRUE</span>, <span class="at">guide=</span><span class="cn">FALSE</span>, <span class="at">option=</span><span class="st">&quot;D&quot;</span>) <span class="sc">+</span></span>
+<span id="cb89-7"><a href="ggplot2-for-data-visualization.html#cb89-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb89-8"><a href="ggplot2-for-data-visualization.html#cb89-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Engine displacement&quot;</span>) <span class="sc">+</span></span>
+<span id="cb89-9"><a href="ggplot2-for-data-visualization.html#cb89-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;City miles per gallon&quot;</span>) <span class="sc">+</span></span>
+<span id="cb89-10"><a href="ggplot2-for-data-visualization.html#cb89-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+</div>
+<div id="barplot-with-errorbars" class="section level3" number="4.8.3">
+<h3><span class="header-section-number">4.8.3</span> Barplot with errorbars</h3>
+<p><img src="images/10/00000e.png" width="450" /></p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="ggplot2-for-data-visualization.html#cb90-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> str</span>
+<span id="cb90-2"><a href="ggplot2-for-data-visualization.html#cb90-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-3"><a href="ggplot2-for-data-visualization.html#cb90-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ToothGrowth <span class="sc">%&gt;%</span> </span>
+<span id="cb90-4"><a href="ggplot2-for-data-visualization.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dose =</span> <span class="fu">as.factor</span>(dose))</span>
+<span id="cb90-5"><a href="ggplot2-for-data-visualization.html#cb90-5" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> str</span>
+<span id="cb90-6"><a href="ggplot2-for-data-visualization.html#cb90-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-7"><a href="ggplot2-for-data-visualization.html#cb90-7" aria-hidden="true" tabindex="-1"></a><span class="do">## summary</span></span>
+<span id="cb90-8"><a href="ggplot2-for-data-visualization.html#cb90-8" aria-hidden="true" tabindex="-1"></a>df_summary <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb90-9"><a href="ggplot2-for-data-visualization.html#cb90-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dose) <span class="sc">%&gt;%</span></span>
+<span id="cb90-10"><a href="ggplot2-for-data-visualization.html#cb90-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sd =</span> <span class="fu">sd</span>(len, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">len =</span> <span class="fu">mean</span>(len))</span>
+<span id="cb90-11"><a href="ggplot2-for-data-visualization.html#cb90-11" aria-hidden="true" tabindex="-1"></a>df_summary</span>
+<span id="cb90-12"><a href="ggplot2-for-data-visualization.html#cb90-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-13"><a href="ggplot2-for-data-visualization.html#cb90-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-14"><a href="ggplot2-for-data-visualization.html#cb90-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_summary, <span class="fu">aes</span>(<span class="at">x=</span>dose, <span class="at">y=</span>len, <span class="at">fill=</span>dose)) <span class="sc">+</span></span>
+<span id="cb90-15"><a href="ggplot2-for-data-visualization.html#cb90-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">width =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb90-16"><a href="ggplot2-for-data-visualization.html#cb90-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> len, <span class="at">ymax =</span> len<span class="sc">+</span>sd), <span class="at">width =</span> <span class="fl">0.2</span>) </span></code></pre></div>
+</div>
+<div id="horizontal-barplot" class="section level3" number="4.8.4">
+<h3><span class="header-section-number">4.8.4</span> horizontal barplot</h3>
+<p><img src="images/10/00000b.png" width="450" /></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="ggplot2-for-data-visualization.html#cb91-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb91-2"><a href="ggplot2-for-data-visualization.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb91-3"><a href="ggplot2-for-data-visualization.html#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb91-4"><a href="ggplot2-for-data-visualization.html#cb91-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cyl =</span> <span class="fu">as.factor</span>(cyl)) <span class="sc">%&gt;%</span></span>
+<span id="cb91-5"><a href="ggplot2-for-data-visualization.html#cb91-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(rowname, wt, mpg, cyl)</span>
+<span id="cb91-6"><a href="ggplot2-for-data-visualization.html#cb91-6" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb91-7"><a href="ggplot2-for-data-visualization.html#cb91-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-8"><a href="ggplot2-for-data-visualization.html#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="co"># change fill color by groups and add text labels</span></span>
+<span id="cb91-9"><a href="ggplot2-for-data-visualization.html#cb91-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(rowname, mpg), <span class="at">y =</span> mpg)) <span class="sc">+</span></span>
+<span id="cb91-10"><a href="ggplot2-for-data-visualization.html#cb91-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">fill =</span> cyl)) <span class="sc">+</span> </span>
+<span id="cb91-11"><a href="ggplot2-for-data-visualization.html#cb91-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> mpg), <span class="at">nudge_y =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb91-12"><a href="ggplot2-for-data-visualization.html#cb91-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb91-13"><a href="ggplot2-for-data-visualization.html#cb91-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>()</span></code></pre></div>
+</div>
+<div id="circular-barplot" class="section level3" number="4.8.5">
+<h3><span class="header-section-number">4.8.5</span> Circular barplot</h3>
+<ul>
+<li><a href="https://www.r-graph-gallery.com/297-circular-barplot-with-groups.html" class="uri">https://www.r-graph-gallery.com/297-circular-barplot-with-groups.html</a></li>
+</ul>
+<p><img src="images/10/000002.png" width="450" /></p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="ggplot2-for-data-visualization.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dataset</span></span>
+<span id="cb92-2"><a href="ggplot2-for-data-visualization.html#cb92-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">70</span></span>
+<span id="cb92-3"><a href="ggplot2-for-data-visualization.html#cb92-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb92-4"><a href="ggplot2-for-data-visualization.html#cb92-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">seq</span>(<span class="dv">1</span>, n),</span>
+<span id="cb92-5"><a href="ggplot2-for-data-visualization.html#cb92-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">individual=</span><span class="fu">paste</span>( <span class="st">&quot;Mister &quot;</span>, <span class="fu">seq</span>(<span class="dv">1</span>,n), <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb92-6"><a href="ggplot2-for-data-visualization.html#cb92-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">group=</span><span class="fu">c</span>( <span class="fu">rep</span>(<span class="st">&#39;A&#39;</span>, <span class="dv">10</span>), <span class="fu">rep</span>(<span class="st">&#39;B&#39;</span>, <span class="dv">30</span>), <span class="fu">rep</span>(<span class="st">&#39;C&#39;</span>, <span class="dv">14</span>), <span class="fu">rep</span>(<span class="st">&#39;D&#39;</span>, n<span class="dv">-10-30-14</span>)) ,</span>
+<span id="cb92-7"><a href="ggplot2-for-data-visualization.html#cb92-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">value=</span><span class="fu">sample</span>( <span class="fu">seq</span>(<span class="dv">10</span>,<span class="dv">100</span>), n, <span class="at">replace=</span>T)</span>
+<span id="cb92-8"><a href="ggplot2-for-data-visualization.html#cb92-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb92-9"><a href="ggplot2-for-data-visualization.html#cb92-9" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> str</span>
+<span id="cb92-10"><a href="ggplot2-for-data-visualization.html#cb92-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-11"><a href="ggplot2-for-data-visualization.html#cb92-11" aria-hidden="true" tabindex="-1"></a><span class="co"># introduce NA</span></span>
+<span id="cb92-12"><a href="ggplot2-for-data-visualization.html#cb92-12" aria-hidden="true" tabindex="-1"></a>empty_bar_idx <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="dv">10</span>)</span>
+<span id="cb92-13"><a href="ggplot2-for-data-visualization.html#cb92-13" aria-hidden="true" tabindex="-1"></a>data[empty_bar_idx,<span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>)] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>)</span>
+<span id="cb92-14"><a href="ggplot2-for-data-visualization.html#cb92-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-15"><a href="ggplot2-for-data-visualization.html#cb92-15" aria-hidden="true" tabindex="-1"></a>label_data <span class="ot">&lt;-</span> data</span>
+<span id="cb92-16"><a href="ggplot2-for-data-visualization.html#cb92-16" aria-hidden="true" tabindex="-1"></a>number_of_bar <span class="ot">&lt;-</span> <span class="fu">nrow</span>(label_data)</span>
+<span id="cb92-17"><a href="ggplot2-for-data-visualization.html#cb92-17" aria-hidden="true" tabindex="-1"></a>angle <span class="ot">&lt;-</span> <span class="dv">90</span> <span class="sc">-</span> <span class="dv">360</span> <span class="sc">*</span> (label_data<span class="sc">$</span>id<span class="fl">-0.5</span>) <span class="sc">/</span>number_of_bar     <span class="co"># I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)</span></span>
+<span id="cb92-18"><a href="ggplot2-for-data-visualization.html#cb92-18" aria-hidden="true" tabindex="-1"></a>label_data<span class="sc">$</span>hjust <span class="ot">&lt;-</span> <span class="fu">ifelse</span>( angle <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">90</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb92-19"><a href="ggplot2-for-data-visualization.html#cb92-19" aria-hidden="true" tabindex="-1"></a>label_data<span class="sc">$</span>angle <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(angle <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">90</span>, angle<span class="sc">+</span><span class="dv">180</span>, angle)</span>
+<span id="cb92-20"><a href="ggplot2-for-data-visualization.html#cb92-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-21"><a href="ggplot2-for-data-visualization.html#cb92-21" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb92-22"><a href="ggplot2-for-data-visualization.html#cb92-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.factor</span>(id), <span class="at">y=</span>value, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb92-23"><a href="ggplot2-for-data-visualization.html#cb92-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb92-24"><a href="ggplot2-for-data-visualization.html#cb92-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">100</span>,<span class="dv">120</span>) <span class="sc">+</span></span>
+<span id="cb92-25"><a href="ggplot2-for-data-visualization.html#cb92-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb92-26"><a href="ggplot2-for-data-visualization.html#cb92-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb92-27"><a href="ggplot2-for-data-visualization.html#cb92-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb92-28"><a href="ggplot2-for-data-visualization.html#cb92-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb92-29"><a href="ggplot2-for-data-visualization.html#cb92-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb92-30"><a href="ggplot2-for-data-visualization.html#cb92-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">4</span>), <span class="st">&quot;cm&quot;</span>) </span>
+<span id="cb92-31"><a href="ggplot2-for-data-visualization.html#cb92-31" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb92-32"><a href="ggplot2-for-data-visualization.html#cb92-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">start =</span> <span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb92-33"><a href="ggplot2-for-data-visualization.html#cb92-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>label_data, <span class="fu">aes</span>(<span class="at">x=</span>id, <span class="at">y=</span>value<span class="sc">+</span><span class="dv">10</span>, <span class="at">label=</span>individual, <span class="at">hjust=</span>hjust), <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">fontface=</span><span class="st">&quot;bold&quot;</span>, <span class="at">alpha=</span><span class="fl">0.6</span>, <span class="at">size=</span><span class="fl">2.5</span>, <span class="at">angle=</span> label_data<span class="sc">$</span>angle, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span> ) </span></code></pre></div>
+<p>데이터 정렬 후 plot</p>
+<p><img src="images/10/000008.png" width="450" /></p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="ggplot2-for-data-visualization.html#cb93-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb93-2"><a href="ggplot2-for-data-visualization.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(group, value) <span class="sc">%&gt;%</span> </span>
+<span id="cb93-3"><a href="ggplot2-for-data-visualization.html#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id2=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) </span>
+<span id="cb93-4"><a href="ggplot2-for-data-visualization.html#cb93-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-5"><a href="ggplot2-for-data-visualization.html#cb93-5" aria-hidden="true" tabindex="-1"></a>label_data2 <span class="ot">&lt;-</span> data2</span>
+<span id="cb93-6"><a href="ggplot2-for-data-visualization.html#cb93-6" aria-hidden="true" tabindex="-1"></a>number_of_bar <span class="ot">&lt;-</span> <span class="fu">nrow</span>(label_data2)</span>
+<span id="cb93-7"><a href="ggplot2-for-data-visualization.html#cb93-7" aria-hidden="true" tabindex="-1"></a>angle <span class="ot">&lt;-</span> <span class="dv">90</span> <span class="sc">-</span> <span class="dv">360</span> <span class="sc">*</span> (label_data2<span class="sc">$</span>id2<span class="fl">-0.5</span>) <span class="sc">/</span>number_of_bar     <span class="co"># I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)</span></span>
+<span id="cb93-8"><a href="ggplot2-for-data-visualization.html#cb93-8" aria-hidden="true" tabindex="-1"></a>label_data2<span class="sc">$</span>hjust <span class="ot">&lt;-</span> <span class="fu">ifelse</span>( angle <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">90</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb93-9"><a href="ggplot2-for-data-visualization.html#cb93-9" aria-hidden="true" tabindex="-1"></a>label_data2<span class="sc">$</span>angle <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(angle <span class="sc">&lt;</span> <span class="sc">-</span><span class="dv">90</span>, angle<span class="sc">+</span><span class="dv">180</span>, angle)</span>
+<span id="cb93-10"><a href="ggplot2-for-data-visualization.html#cb93-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-11"><a href="ggplot2-for-data-visualization.html#cb93-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-12"><a href="ggplot2-for-data-visualization.html#cb93-12" aria-hidden="true" tabindex="-1"></a>data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb93-13"><a href="ggplot2-for-data-visualization.html#cb93-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">as.factor</span>(id2), <span class="at">y=</span>value, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb93-14"><a href="ggplot2-for-data-visualization.html#cb93-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb93-15"><a href="ggplot2-for-data-visualization.html#cb93-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">100</span>,<span class="dv">120</span>) <span class="sc">+</span></span>
+<span id="cb93-16"><a href="ggplot2-for-data-visualization.html#cb93-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb93-17"><a href="ggplot2-for-data-visualization.html#cb93-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb93-18"><a href="ggplot2-for-data-visualization.html#cb93-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb93-19"><a href="ggplot2-for-data-visualization.html#cb93-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb93-20"><a href="ggplot2-for-data-visualization.html#cb93-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb93-21"><a href="ggplot2-for-data-visualization.html#cb93-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">4</span>), <span class="st">&quot;cm&quot;</span>) </span>
+<span id="cb93-22"><a href="ggplot2-for-data-visualization.html#cb93-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb93-23"><a href="ggplot2-for-data-visualization.html#cb93-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">start =</span> <span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb93-24"><a href="ggplot2-for-data-visualization.html#cb93-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>label_data2, <span class="fu">aes</span>(<span class="at">x=</span>id2, <span class="at">y=</span>value<span class="sc">+</span><span class="dv">10</span>, <span class="at">label=</span>individual, <span class="at">hjust=</span>hjust), <span class="at">color=</span><span class="st">&quot;black&quot;</span>, <span class="at">fontface=</span><span class="st">&quot;bold&quot;</span>,<span class="at">alpha=</span><span class="fl">0.6</span>, <span class="at">size=</span><span class="fl">2.5</span>, <span class="at">angle=</span> label_data<span class="sc">$</span>angle, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span> ) </span></code></pre></div>
+</div>
+<div id="stacked-area-chart" class="section level3" number="4.8.6">
+<h3><span class="header-section-number">4.8.6</span> Stacked area chart</h3>
+<ul>
+<li><a href="https://www.data-to-viz.com/caveat/stacking.html" class="uri">https://www.data-to-viz.com/caveat/stacking.html</a></li>
+</ul>
+<p><img src="images/10/000009a.png" width="450" /></p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="ggplot2-for-data-visualization.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(babynames)</span>
+<span id="cb94-2"><a href="ggplot2-for-data-visualization.html#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-3"><a href="ggplot2-for-data-visualization.html#cb94-3" aria-hidden="true" tabindex="-1"></a>babynames <span class="sc">%&gt;%</span> str</span>
+<span id="cb94-4"><a href="ggplot2-for-data-visualization.html#cb94-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-5"><a href="ggplot2-for-data-visualization.html#cb94-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-6"><a href="ggplot2-for-data-visualization.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load dataset from github</span></span>
+<span id="cb94-7"><a href="ggplot2-for-data-visualization.html#cb94-7" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> babynames <span class="sc">%&gt;%</span> </span>
+<span id="cb94-8"><a href="ggplot2-for-data-visualization.html#cb94-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Amanda&quot;</span>, <span class="st">&quot;Jessica&quot;</span>,    <span class="st">&quot;Patricia&quot;</span>, <span class="st">&quot;Deborah&quot;</span>,   <span class="st">&quot;Dorothy&quot;</span>,  <span class="st">&quot;Helen&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb94-9"><a href="ggplot2-for-data-visualization.html#cb94-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">&quot;F&quot;</span>)</span>
+<span id="cb94-10"><a href="ggplot2-for-data-visualization.html#cb94-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-11"><a href="ggplot2-for-data-visualization.html#cb94-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb94-12"><a href="ggplot2-for-data-visualization.html#cb94-12" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb94-13"><a href="ggplot2-for-data-visualization.html#cb94-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>n, <span class="at">fill=</span>name, <span class="at">text=</span>name)) <span class="sc">+</span></span>
+<span id="cb94-14"><a href="ggplot2-for-data-visualization.html#cb94-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>( ) <span class="sc">+</span></span>
+<span id="cb94-15"><a href="ggplot2-for-data-visualization.html#cb94-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_viridis</span>(<span class="at">discrete =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb94-16"><a href="ggplot2-for-data-visualization.html#cb94-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">&quot;Popularity of American names in the previous 30 years&quot;</span>) <span class="sc">+</span></span>
+<span id="cb94-17"><a href="ggplot2-for-data-visualization.html#cb94-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>() <span class="sc">+</span></span>
+<span id="cb94-18"><a href="ggplot2-for-data-visualization.html#cb94-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;Birth year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb94-19"><a href="ggplot2-for-data-visualization.html#cb94-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;Number of babies&quot;</span>)</span>
+<span id="cb94-20"><a href="ggplot2-for-data-visualization.html#cb94-20" aria-hidden="true" tabindex="-1"></a>p</span></code></pre></div>
+<p><img src="images/10/000006.png" width="450" /></p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="ggplot2-for-data-visualization.html#cb95-1" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span>name, <span class="at">scale=</span><span class="st">&quot;free_y&quot;</span>)</span></code></pre></div>
+</div>
+<div id="density-plot" class="section level3" number="4.8.7">
+<h3><span class="header-section-number">4.8.7</span> Density plot</h3>
+<p><img src="images/10/000003.png" width="450" /></p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="ggplot2-for-data-visualization.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb96-2"><a href="ggplot2-for-data-visualization.html#cb96-2" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(cty))</span>
+<span id="cb96-3"><a href="ggplot2-for-data-visualization.html#cb96-3" aria-hidden="true" tabindex="-1"></a>g <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">fill=</span><span class="fu">factor</span>(cyl)), <span class="at">alpha=</span><span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb96-4"><a href="ggplot2-for-data-visualization.html#cb96-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Density plot&quot;</span>, </span>
+<span id="cb96-5"><a href="ggplot2-for-data-visualization.html#cb96-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle=</span><span class="st">&quot;City Mileage Grouped by Number of cylinders&quot;</span>,</span>
+<span id="cb96-6"><a href="ggplot2-for-data-visualization.html#cb96-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption=</span><span class="st">&quot;Source: mpg&quot;</span>,</span>
+<span id="cb96-7"><a href="ggplot2-for-data-visualization.html#cb96-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">x=</span><span class="st">&quot;City Mileage&quot;</span>,</span>
+<span id="cb96-8"><a href="ggplot2-for-data-visualization.html#cb96-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">fill=</span><span class="st">&quot;# Cylinders&quot;</span>)</span></code></pre></div>
+</div>
+<div id="waffle-chart" class="section level3" number="4.8.8">
+<h3><span class="header-section-number">4.8.8</span> Waffle chart</h3>
+<ul>
+<li><a href="http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html#Waffle%20Chart" class="uri">http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html#Waffle%20Chart</a></li>
+</ul>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="ggplot2-for-data-visualization.html#cb97-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> mpg<span class="sc">$</span>class  <span class="co"># the categorical data </span></span>
+<span id="cb97-2"><a href="ggplot2-for-data-visualization.html#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-3"><a href="ggplot2-for-data-visualization.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Prep data (nothing to change here)</span></span>
+<span id="cb97-4"><a href="ggplot2-for-data-visualization.html#cb97-4" aria-hidden="true" tabindex="-1"></a>nrows <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb97-5"><a href="ggplot2-for-data-visualization.html#cb97-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> <span class="dv">1</span><span class="sc">:</span>nrows, <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>nrows)</span>
+<span id="cb97-6"><a href="ggplot2-for-data-visualization.html#cb97-6" aria-hidden="true" tabindex="-1"></a>categ_table <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">table</span>(var) <span class="sc">*</span> ((nrows<span class="sc">*</span>nrows)<span class="sc">/</span>(<span class="fu">length</span>(var))))</span>
+<span id="cb97-7"><a href="ggplot2-for-data-visualization.html#cb97-7" aria-hidden="true" tabindex="-1"></a>categ_table</span>
+<span id="cb97-8"><a href="ggplot2-for-data-visualization.html#cb97-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-9"><a href="ggplot2-for-data-visualization.html#cb97-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-10"><a href="ggplot2-for-data-visualization.html#cb97-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>category <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">names</span>(categ_table), categ_table))  </span>
+<span id="cb97-11"><a href="ggplot2-for-data-visualization.html#cb97-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: if sum(categ_table) is not 100 (i.e. nrows^2), it will need adjustment to make the sum to 100.</span></span>
+<span id="cb97-12"><a href="ggplot2-for-data-visualization.html#cb97-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-13"><a href="ggplot2-for-data-visualization.html#cb97-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Plot</span></span>
+<span id="cb97-14"><a href="ggplot2-for-data-visualization.html#cb97-14" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> str</span>
+<span id="cb97-15"><a href="ggplot2-for-data-visualization.html#cb97-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> category)) <span class="sc">+</span> </span>
+<span id="cb97-16"><a href="ggplot2-for-data-visualization.html#cb97-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.5</span>) </span></code></pre></div>
+<p><img src="images/10/00000a.png" width="450" /></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="ggplot2-for-data-visualization.html#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">fill =</span> category)) <span class="sc">+</span> </span>
+<span id="cb98-2"><a href="ggplot2-for-data-visualization.html#cb98-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb98-3"><a href="ggplot2-for-data-visualization.html#cb98-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb98-4"><a href="ggplot2-for-data-visualization.html#cb98-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">trans =</span> <span class="st">&#39;reverse&#39;</span>) <span class="sc">+</span></span>
+<span id="cb98-5"><a href="ggplot2-for-data-visualization.html#cb98-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set3&quot;</span>) <span class="sc">+</span></span>
+<span id="cb98-6"><a href="ggplot2-for-data-visualization.html#cb98-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Waffle Chart&quot;</span>, <span class="at">subtitle=</span><span class="st">&quot;&#39;Class&#39; of vehicles&quot;</span>,</span>
+<span id="cb98-7"><a href="ggplot2-for-data-visualization.html#cb98-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">caption=</span><span class="st">&quot;Source: mpg&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb98-8"><a href="ggplot2-for-data-visualization.html#cb98-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">1.2</span>)),</span>
+<span id="cb98-9"><a href="ggplot2-for-data-visualization.html#cb98-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb98-10"><a href="ggplot2-for-data-visualization.html#cb98-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb98-11"><a href="ggplot2-for-data-visualization.html#cb98-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb98-12"><a href="ggplot2-for-data-visualization.html#cb98-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb98-13"><a href="ggplot2-for-data-visualization.html#cb98-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+</div>
+<div id="marginal-histogram" class="section level3" number="4.8.9">
+<h3><span class="header-section-number">4.8.9</span> Marginal histogram</h3>
+<p><img src="images/10/000046.png" width="450" /></p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="ggplot2-for-data-visualization.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggExtra)</span>
+<span id="cb99-2"><a href="ggplot2-for-data-visualization.html#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="ggplot2-for-data-visualization.html#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot</span></span>
+<span id="cb99-4"><a href="ggplot2-for-data-visualization.html#cb99-4" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mpg, <span class="fu">aes</span>(<span class="at">x=</span>cty, <span class="at">y=</span>hwy)) <span class="sc">+</span> </span>
+<span id="cb99-5"><a href="ggplot2-for-data-visualization.html#cb99-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position=</span><span class="st">&quot;jitter&quot;</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb99-6"><a href="ggplot2-for-data-visualization.html#cb99-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se=</span>F) <span class="sc">+</span></span>
+<span id="cb99-7"><a href="ggplot2-for-data-visualization.html#cb99-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb99-8"><a href="ggplot2-for-data-visualization.html#cb99-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb99-9"><a href="ggplot2-for-data-visualization.html#cb99-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span></span>
+<span id="cb99-10"><a href="ggplot2-for-data-visualization.html#cb99-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb99-11"><a href="ggplot2-for-data-visualization.html#cb99-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;City miles per gallon&quot;</span>) <span class="sc">+</span></span>
+<span id="cb99-12"><a href="ggplot2-for-data-visualization.html#cb99-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Highway miles per gallon&quot;</span>)</span>
+<span id="cb99-13"><a href="ggplot2-for-data-visualization.html#cb99-13" aria-hidden="true" tabindex="-1"></a>p</span>
+<span id="cb99-14"><a href="ggplot2-for-data-visualization.html#cb99-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggMarginal</span>(p, <span class="at">type =</span> <span class="st">&quot;histogram&quot;</span>, <span class="at">fill=</span><span class="st">&quot;transparent&quot;</span>) </span>
+<span id="cb99-15"><a href="ggplot2-for-data-visualization.html#cb99-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggMarginal</span>(p, <span class="at">type =</span> <span class="st">&quot;density&quot;</span>, <span class="at">fill=</span><span class="st">&quot;transparent&quot;</span>)</span></code></pre></div>
+<p><img src="images/10/000005.png" width="450" /></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="ggplot2-for-data-visualization.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb100-2"><a href="ggplot2-for-data-visualization.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Grouped Scatter plot with marginal density plots</span></span>
+<span id="cb100-3"><a href="ggplot2-for-data-visualization.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggscatterhist</span>(</span>
+<span id="cb100-4"><a href="ggplot2-for-data-visualization.html#cb100-4" aria-hidden="true" tabindex="-1"></a>  iris, </span>
+<span id="cb100-5"><a href="ggplot2-for-data-visualization.html#cb100-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="st">&quot;Sepal.Length&quot;</span>, </span>
+<span id="cb100-6"><a href="ggplot2-for-data-visualization.html#cb100-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">&quot;Sepal.Width&quot;</span>,</span>
+<span id="cb100-7"><a href="ggplot2-for-data-visualization.html#cb100-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="st">&quot;Species&quot;</span>, </span>
+<span id="cb100-8"><a href="ggplot2-for-data-visualization.html#cb100-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">3</span>, </span>
+<span id="cb100-9"><a href="ggplot2-for-data-visualization.html#cb100-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.6</span>,</span>
+<span id="cb100-10"><a href="ggplot2-for-data-visualization.html#cb100-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>),</span>
+<span id="cb100-11"><a href="ggplot2-for-data-visualization.html#cb100-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin.params =</span> <span class="fu">list</span>(<span class="at">fill =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">size =</span> <span class="fl">0.2</span>)</span>
+<span id="cb100-12"><a href="ggplot2-for-data-visualization.html#cb100-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+</div>
+<div id="density-ridgeline-plots" class="section level3" number="4.8.10">
+<h3><span class="header-section-number">4.8.10</span> Density ridgeline plots</h3>
+<p><img src="images/10/000004.png" width="450" /></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="ggplot2-for-data-visualization.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb101-2"><a href="ggplot2-for-data-visualization.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x =</span> Sepal.Length, <span class="at">y =</span> Species)) <span class="sc">+</span></span>
+<span id="cb101-3"><a href="ggplot2-for-data-visualization.html#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="fu">aes</span>(<span class="at">fill =</span> Species)) <span class="sc">+</span></span>
+<span id="cb101-4"><a href="ggplot2-for-data-visualization.html#cb101-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>))</span></code></pre></div>
+<hr />
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tidyverse-for-data-science.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["KRIBBR.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
