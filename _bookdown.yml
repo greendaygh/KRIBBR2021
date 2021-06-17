@@ -1,0 +1,17 @@
+rmd_files: [
+  "index.Rmd", 
+  "02-Rintro.Rmd",
+  "03-tidyverse.Rmd",
+  "04-ggplot.Rmd",
+  
+]
+book_filename: "KRIBBR"
+#repo: https://github.com/greendaygh/Rprog2020/
+output_dir: docs
+delete_merged_file: true
+language:
+  label:
+    fig: "FIGURE"
+    tab: "TABLE"
+  ui:
+    chapter_name: "Chapter "

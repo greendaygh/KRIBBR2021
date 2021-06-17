@@ -1,0 +1,48 @@
+--- 
+title: "2021 연구데이터 분석과정"
+subtitle: "생명정보학을 위한 R프로그래밍(중급과정)"
+author: "한국생명공학연구원 김하성"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+#mainfont: Nanum Myeongjo
+documentclass: book
+#bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Lecture"
+---
+
+
+
+# 강의 개요 {#introduction}
+- 장소: 코빅 3층 전산교육장(1304호)
+- 강사: 한국생명공학연구원 바이오합성연구센터 김하성
+- 연락처: 042-860-4372, haseong@kribb.re.kr (생명연 연구동 1143)
+- 강의자료: https://greendaygh.github.io/KRIBBR2021/
+
+## 참고 교제 {#References_n_books}
+- Using R for Introductory Statistics by John Verzani
+  - Free version of [1st Edition](https://cran.r-project.org/doc/contrib/Verzani-SimpleR.pdf)
+  - [Second edition](https://www.crcpress.com/Using-R-for-Introductory-Statistics-Second-Edition/Verzani/p/book/9781466590731)
+- [R for Data Science](https://r4ds.had.co.nz) 
+- [Bioinformatics Data Skills](http://2.droppdf.com/files/5aTvl/bioinformatics-data-skills.pdf) by Vince Buffalo
+- [Introductory Statistics with R](http://www.academia.dk/BiologiskAntropologi/Epidemiologi/PDF/Introductory_Statistics_with_R__2nd_ed.pdf) by Dalgaard
+- 일반통계학 (영지문화사, 김우철 외)
+
+## 참고 자료 {#References}
+- [R 홈페이지](https://www.r-project.org/)
+- [Rstudio 홈페이지](https://www.rstudio.com/)
+- [Bioconductor](https://www.bioconductor.org/)
+- [R 기본 문서들](https://cran.r-project.org/manuals.html) 
+- [R ebooks](https://bookdown.org/)
+- [Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/)
+- [RStudio Webinars](https://resources.rstudio.com/)
+- [Shiny](http://shiny.rstudio.com/tutorial/)
+- [Hadley github](https://github.com/hadley)
+
+## 강의 계획 {#Schedule}
+
+- Day1 - R, Rstudio Basics, Tindyverse 
+- Day2 - Bioconductor, Sequence data analysis
+- Day3 - High-throughput sequence data
+- Day4 - Annotation 
