@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2021.5.19)  17 JUN 2021 04:11
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2021.6.17)  24 JUN 2021 04:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1644,24 +1644,75 @@ File: images/10/000005.png Graphic file (type bmp)
 <images/10/000005.png>
 File: images/10/000004.png Graphic file (type bmp)
 <images/10/000004.png>
-[39]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2264.
-[40]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2264.
+[39] [40]
+Chapter 5.
+Missing character: There is no 새 in font [lmmono10-regular]:!
+Missing character: There is no 로 in font [lmmono10-regular]:!
+Missing character: There is no 생 in font [lmmono10-regular]:!
+Missing character: There is no 성 in font [lmmono10-regular]:!
+Missing character: There is no 저 in font [lmmono10-regular]:!
+Missing character: There is no 장 in font [lmmono10-regular]:!
+[41
+
+] [42] [43] [44] [45] [46
+
+]
+Chapter 6.
+File: images/04/bioconductor.JPG Graphic file (type bmp)
+<images/04/bioconductor.JPG>
+File: images/bioconductor_list.PNG Graphic file (type bmp)
+<images/bioconductor_list.PNG>
+[47] [48]
+
+Package natbib Warning: Citation `AdvancedR' on page 49 undefined on input line
+ 2837.
+
+[49] [50]
+Chapter 7.
+
+Package natbib Warning: Citation `sippl1999biological' on page 51 undefined on 
+input line 2965.
+
+File: images/04/biostrings.JPG Graphic file (type bmp)
+<images/04/biostrings.JPG>
+[51
+
+]
+File: images/rna-codon-chart.jpg Graphic file (type bmp)
+<images/rna-codon-chart.jpg>
+[52] [53]
+File: images/05/01.png Graphic file (type bmp)
+<images/05/01.png>
+[54] [55] [56]
+File: images/ape.PNG Graphic file (type bmp)
+<images/ape.PNG>
+File: images/orffinder.PNG Graphic file (type bmp)
+<images/orffinder.PNG>
+[57] [58]
+Missing character: There is no 다 in font [lmmono10-regular]:!
+Missing character: There is no 음 in font [lmmono10-regular]:!
+Missing character: There is no 시 in font [lmmono10-regular]:!
+Missing character: There is no 간 in font [lmmono10-regular]:!
+
+Package natbib Warning: There were undefined citations.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3488.
+[59]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3488.
 (./KRIBBR.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 2264.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 2264.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 3488.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 3488.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 19806 strings out of 479819
- 346483 string characters out of 5895846
- 794565 words of memory out of 5000000
- 36599 multiletter control sequences out of 15000+600000
+ 19904 strings out of 479819
+ 348425 string characters out of 5895846
+ 797265 words of memory out of 5000000
+ 36687 multiletter control sequences out of 15000+600000
  538885 words of font info for 89 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  58i,6n,118p,805b,555s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on KRIBBR.pdf (40 pages).
+Output written on KRIBBR.pdf (59 pages).

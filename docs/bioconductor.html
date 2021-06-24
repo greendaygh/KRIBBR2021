@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 R/Rstudio basics | 2021 연구데이터 분석과정</title>
+  <title>Chapter 6 Bioconductor | 2021 연구데이터 분석과정</title>
   <meta name="description" content="Lecture" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 R/Rstudio basics | 2021 연구데이터 분석과정" />
+  <meta property="og:title" content="Chapter 6 Bioconductor | 2021 연구데이터 분석과정" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 R/Rstudio basics | 2021 연구데이터 분석과정" />
+  <meta name="twitter:title" content="Chapter 6 Bioconductor | 2021 연구데이터 분석과정" />
   
   <meta name="twitter:description" content="Lecture" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="tidyverse-for-data-science.html"/>
+<link rel="prev" href="day1-강의-정리.html"/>
+<link rel="next" href="working-with-dna-sequences.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -316,272 +316,131 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rrstudio-basics" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> R/Rstudio basics</h1>
-<div id="what-is-r-rstudio" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> What is R / Rstudio</h2>
-<p><img src="images/01/r.jpg" width="100" /></p>
-<p>R은 통계나 생물통계, 유전학을 연구하는 사람들 사이에서 널리 사용되는 오픈소스 프로그래밍 언어 입니다. Bell Lab에서 개발한 S 언어에서 유래했으며 많은 패키지가 (다른 사람들이 만들어 놓은 코드) 있어서 쉽게 가져다 사용할 수 있습니다. R은 복잡한 수식이나 통계 알고리즘을 간단히 구현하고 사용할 수 있으며 C, C++, Python 등 다른 언어들과의 병행 사용도 가능합니다.</p>
-<p>R은 통계분석에 널리 사용되는데 이는 데이터 가시화를 위한 그래픽 기능이나 벡터 연산 등의 편리함 때문에 점점 더 많은 사람들이 사용하고 있습니다. 기존에는 느린 속도나 부족한 확장성이 다른 언어들에 비해 단점으로 지적되었으나 R 언어의 계속적인 개발과 업데이트로 이러한 단점들이 빠르게 극복되고 있습니다. R 사용을 위해서는 R 언어의 코어 프로그램을 먼저 설치하고 그 다음 R 언어용 IDE인 RStudio 설치가 필요합니다.</p>
-<p><img src="images/01/22.PNG" width="300" />
-<img src="images/01/23.PNG" width="300" /></p>
-</div>
-<div id="r-rstudio-installation" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> R / Rstudio Installation</h2>
-<div id="r-설치" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> R 설치</h3>
+<div id="bioconductor" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Bioconductor</h1>
 <ul>
-<li>R 사이트에 접속 후 (<a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>) 좌측 메뉴 상단에 위치한 CRAN 클릭.</li>
-<li>미러 사이트 목록에서 Korea의 아무 사이트나 들어감</li>
-<li>Download R for Windows를 클릭 후 base 링크 들어가서</li>
-<li>Download R x.x.x for Windows 링크 클릭으로 실행 프로그램 다운로드 - 로컬 컴퓨터에 Download 된 R-x.x.x-win.exe 를 실행</li>
-<li>설치 가이드에 따라 R 언어 소프트웨어 설치 완료</li>
+<li><a href="https://www.bioconductor.org" class="uri">https://www.bioconductor.org</a></li>
 </ul>
-</div>
-<div id="rstudio-설치" class="section level3" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> Rstudio 설치</h3>
-<p>Rstudio는 R 언어를 위한 오픈소스 기반 통합개발환경(IDE)으로 R 프로그래밍을 위한 편리한 기능들을 제공해 줍니다.</p>
+<p>Bioconductor는 바이오인포메틱스를 위한 R기반의 데이터, 메소드, 그리고 패키지들의 모음입니다. 2002년 microarray 데이터 분석을 위한 플랫폼으로 시작되었으며 현재 2000개 이상의 패키지로 구성되어 있습니다. R은 분산형 오픈소스이나 Bioconductor는 Full-time developer들에 의해서 유지되고 있습니다. <code>CRAN</code>에 배포되지 않고 <code>CRAN</code>에 비해 더 많은 필수 자료들 (vignettes 등)이 필요하며 높은 수준으로 quality control이 되고 있습니다.</p>
+<p>사용 가능한 패키지들은 <a href="http://bioconductor.org/packages/release/BiocViews.html#___Software">이곳</a>을 참고하시면 되겠습니다.</p>
+<p><img src="images/04/bioconductor.JPG" width="600" /></p>
+<p>Bioconductor 코어 개발 그룹은 사용자들이 지놈스케일 데이터를 더 편리하게 다루룰 수 있도록 데이터의 구조를 개발하는데 많은 시간을 들입니다.</p>
 <ul>
-<li>사이트에 접속 (<a href="https://www.rstudio.com/" class="uri">https://www.rstudio.com/</a>), 상단의 Products &gt; RStudio 클릭</li>
-<li>RStudio Desktop 선택</li>
-<li>Download RStudio Desktop 클릭</li>
-<li>RStudio Desktop Free 버전의 Download를 선택하고</li>
-<li>Download RStudio for Windows 클릭, 다운로드</li>
-<li>로컬 컴퓨터에 다운로드된 RStudio-x.x.x.exe 실행</li>
-<li>설치 가이드에 따라 설치 완료</li>
+<li>지놈스케일의 서열이나 발현등 대용량 유전자형 데이터 <strong>관리</strong> 및 <strong>통계적 분석</strong>을 위한 툴 제공</li>
+<li>분자수준의 현상과 생장이나 질병 등 표현형수준의 관계를 규명하기 위한 정량 데이터 통합 및 관리</li>
 </ul>
-</div>
-</div>
-<div id="rstudio-interface" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Rstudio interface</h2>
+<div id="packages" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Packages</h2>
+<p>Use &gt;&gt; Software, Annotation, Experiment</p>
 <ul>
-<li>좌측 상단의 공간은 코드편집창, 좌측 하단은 콘솔창 이며 각 위치를 기호에 따라서 바꿀 수 있습니다.</li>
+<li>Software: 분석을 위한 툴 모음</li>
+<li>Annotation: 유전자 symbol/ID mapping, gene ontology 기반 유전자 분류, 유전체상에서 exon, transcript, gene 등의 위치, 단백질 기능 등</li>
+<li>Experiment data: 학습 가능할 정도의 Highly curated datasets (실험 데이터)</li>
+<li>Workflow: 특정 데이터 분석을 위한 프로세스 모음 RNA-seq, ChIP seq, copy number analysis, microarray methylation, classic expression analysis, flow cytometry 등</li>
 </ul>
-<p><img src="images/01/01-11.PNG" width="400" /></p>
-<div id="keyboard-shortcuts" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Keyboard shortcuts</h3>
-<ul>
-<li>참고사이트
-<ul>
-<li><a href="https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts" class="uri">https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts</a></li>
-<li>Tools –&gt; Keyboard shortcut Quick Reference (<code>Alt + Shift + K</code>)</li>
-</ul></li>
-<li>코드편집창 이동 (<code>Ctrl+1</code>) 콘솔창 이동(<code>Ctrl+2</code>)</li>
-<li>한 줄 실행 (<code>Ctrl+Enter</code>)</li>
-<li>주석처리 (<code>Ctrl + Shift + C</code>)
-<ul>
-<li>또는 <code>#</code>으로 시작하는 라인</li>
-</ul></li>
-</ul>
-</div>
-<div id="exercise" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Exercise</h3>
-<ol style="list-style-type: decimal">
-<li>코드편집창에서 다음 입력하시오</li>
-</ol>
-<p><img src="images/01/01-14.PNG" /></p>
-<ul>
-<li>단축키 <code>Ctrl + enter</code>로 코드 실행</li>
-<li>단축키 <code>Ctrl + 2</code>로 커서 콘솔창으로 이동</li>
-<li><code>x</code>값 <code>x+y</code>값 확인</li>
-<li>단축키 <code>Ctrl + 1</code>로 코드편집창 이동</li>
-<li>단축키 <code>Ctrl + Shift + C</code> 사용</li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="rrstudio-basics.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x &lt;- 10</span></span>
-<span id="cb1-2"><a href="rrstudio-basics.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- 20</span></span></code></pre></div>
-</div>
-<div id="set-a-project" class="section level3" number="2.3.3">
-<h3><span class="header-section-number">2.3.3</span> Set a project</h3>
-<ul>
-<li><p>프로젝트를 만들어서 사용할 경우 파일이나 디렉토리, 내용 등을 쉽게 구분하여 사용 가능합니다. 아래와 같이 원하는 위치에 원하는 이름의 프로젝트를 생성하고 프로젝트를 시작할 때는 해당 디렉토리의 <code>xxx.Rproj</code> 파일을 클릭합니다.</p></li>
-<li><p>File &gt; New Project &gt; New Directory &gt; New Project &gt; “kribb-R” &gt; Create Project</p></li>
-<li><p>File &gt; New File &gt; R Script &gt; “day1.R”</p></li>
-</ul>
+<p><img src="images/bioconductor_list.PNG" width="600" /></p>
+<div id="installation" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Installation</h3>
+<p><code>BiocManager</code>를 먼저 설치하고 해당 패키지를 설치하시기 바랍니다. <code>BiocManager</code>에는 <code>available()</code>이라는 함수로 (특정 문자가 포함된) 사용 가능한 패키지를 검색할 수 도 있습니다.</p>
+<p>Use &gt;&gt; Software &gt;&gt; IRanges</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="bioconductor.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb128-2"><a href="bioconductor.html#cb128-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb128-3"><a href="bioconductor.html#cb128-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-4"><a href="bioconductor.html#cb128-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;IRanges&quot;</span>)</span>
+<span id="cb128-5"><a href="bioconductor.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="do">## .libPaths()</span></span></code></pre></div>
 </div>
 </div>
-<div id="r-programming" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> R programming</h2>
-<div id="console-calculator" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Console calculator</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="rrstudio-basics.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span>
-<span id="cb2-2"><a href="rrstudio-basics.html#cb2-2" aria-hidden="true" tabindex="-1"></a>((<span class="dv">2</span> – <span class="dv">1</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (<span class="dv">1</span> – <span class="dv">3</span>)<span class="sc">^</span><span class="dv">2</span> )<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb2-3"><a href="rrstudio-basics.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span>; <span class="dv">2</span> <span class="sc">-</span> <span class="dv">2</span></span></code></pre></div>
+<div id="learning-and-support" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Learning and support</h2>
+<p>각 패키지는 제목, 저자, 유지관리자, 설명, 참조, 설치법 등의 정보가 포함된 landing page가 있으며 패키지 내 함수들은 상세한 설명과 예제가 제공됩니다. 예를 들어 <a href="http://bioconductor.org/packages/release/bioc/html/IRanges.html">IRanges</a>의 landing page를 참고하세요</p>
+<p>vignettes는 bioconductor의 중요한 특징 중 하나로 R 코드와 함께 패키지를 사용하는 방법에 대한 상세한 설명을 제공하는 문서입니다.</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="bioconductor.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(IRanges)</span>
+<span id="cb129-2"><a href="bioconductor.html#cb129-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-3"><a href="bioconductor.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package=</span><span class="st">&quot;IRanges&quot;</span>)</span>
+<span id="cb129-4"><a href="bioconductor.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="fu">browseVignettes</span>(<span class="st">&quot;IRanges&quot;</span>)</span>
+<span id="cb129-5"><a href="bioconductor.html#cb129-5" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;IRangesOverview&quot;</span>, <span class="at">package=</span><span class="st">&quot;IRanges&quot;</span>)</span>
+<span id="cb129-6"><a href="bioconductor.html#cb129-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-7"><a href="bioconductor.html#cb129-7" aria-hidden="true" tabindex="-1"></a>ir1 <span class="ot">&lt;-</span> <span class="fu">IRanges</span>(<span class="at">start=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">width=</span><span class="dv">10</span><span class="sc">:</span><span class="dv">1</span>)</span>
+<span id="cb129-8"><a href="bioconductor.html#cb129-8" aria-hidden="true" tabindex="-1"></a>ir1</span>
+<span id="cb129-9"><a href="bioconductor.html#cb129-9" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ir1)</span>
+<span id="cb129-10"><a href="bioconductor.html#cb129-10" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;IRanges&quot;</span>)</span>
+<span id="cb129-11"><a href="bioconductor.html#cb129-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-12"><a href="bioconductor.html#cb129-12" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(IRanges)</span>
+<span id="cb129-13"><a href="bioconductor.html#cb129-13" aria-hidden="true" tabindex="-1"></a>?IRanges</span>
+<span id="cb129-14"><a href="bioconductor.html#cb129-14" aria-hidden="true" tabindex="-1"></a>??IRanges</span></code></pre></div>
+<p>Learn &gt;&gt; Support site 게시판에는 관련된 여러 QnA 들이 있어서 유사 문제에 대한 도움을 받을 수 있습니다.</p>
 </div>
-<div id="exercise-1" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> Exercise</h3>
-<p>다음 공식들을 계산하는 R 코드를 작성하시오</p>
-<p><span class="math display">\[ \sqrt{(4+3)(2+1)} \]</span></p>
-<p><span class="math display">\[ 2^3 + 3^2 \]</span></p>
-<p><span class="math display">\[ \frac{0.25 - 0.2}{\sqrt{0.2 (1-0.2)/100}}\]</span></p>
+<div id="class-object-and-method" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Class, Object and Method</h2>
+<p>객체지향프로그래밍 (OOP)은 복잡한 문제를 프로그래밍할 때 발생되는 코드의 복잡성을 해결할 수 있는 하나의 방안으로 1990년대부터 많이 사용되었습니다.</p>
+<p>R도 객체지향 프로그래밍 언어입니다. 그런데 R은 다른 언어들에 비해서 좀 어려운 (다른) 개념으로 사용됩니다. R에서 사용하는 Class에는 크게 base type, S3, S4, RC, 그리고 R6 등 다양한 타입이 있고 이 중 S3를 많이 사용해 왔으며 S3의 단점을 보완한 S4 형식의 class와 R6를 주로 사용합니다 <span class="citation">[@AdvancedR]</span>. 본 강의에서는 S3 형식의 class만 다루도록 하겠습니다.</p>
+<p>클래스를 사용하는 이유는 여러가지가 있겠지만 복잡한 개념의 데이터를 구조화하고 쉽게 관리하기 위해서 사용한다고 보면 될 것 같습니다. 여러분이 알아야할 개념은 Class와 Object 그리고 Method 입니다. 사실 R의 모든것이 Object이고 이러한 Object들의 정의가 Class 입니다.</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="bioconductor.html#cb130-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">y=</span>LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
+<span id="cb130-2"><a href="bioconductor.html#cb130-2" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb130-3"><a href="bioconductor.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span></code></pre></div>
+<p>위에서 df는 변수라고 부르지만 object이기도 합니다. df의 class는 data.frame 입니다. 클래스는 누구든 원하는 만큼 얼마든지 만들 수 있습니다.</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="bioconductor.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df) <span class="ot">&lt;-</span> <span class="st">&quot;myclass&quot;</span></span>
+<span id="cb131-2"><a href="bioconductor.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span></code></pre></div>
+<p>그런데 모든 object들이 OOP 유래는 아닙니다 base object들이 그 예입니다.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="bioconductor.html#cb132-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb132-2"><a href="bioconductor.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
+<span id="cb132-3"><a href="bioconductor.html#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(x, <span class="st">&quot;class&quot;</span>)</span>
+<span id="cb132-4"><a href="bioconductor.html#cb132-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-5"><a href="bioconductor.html#cb132-5" aria-hidden="true" tabindex="-1"></a>mtcars</span>
+<span id="cb132-6"><a href="bioconductor.html#cb132-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(mtcars, <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
+<p>method는 위와 같은 클래스들에 특화된 어떤 기능을 하는 함수라고 생각하시면 됩니다.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="bioconductor.html#cb133-1" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb133-2"><a href="bioconductor.html#cb133-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb133-3"><a href="bioconductor.html#cb133-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-4"><a href="bioconductor.html#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mt)</span>
+<span id="cb133-5"><a href="bioconductor.html#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span>
+<span id="cb133-6"><a href="bioconductor.html#cb133-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mt)</span>
+<span id="cb133-7"><a href="bioconductor.html#cb133-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span>
+<span id="cb133-8"><a href="bioconductor.html#cb133-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-9"><a href="bioconductor.html#cb133-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-10"><a href="bioconductor.html#cb133-10" aria-hidden="true" tabindex="-1"></a>diamonds <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span>diamonds</span>
+<span id="cb133-11"><a href="bioconductor.html#cb133-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-12"><a href="bioconductor.html#cb133-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diamonds<span class="sc">$</span>carat)</span>
+<span id="cb133-13"><a href="bioconductor.html#cb133-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diamonds<span class="sc">$</span>cut)</span>
+<span id="cb133-14"><a href="bioconductor.html#cb133-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb133-15"><a href="bioconductor.html#cb133-15" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;data.frame&quot;</span>)</span></code></pre></div>
+<p>위 summary, str 등이 generic function이라 불리는 method들 입니다. class마다 사용 가능한 method가 어떠한 정보가 있는지 알기 위해서 <code>methods()</code>라는 함수를 사용합니다.</p>
 </div>
-<div id="variables-and-values" class="section level3" number="2.4.3">
-<h3><span class="header-section-number">2.4.3</span> Variables and values</h3>
-<ul>
-<li>프로그래밍 언어의 공통적 개념 <code>변수</code>, <code>함수</code>, <code>자료형</code>, <code>조건문</code>, <code>반복문</code><br />
-</li>
-<li>Assignment operator ( <code>&lt;-</code> OR <code>=</code> )
-<ul>
-<li>Valid object name <code>&lt;-</code> value</li>
-<li>단축키: <code>Alt + -</code> (the minus sign)</li>
-</ul></li>
-</ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="rrstudio-basics.html#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb3-2"><a href="rrstudio-basics.html#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span> – <span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb3-3"><a href="rrstudio-basics.html#cb3-3" aria-hidden="true" tabindex="-1"></a>y</span>
-<span id="cb3-4"><a href="rrstudio-basics.html#cb3-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="st">&quot;two&quot;</span>  </span>
-<span id="cb3-5"><a href="rrstudio-basics.html#cb3-5" aria-hidden="true" tabindex="-1"></a>some_data <span class="ot">&lt;-</span> <span class="fl">9.8</span></span></code></pre></div>
-<ul>
-<li>내장 변수 Built-in variables</li>
-</ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="rrstudio-basics.html#cb4-1" aria-hidden="true" tabindex="-1"></a>pi</span></code></pre></div>
-<ul>
-<li>변수이름 작명법
-<ul>
-<li>문자, 숫자, “_”, “.” 등으로 구성</li>
-<li>대소문자 구분</li>
-<li>가독성, 의미있는 변수 이름</li>
-<li>길이 제한 없음</li>
-</ul></li>
-</ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="rrstudio-basics.html#cb5-1" aria-hidden="true" tabindex="-1"></a>i_use_snake_case <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb5-2"><a href="rrstudio-basics.html#cb5-2" aria-hidden="true" tabindex="-1"></a>otherPeopleUseCamelCase <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb5-3"><a href="rrstudio-basics.html#cb5-3" aria-hidden="true" tabindex="-1"></a>some.people.use.periods <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb5-4"><a href="rrstudio-basics.html#cb5-4" aria-hidden="true" tabindex="-1"></a>And_aFew.People_RENOUNCEconvention <span class="ot">&lt;-</span> <span class="dv">4</span></span></code></pre></div>
-<ul>
-<li>자동 완성 기능 (Tab completion) in RStudio</li>
-<li>이전 명령은 콘솔에서 위 아래 화살표</li>
-</ul>
-</div>
-<div id="exercise-2" class="section level3" number="2.4.4">
-<h3><span class="header-section-number">2.4.4</span> Exercise</h3>
-<ol style="list-style-type: decimal">
-<li><p>변수 <code>x</code>에 1, 3, 5, 7, 9를, 변수 <code>y</code>에 2, 4, 6, 8, 10을 저장하는 코드를 작성하시오</p></li>
-<li><p>앞서 변수 <code>x</code>와 <code>y</code>를 더한 값을 <code>z</code>에 저장하는 코드를 작성하시오</p></li>
-<li><p>변수 x에 “hello world!” 를 저장하고 x의 값을 출력하는 코드를 작성하시오</p></li>
-</ol>
-</div>
-<div id="functions" class="section level3" number="2.4.5">
-<h3><span class="header-section-number">2.4.5</span> Functions</h3>
-<p>함수(Function)란 사용자가 원하는 기능을 수행하는 코드의 모음으로서 반복적으로 쉽게 사용할 수 있도록 만들어 놓은 코드 입니다. 특정 데이터를 입력으로 받아 원하는 기능을 수행한 후 결과 데이터를 반환하는 구조를 가집니다. 함수는 일반적으로 다음과 같은 포멧으로 구현할 수 있습니다.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="rrstudio-basics.html#cb6-1" aria-hidden="true" tabindex="-1"></a>my_function_name <span class="ot">&lt;-</span> <span class="cf">function</span>(parameter1, parameter2, ... ){</span>
-<span id="cb6-2"><a href="rrstudio-basics.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">##any statements</span></span>
-<span id="cb6-3"><a href="rrstudio-basics.html#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(object)</span>
-<span id="cb6-4"><a href="rrstudio-basics.html#cb6-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>예를 들어 다음과 같은 <code>my_sine</code> 함수를 만들 수 있으며 parameter (매개변수)는 <code>x</code>이고 <code>y</code>는 반환값을 저장하는 지역변수 입니다.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="rrstudio-basics.html#cb7-1" aria-hidden="true" tabindex="-1"></a>my_sine <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb7-2"><a href="rrstudio-basics.html#cb7-2" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">sin</span>(x)</span>
-<span id="cb7-3"><a href="rrstudio-basics.html#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
-<span id="cb7-4"><a href="rrstudio-basics.html#cb7-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<ul>
-<li>내장 함수 (Built-in functions)</li>
-</ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="rrstudio-basics.html#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> pi</span>
-<span id="cb8-2"><a href="rrstudio-basics.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sin</span>(x)</span>
-<span id="cb8-3"><a href="rrstudio-basics.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(x)</span>
-<span id="cb8-4"><a href="rrstudio-basics.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(x)</span>
-<span id="cb8-5"><a href="rrstudio-basics.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(x, <span class="dv">10</span>)</span>
-<span id="cb8-6"><a href="rrstudio-basics.html#cb8-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)</span>
-<span id="cb8-7"><a href="rrstudio-basics.html#cb8-7" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> x</span>
-<span id="cb8-8"><a href="rrstudio-basics.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
-<span id="cb8-9"><a href="rrstudio-basics.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)<span class="sc">/</span><span class="fu">length</span>(x)</span></code></pre></div>
-</div>
-<div id="exercise-3" class="section level3" number="2.4.6">
-<h3><span class="header-section-number">2.4.6</span> Exercise</h3>
-<ol style="list-style-type: decimal">
-<li><p>변수 <code>x</code>에 1, 3, 5, 7, 9를, 변수 <code>y</code>에 2, 4, 6, 8, 10을 저장하는 코드를 작성하시오</p></li>
-<li><p><code>x</code>와 <code>y</code>를 더한 값을 <code>z</code>에 저장하는 코드를 작성하시오</p></li>
-<li><p><code>mysum</code> 이라는 이름의 함수를 작성하되 두 변수를 입력으로 받아 더한 후 결과를 반환하는 코드를 작성하시오</p></li>
-<li><p><code>mymean</code> 이라는 이름의 함수를 작성하되 두 변수를 입력으로 받아 평균을 구한 후 결과를 반환하는 코드를 작성하시오</p></li>
-</ol>
-</div>
-</div>
-<div id="terminology" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Terminology</h2>
-<ul>
-<li>Session: R 언어 실행 환경</li>
-<li>Console: 명령어 입력하는 창</li>
-<li>Code: R 프로그래밍 변수/제어문 모음</li>
-<li>Object types:
-<ul>
-<li>vector: 값들의 모임 combine function <code>c()</code> EX: c(6, 11, 13, 31, 90, 92)</li>
-<li>matrix: 2D 형태 값들의 모임</li>
-<li>array: 1D, 2D, 3D, … 형태 값들의 모임</li>
-<li>factor: 범주형 데이터</li>
-<li>data frame: 2D 형태 값들의 모임 (다른 타입 값 가능)</li>
-<li>list:</li>
-<li>function: 특정 기능 수행, [함수이름, 입력값 (arguments), 출력값 (return)] 으로 구성</li>
-</ul></li>
-<li>Data (value) types:
-<ul>
-<li>Integers</li>
-<li>doubles/numerics</li>
-<li>logicals</li>
-<li>characters.</li>
-</ul></li>
-<li>Conditionals (조건, 제어):
-<ul>
-<li><code>if</code>, <code>==</code>, <code>&amp;</code> (AND), <code>|</code> (OR) Ex: <code>(2 + 1 == 3) &amp; (2 + 1 == 4)</code></li>
-<li><code>for</code>, <code>while</code>: 반복 수</li>
-</ul></li>
-</ul>
-</div>
-<div id="supports" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Supports</h2>
-<div id="help" class="section level3" number="2.6.1">
-<h3><span class="header-section-number">2.6.1</span> Help</h3>
-<p>R은 방대한 양의 도움말 데이터를 제공하며 다음과 같은 명령어로 찾아볼 수 있습니다.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="rrstudio-basics.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb9-2"><a href="rrstudio-basics.html#cb9-2" aria-hidden="true" tabindex="-1"></a>?mean</span>
-<span id="cb9-3"><a href="rrstudio-basics.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb9-4"><a href="rrstudio-basics.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">help.search</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb9-5"><a href="rrstudio-basics.html#cb9-5" aria-hidden="true" tabindex="-1"></a>??mean</span>
-<span id="cb9-6"><a href="rrstudio-basics.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package=</span><span class="st">&quot;MASS&quot;</span>)</span></code></pre></div>
-</div>
-<div id="cheatsheet" class="section level3" number="2.6.2">
-<h3><span class="header-section-number">2.6.2</span> Cheatsheet</h3>
-<p><a href="https://rstudio.com/resources/cheatsheets/" class="uri">https://rstudio.com/resources/cheatsheets/</a></p>
-<p><img src="images/01/base-r_1.png" width="350" />
-<img src="images/01/base-r_2.png" width="350" /></p>
-</div>
-</div>
-<div id="r-packages-and-dataset" class="section level2" number="2.7">
-<h2><span class="header-section-number">2.7</span> R packages and Dataset</h2>
-<div id="r-packages" class="section level3" number="2.7.1">
-<h3><span class="header-section-number">2.7.1</span> R packages</h3>
-<ul>
-<li>R 패키지는 함수들의 모음으로 다른 사람들이 만들어 놓은 함수를 가져와서 사용할 수 있음</li>
-<li>예) <code>sum()</code> 은 <code>base</code> package에 있고 <code>sd()</code> 함수는 <code>stats</code> package에서 제공</li>
-<li>패키지를 구할 수 있는 가장 대표적인 사이트</li>
-<li>The Comprehensive R Archive Network (CRAN) - <a href="http://cran.r-project.org/web/views/" class="uri">http://cran.r-project.org/web/views/</a></li>
-<li>Bioconductor - <a href="http://www.bioconductor.org/packages/release/bioc/" class="uri">http://www.bioconductor.org/packages/release/bioc/</a></li>
-</ul>
-<p><img src="images/01/01-18.png" width="350" /></p>
-<ul>
-<li>UsingR package installation</li>
-</ul>
-<p><img src="images/01/01-19.png" width="350" /></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="rrstudio-basics.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;UsingR&quot;</span>)</span></code></pre></div>
-<ul>
-<li>UsingR package loading</li>
-</ul>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="rrstudio-basics.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(UsingR)</span>
-<span id="cb11-2"><a href="rrstudio-basics.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package=</span><span class="st">&quot;UsingR&quot;</span>)</span></code></pre></div>
-</div>
-<div id="data-sets" class="section level3" number="2.7.2">
-<h3><span class="header-section-number">2.7.2</span> Data sets</h3>
-<ul>
-<li>일반적으로 패키지 안에 관련된 데이터도 같이 저장</li>
-<li>data() function를 이용해서 패키지 데이터를 사용자 작업공간에 복사해서 사용 가능</li>
-</ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="rrstudio-basics.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(rivers)</span>
-<span id="cb12-2"><a href="rrstudio-basics.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(rivers)</span>
-<span id="cb12-3"><a href="rrstudio-basics.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(rivers)</span>
-<span id="cb12-4"><a href="rrstudio-basics.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(rivers)</span>
-<span id="cb12-5"><a href="rrstudio-basics.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package=</span><span class="st">&quot;UsingR&quot;</span>)</span>
-<span id="cb12-6"><a href="rrstudio-basics.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(HistData)</span>
-<span id="cb12-7"><a href="rrstudio-basics.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Cavendish)</span>
-<span id="cb12-8"><a href="rrstudio-basics.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Cavendish)</span>
-<span id="cb12-9"><a href="rrstudio-basics.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Cavendish<span class="sc">$</span>density2)</span></code></pre></div>
+<div id="bioconductor의-oop" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Bioconductor의 OOP</h2>
+<p>bioconductor에서 다루는 genome 스케일의 experiment나 annotation은 대표적인 복잡한 데이터 중 하나 입니다. Bioconductor에서 OOP 개념은 다음과 같습니다.</p>
+<blockquote>
+<p>class - 복잡한 생물학적 데이터 구조의 틀 정의<br />
+object - 특정 클래스가 특정 구현된 실체<br />
+method - 특정 클래스에 대한 기능 수행</p>
+</blockquote>
+<p>예를 들어 객체 <code>Homo.sapience</code>를 살펴보면 다음과 같습니다.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="bioconductor.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb134-2"><a href="bioconductor.html#cb134-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb134-3"><a href="bioconductor.html#cb134-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Homo.sapiens&quot;</span>)</span>
+<span id="cb134-4"><a href="bioconductor.html#cb134-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-5"><a href="bioconductor.html#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Homo.sapiens)</span>
+<span id="cb134-6"><a href="bioconductor.html#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Homo.sapiens)</span>
+<span id="cb134-7"><a href="bioconductor.html#cb134-7" aria-hidden="true" tabindex="-1"></a>?OrganismDb</span></code></pre></div>
+<blockquote>
+<p>The OrganismDb class is a container for storing knowledge about existing Annotation packages and the relationships between these resources.</p>
+</blockquote>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="bioconductor.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="fu">class</span>(Homo.sapiens))</span>
+<span id="cb135-2"><a href="bioconductor.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">genes</span>(Homo.sapiens)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb135-3"><a href="bioconductor.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exons</span>(Homo.sapiens)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb135-4"><a href="bioconductor.html#cb135-4" aria-hidden="true" tabindex="-1"></a>homo_seq <span class="ot">&lt;-</span> <span class="fu">seqinfo</span>(Homo.sapiens)</span>
+<span id="cb135-5"><a href="bioconductor.html#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(homo_seq)</span>
+<span id="cb135-6"><a href="bioconductor.html#cb135-6" aria-hidden="true" tabindex="-1"></a>?seqinfo</span></code></pre></div>
+<blockquote>
+<p>A Seqinfo object is a table-like object that contains basic information about a set of genomic sequences. …</p>
+</blockquote>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="bioconductor.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(homo_seq)</span>
+<span id="cb136-2"><a href="bioconductor.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seqnames</span>(homo_seq)</span></code></pre></div>
+<p>bioconductor에는 대용량 정보가 object 형태로 구조화되어 저장되어 있으며 <code>library()</code>함수로 읽어올 수 있고 다양한 함수로 해당 object의 정보를 읽어올 수 있습니다.</p>
+<div id="exercise-4" class="section level3" number="6.4.1">
+<h3><span class="header-section-number">6.4.1</span> Exercise</h3>
+<p><a href="https://adv-r.hadley.nz/s3.html" class="uri">https://adv-r.hadley.nz/s3.html</a></p>
+<hr />
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.</p>
 
 </div>
@@ -592,8 +451,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tidyverse-for-data-science.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="day1-강의-정리.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="working-with-dna-sequences.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

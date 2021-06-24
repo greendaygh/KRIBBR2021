@@ -3,7 +3,9 @@ rmd_files: [
   "02-Rintro.Rmd",
   "03-tidyverse.Rmd",
   "04-ggplot.Rmd",
-  
+  "day1.Rmd",
+  "05-bioconductor.Rmd",
+  "05-sequence-basics.Rmd"
 ]
 book_filename: "KRIBBR"
 #repo: https://github.com/greendaygh/Rprog2020/

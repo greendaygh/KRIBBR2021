@@ -1,0 +1,400 @@
+# Day1 강의 정리 
+
+
+## Class 1 - 기초, 사용법, 프로그래밍
+
+### 목표 
+
+* rstudio, rmarkdown 사용법 익히기
+* R 프로그래밍을 위한 변수, 함수 개념 이해
+
+### Rstudio 
+
+* 프로젝트 생성 후 전환 
+
+~~~
+Rstudio > File > New Project > 
+	New Directory > New Project >
+	D:/kribb/ (새로 생성) > 
+	kribbr2021 (Directory name) >
+	Create project
+~~~
+
+* Rmd 파일의 밑줄 없애기 위해 uncheck spell-checking
+
+~~~
+Tools > Global options > Spelling >
+	uncheck Use real time spell-checking 
+~~~
+
+
+### Rmarkdown 사용법
+
+~~~
+File > New File > R markdown 
+	> day1 저장 > Knit
+~~~
+
+* Ctrl + Alt + i: Rmarkdown 코드청크를 여는 단축키 
+* 코드청크에서만 Ctrl + Enter 작동 
+* 랜더링 (knit) 빠르게 하기 위해서 옵션 `eval=F`
+* Tools > Global options > Spelling > uncheck Use real time spell-checking 
+
+
+```{r, eval=F}
+
+x <- 10
+y <- 20
+x + y
+
+```
+
+### 변수 
+
+* `c()` 함수를 이용해서 여러 값 저장 가능
+* 콘솔창에서 출력해서 변수 값 확인
+* 또는 cat/print 함수 이용
+
+```{r, eval=F}
+
+x <- c(1, 3, 5, 7, 9)
+y <- c(2, 4, 6, 8, 10)
+z <- x + y
+x <- "Hello world!"
+
+cat(z)
+print(z)
+
+```
+
+### 함수 
+
+* 사용하기 전에 실행해서 환경에 등록 
+
+```{r, eval=F}
+
+sin(1)
+
+my_sine <- function(x){
+    y <- sin(x)
+    return(y)
+}
+
+my_sine(1)
+
+x <- my_sine(1)
+x
+
+```
+
+
+### 지역변수 광역변수
+
+* Problem 3, 4
+
+```{r, eval=F}
+
+# 1, 2
+x <- c(1, 3, 5, 7, 9)
+y <- c(2, 4, 6, 8, 10)
+z <- x + y
+cat(z)
+
+# problem 3
+mysum <- function(a, b){
+  x <- a + b
+  cat("Value of x:", x, "\n")
+  return(x)
+}
+
+# problem 4
+mymean <- function(a, b){
+  x <- (a+b)/2
+  cat("Value of x:", x, "\n")
+  return(x)
+}
+
+```
+
+
+* 함수 안의 변수와 함수 밖의 변수는 다름
+
+```{r, eval=F}
+x <- 10
+y <- 20
+
+mysum(x, y)
+mymean(x, y)
+```
+
+
+
+
+
+## Class 2 - 데이터의 이해 
+
+### 목표 
+
+* tidyverse 출현 배경 이해
+* data.frame, tibble 개념 이해 
+* 데이터에서 샘플 (row), 변수 (col), 값 (element) 구분하기
+* tidy data 개념 (Long형 wide형 구분) 이해 
+
+
+### tibble 
+
+```{r, eval=F}
+library(tidyverse)
+
+
+tb <- tibble(
+  x = 1:5, 
+  y = 1, 
+  z = x ^ 2 + y
+)
+tb
+```
+
+
+```{r, eval=F}
+airquality
+myair <- airquality[1:5,]
+myair
+```
+
+### tidy data
+
+```{r, eval=F}
+myair_long <- pivot_longer(myair, c("Ozone", "Solar.R", "Wind", "Temp"))
+myair_long
+
+```
+
+```{r, eval=F}
+stocks <- tibble(
+  year   = c(2015, 2015, 2016, 2016),
+  month  = c(   1,    2,     1,    2),
+  profit = c(1.88, 0.59, 0.92, 0.17)
+)
+stocks
+```
+
+
+```{r, eval=F}
+pivot_wider(stocks, names_from=c("month"), values_from=c("profit"))
+```
+
+
+
+
+## class 3 - 데이터 형변환의 이해 
+
+### 목표 
+
+* pipe operator 단축키: Ctrl + Shift + M
+* dplyr functions 이해 
+
+
+### 파이프오퍼레이터 
+
+일반적인 함수 사용법 
+
+```{r, eval=F}
+
+x <- c(1:10)
+xsum <- sum(x)
+n <- length(x)
+xmean <- xsum/n
+cat(xmean)
+
+```
+
+파이프 오퍼레이터를 이용한 함수 사용 및 데이터 변환
+
+```{r, eval=F}
+y <- sum(x)
+z <- log(y)
+k <- sin(z)
+cat(k)
+
+sin(log(sum(x)))
+
+x %>% 
+  sum %>% 
+  log %>% 
+  sin
+
+```
+
+
+
+```{r, eval=F}
+x <- 1:5
+x %>% paste("a", sep="")
+
+
+paste("a", "b", sep="")
+paste0("a", "b")
+
+paste("a", sep="")
+
+
+paste(x, "a", sep="")
+x %>% paste("a", sep="")
+```
+
+### dplyr 사용
+
+```{r, eval=F}
+
+iris %>% str
+str(iris)
+head(iris)
+iris[1:10,]
+
+data(iris)
+
+iris_setosa <- iris[1:50,]
+iris_setosa %>% str
+iris %>% 
+  filter(Species == "setosa") %>% 
+  dim 
+  
+iris %>% 
+  select(Species, everything()) %>% 
+  select(starts_with('S'))
+
+
+```
+
+```{r, eval=F}
+iris2 <- iris %>% 
+  mutate(sepal_ratio = Sepal.Length/Sepal.Width)
+str(iris2)
+```
+
+### 예제 
+
+1. iris의 각 변수의 평균과 분산 계산 
+
+```{r, eval=F}
+
+iris %>% str
+
+mean(iris[,1])
+mean(iris[,2])
+mean(iris[,3])
+mean(iris[,4])
+
+x <- rep(0, 4)
+for(i in 1:4){
+  x[i] <- mean(iris[,i])
+}
+
+
+mean(iris[,"Sepal.Length"])
+mean(iris[,2])
+
+iris %>% 
+  select(!Species) %>% 
+  summarise_all(sd)
+
+```
+
+
+2. iris의 각 species별 Sepal.Width와 Sepal.Length의 평균과 분산 계산 
+
+```{r, eval=F}
+
+mean(iris[iris[,5]=="setosa","Sepal.Length"])
+
+iris_mean <- iris %>%
+  group_by(Species) %>% 
+  summarise(across(everything(), mean))
+
+iris_sd <- iris %>%
+  group_by(Species) %>% 
+  summarise(across(everything(), sd))
+
+
+```
+
+
+
+3. iris의 각 species별 Sepal.Width와 Sepal.Length의 평균과 분산 이용한 막대그래프 그리기 
+
+
+```{r, eval=F}
+
+iris %>%
+  group_by(Species) %>% 
+  summarise(across(everything(), mean)) %>% 
+  pivot_longer(cols = !Species) %>% 
+  filter(Species=="setosa") %>% 
+  ggplot(mapping = aes(y=value, x=name)) +
+  geom_point() +
+  geom_bar(stat = "identity") +
+  theme_bw()
+
+```
+
+```{r, eval=F}
+df1 <- data.frame(id=c(1,2,3,4,5,6), age=c(30, 41, 33, 56, 20, 17))
+df2 <- data.frame(id=c(4,5,6,7,8,9), gender=c("f", "f", "m", "m", "f", "m"))
+
+df1
+```
+
+```{r, eval=F}
+df2
+```
+
+```{r, eval=F}
+cbind(df1, df2)
+
+inner_join(df1, df2, by="id")
+left_join(df1, df2, "id")
+right_join(df1, df2, "id")
+full_join(df1, df2, "id")
+
+df1 %>% left_join(df2, "id")
+
+```
+
+
+### 스크립트 활용 
+
+
+다음 코드를 day1script.R 로 저장하고 `source`로 실행 
+
+~~~
+
+airmean <- airquality %>% 
+  filter(complete.cases(.)) %>% 
+  select(-Day) %>% 
+  group_by(Month) %>% 
+  summarise(across(everything(), mean)) %>% 
+  pivot_longer(-Month, values_to = "mean")
+
+airsd <- airquality %>% 
+  filter(complete.cases(.)) %>% 
+  select(-Day) %>% 
+  group_by(Month) %>% 
+  summarise(across(everything(), sd)) %>% 
+  pivot_longer(-Month, values_to = "sd")
+
+
+airdata <- left_join(airmean, airsd, by=c("Month", "name"))
+
+q <- ggplot(airdata, aes(x=Month, y=mean, fill=name)) +
+  geom_bar(stat="identity", position="dodge") +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), position=position_dodge(width=0.9), width=0.4)
+
+~~~
+
+```{r, eval=F}
+source("day1script.R")
+q
+```
+
+

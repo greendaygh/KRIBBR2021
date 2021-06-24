@@ -129,7 +129,7 @@
 \makeatother
 \subtitle{생명정보학을 위한 R프로그래밍(중급과정)}
 \author{한국생명공학연구원 김하성}
-\date{2021-06-17}
+\date{2021-06-24}
 
 \begin{document}
 \maketitle
@@ -2260,5 +2260,1229 @@ Theme은 data관련 요소들 외의 것들에 대한 설정을 위해서 사용
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 이 저작물은 크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스에 따라 이용할 수 있습니다.
+
+\hypertarget{day1-uxac15uxc758-uxc815uxb9ac}{%
+\chapter{Day1 강의 정리}\label{day1-uxac15uxc758-uxc815uxb9ac}}
+
+\hypertarget{class-1---uxae30uxcd08-uxc0acuxc6a9uxbc95-uxd504uxb85cuxadf8uxb798uxbc0d}{%
+\section{Class 1 - 기초, 사용법, 프로그래밍}\label{class-1---uxae30uxcd08-uxc0acuxc6a9uxbc95-uxd504uxb85cuxadf8uxb798uxbc0d}}
+
+\hypertarget{uxbaa9uxd45c}{%
+\subsection{목표}\label{uxbaa9uxd45c}}
+
+\begin{itemize}
+\tightlist
+\item
+  rstudio, rmarkdown 사용법 익히기
+\item
+  R 프로그래밍을 위한 변수, 함수 개념 이해
+\end{itemize}
+
+\hypertarget{rstudio}{%
+\subsection{Rstudio}\label{rstudio}}
+
+\begin{itemize}
+\tightlist
+\item
+  프로젝트 생성 후 전환
+\end{itemize}
+
+\begin{verbatim}
+Rstudio > File > New Project > 
+    New Directory > New Project >
+    D:/kribb/ (새로 생성) > 
+    kribbr2021 (Directory name) >
+    Create project
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Rmd 파일의 밑줄 없애기 위해 uncheck spell-checking
+\end{itemize}
+
+\begin{verbatim}
+Tools > Global options > Spelling >
+    uncheck Use real time spell-checking 
+\end{verbatim}
+
+\hypertarget{rmarkdown-uxc0acuxc6a9uxbc95}{%
+\subsection{Rmarkdown 사용법}\label{rmarkdown-uxc0acuxc6a9uxbc95}}
+
+\begin{verbatim}
+File > New File > R markdown 
+    > day1 저장 > Knit
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Ctrl + Alt + i: Rmarkdown 코드청크를 여는 단축키
+\item
+  코드청크에서만 Ctrl + Enter 작동
+\item
+  랜더링 (knit) 빠르게 하기 위해서 옵션 \texttt{eval=F}
+\item
+  Tools \textgreater{} Global options \textgreater{} Spelling \textgreater{} uncheck Use real time spell-checking
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{20}
+\NormalTok{x }\SpecialCharTok{+}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{uxbcc0uxc218}{%
+\subsection{변수}\label{uxbcc0uxc218}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{c()} 함수를 이용해서 여러 값 저장 가능
+\item
+  콘솔창에서 출력해서 변수 값 확인
+\item
+  또는 cat/print 함수 이용
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{9}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\NormalTok{z }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{+}\NormalTok{ y}
+\NormalTok{x }\OtherTok{\textless{}{-}} \StringTok{"Hello world!"}
+
+\FunctionTok{cat}\NormalTok{(z)}
+\FunctionTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{uxd568uxc218}{%
+\subsection{함수}\label{uxd568uxc218}}
+
+\begin{itemize}
+\tightlist
+\item
+  사용하기 전에 실행해서 환경에 등록
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sin}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{my\_sine }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x)\{}
+\NormalTok{    y }\OtherTok{\textless{}{-}} \FunctionTok{sin}\NormalTok{(x)}
+    \FunctionTok{return}\NormalTok{(y)}
+\NormalTok{\}}
+
+\FunctionTok{my\_sine}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{my\_sine}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{uxc9c0uxc5eduxbcc0uxc218-uxad11uxc5eduxbcc0uxc218}{%
+\subsection{지역변수 광역변수}\label{uxc9c0uxc5eduxbcc0uxc218-uxad11uxc5eduxbcc0uxc218}}
+
+\begin{itemize}
+\tightlist
+\item
+  Problem 3, 4
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1, 2}
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{9}\NormalTok{)}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\NormalTok{z }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{+}\NormalTok{ y}
+\FunctionTok{cat}\NormalTok{(z)}
+
+\CommentTok{\# problem 3}
+\NormalTok{mysum }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(a, b)\{}
+\NormalTok{  x }\OtherTok{\textless{}{-}}\NormalTok{ a }\SpecialCharTok{+}\NormalTok{ b}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Value of x:"}\NormalTok{, x, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{return}\NormalTok{(x)}
+\NormalTok{\}}
+
+\CommentTok{\# problem 4}
+\NormalTok{mymean }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(a, b)\{}
+\NormalTok{  x }\OtherTok{\textless{}{-}}\NormalTok{ (a}\SpecialCharTok{+}\NormalTok{b)}\SpecialCharTok{/}\DecValTok{2}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Value of x:"}\NormalTok{, x, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{return}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  함수 안의 변수와 함수 밖의 변수는 다름
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{20}
+
+\FunctionTok{mysum}\NormalTok{(x, y)}
+\FunctionTok{mymean}\NormalTok{(x, y)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{class-2---uxb370uxc774uxd130uxc758-uxc774uxd574}{%
+\section{Class 2 - 데이터의 이해}\label{class-2---uxb370uxc774uxd130uxc758-uxc774uxd574}}
+
+\hypertarget{uxbaa9uxd45c-1}{%
+\subsection{목표}\label{uxbaa9uxd45c-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  tidyverse 출현 배경 이해
+\item
+  data.frame, tibble 개념 이해
+\item
+  데이터에서 샘플 (row), 변수 (col), 값 (element) 구분하기
+\item
+  tidy data 개념 (Long형 wide형 구분) 이해
+\end{itemize}
+
+\hypertarget{tibble}{%
+\subsection{tibble}\label{tibble}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+
+\NormalTok{tb }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }
+  \AttributeTok{y =} \DecValTok{1}\NormalTok{, }
+  \AttributeTok{z =}\NormalTok{ x }\SpecialCharTok{\^{}} \DecValTok{2} \SpecialCharTok{+}\NormalTok{ y}
+\NormalTok{)}
+\NormalTok{tb}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{airquality}
+\NormalTok{myair }\OtherTok{\textless{}{-}}\NormalTok{ airquality[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,]}
+\NormalTok{myair}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{tidy-data}{%
+\subsection{tidy data}\label{tidy-data}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myair\_long }\OtherTok{\textless{}{-}} \FunctionTok{pivot\_longer}\NormalTok{(myair, }\FunctionTok{c}\NormalTok{(}\StringTok{"Ozone"}\NormalTok{, }\StringTok{"Solar.R"}\NormalTok{, }\StringTok{"Wind"}\NormalTok{, }\StringTok{"Temp"}\NormalTok{))}
+\NormalTok{myair\_long}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stocks }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{year   =} \FunctionTok{c}\NormalTok{(}\DecValTok{2015}\NormalTok{, }\DecValTok{2015}\NormalTok{, }\DecValTok{2016}\NormalTok{, }\DecValTok{2016}\NormalTok{),}
+  \AttributeTok{month  =} \FunctionTok{c}\NormalTok{(   }\DecValTok{1}\NormalTok{,    }\DecValTok{2}\NormalTok{,     }\DecValTok{1}\NormalTok{,    }\DecValTok{2}\NormalTok{),}
+  \AttributeTok{profit =} \FunctionTok{c}\NormalTok{(}\FloatTok{1.88}\NormalTok{, }\FloatTok{0.59}\NormalTok{, }\FloatTok{0.92}\NormalTok{, }\FloatTok{0.17}\NormalTok{)}
+\NormalTok{)}
+\NormalTok{stocks}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pivot\_wider}\NormalTok{(stocks, }\AttributeTok{names\_from=}\FunctionTok{c}\NormalTok{(}\StringTok{"month"}\NormalTok{), }\AttributeTok{values\_from=}\FunctionTok{c}\NormalTok{(}\StringTok{"profit"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{class-3---uxb370uxc774uxd130-uxd615uxbcc0uxd658uxc758-uxc774uxd574}{%
+\section{class 3 - 데이터 형변환의 이해}\label{class-3---uxb370uxc774uxd130-uxd615uxbcc0uxd658uxc758-uxc774uxd574}}
+
+\hypertarget{uxbaa9uxd45c-2}{%
+\subsection{목표}\label{uxbaa9uxd45c-2}}
+
+\begin{itemize}
+\tightlist
+\item
+  pipe operator 단축키: Ctrl + Shift + M
+\item
+  dplyr functions 이해
+\end{itemize}
+
+\hypertarget{uxd30cuxc774uxd504uxc624uxd37cuxb808uxc774uxd130}{%
+\subsection{파이프오퍼레이터}\label{uxd30cuxc774uxd504uxc624uxd37cuxb808uxc774uxd130}}
+
+일반적인 함수 사용법
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)}
+\NormalTok{xsum }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(x)}
+\NormalTok{n }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(x)}
+\NormalTok{xmean }\OtherTok{\textless{}{-}}\NormalTok{ xsum}\SpecialCharTok{/}\NormalTok{n}
+\FunctionTok{cat}\NormalTok{(xmean)}
+\end{Highlighting}
+\end{Shaded}
+
+파이프 오퍼레이터를 이용한 함수 사용 및 데이터 변환
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(x)}
+\NormalTok{z }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(y)}
+\NormalTok{k }\OtherTok{\textless{}{-}} \FunctionTok{sin}\NormalTok{(z)}
+\FunctionTok{cat}\NormalTok{(k)}
+
+\FunctionTok{sin}\NormalTok{(}\FunctionTok{log}\NormalTok{(}\FunctionTok{sum}\NormalTok{(x)))}
+
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  sum }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  log }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  sin}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{paste}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+
+
+\FunctionTok{paste}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+\FunctionTok{paste0}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{)}
+
+\FunctionTok{paste}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+
+
+\FunctionTok{paste}\NormalTok{(x, }\StringTok{"a"}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{paste}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dplyr-uxc0acuxc6a9}{%
+\subsection{dplyr 사용}\label{dplyr-uxc0acuxc6a9}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ str}
+\FunctionTok{str}\NormalTok{(iris)}
+\FunctionTok{head}\NormalTok{(iris)}
+\NormalTok{iris[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,]}
+
+\FunctionTok{data}\NormalTok{(iris)}
+
+\NormalTok{iris\_setosa }\OtherTok{\textless{}{-}}\NormalTok{ iris[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{,]}
+\NormalTok{iris\_setosa }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ str}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Species }\SpecialCharTok{==} \StringTok{"setosa"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  dim }
+  
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(Species, }\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{\textquotesingle{}S\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris2 }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sepal\_ratio =}\NormalTok{ Sepal.Length}\SpecialCharTok{/}\NormalTok{Sepal.Width)}
+\FunctionTok{str}\NormalTok{(iris2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{uxc608uxc81c}{%
+\subsection{예제}\label{uxc608uxc81c}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  iris의 각 변수의 평균과 분산 계산
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ str}
+
+\FunctionTok{mean}\NormalTok{(iris[,}\DecValTok{1}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(iris[,}\DecValTok{2}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(iris[,}\DecValTok{3}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(iris[,}\DecValTok{4}\NormalTok{])}
+
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)\{}
+\NormalTok{  x[i] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(iris[,i])}
+\NormalTok{\}}
+
+
+\FunctionTok{mean}\NormalTok{(iris[,}\StringTok{"Sepal.Length"}\NormalTok{])}
+\FunctionTok{mean}\NormalTok{(iris[,}\DecValTok{2}\NormalTok{])}
+
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{!}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise\_all}\NormalTok{(sd)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  iris의 각 species별 Sepal.Width와 Sepal.Length의 평균과 분산 계산
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(iris[iris[,}\DecValTok{5}\NormalTok{]}\SpecialCharTok{==}\StringTok{"setosa"}\NormalTok{,}\StringTok{"Sepal.Length"}\NormalTok{])}
+
+\NormalTok{iris\_mean }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{everything}\NormalTok{(), mean))}
+
+\NormalTok{iris\_sd }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{everything}\NormalTok{(), sd))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  iris의 각 species별 Sepal.Width와 Sepal.Length의 평균과 분산 이용한 막대그래프 그리기
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{everything}\NormalTok{(), mean)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{!}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\StringTok{"setosa"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{value, }\AttributeTok{x=}\NormalTok{name)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df1 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{id=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{), }\AttributeTok{age=}\FunctionTok{c}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{41}\NormalTok{, }\DecValTok{33}\NormalTok{, }\DecValTok{56}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{17}\NormalTok{))}
+\NormalTok{df2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{id=}\FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{), }\AttributeTok{gender=}\FunctionTok{c}\NormalTok{(}\StringTok{"f"}\NormalTok{, }\StringTok{"f"}\NormalTok{, }\StringTok{"m"}\NormalTok{, }\StringTok{"m"}\NormalTok{, }\StringTok{"f"}\NormalTok{, }\StringTok{"m"}\NormalTok{))}
+
+\NormalTok{df1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cbind}\NormalTok{(df1, df2)}
+
+\FunctionTok{inner\_join}\NormalTok{(df1, df2, }\AttributeTok{by=}\StringTok{"id"}\NormalTok{)}
+\FunctionTok{left\_join}\NormalTok{(df1, df2, }\StringTok{"id"}\NormalTok{)}
+\FunctionTok{right\_join}\NormalTok{(df1, df2, }\StringTok{"id"}\NormalTok{)}
+\FunctionTok{full\_join}\NormalTok{(df1, df2, }\StringTok{"id"}\NormalTok{)}
+
+\NormalTok{df1 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{left\_join}\NormalTok{(df2, }\StringTok{"id"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{uxc2a4uxd06cuxb9bduxd2b8-uxd65cuxc6a9}{%
+\subsection{스크립트 활용}\label{uxc2a4uxd06cuxb9bduxd2b8-uxd65cuxc6a9}}
+
+다음 코드를 day1script.R 로 저장하고 \texttt{source}로 실행
+
+\begin{verbatim}
+airmean <- airquality %>% 
+  filter(complete.cases(.)) %>% 
+  select(-Day) %>% 
+  group_by(Month) %>% 
+  summarise(across(everything(), mean)) %>% 
+  pivot_longer(-Month, values_to = "mean")
+
+airsd <- airquality %>% 
+  filter(complete.cases(.)) %>% 
+  select(-Day) %>% 
+  group_by(Month) %>% 
+  summarise(across(everything(), sd)) %>% 
+  pivot_longer(-Month, values_to = "sd")
+
+
+airdata <- left_join(airmean, airsd, by=c("Month", "name"))
+
+q <- ggplot(airdata, aes(x=Month, y=mean, fill=name)) +
+  geom_bar(stat="identity", position="dodge") +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), position=position_dodge(width=0.9), width=0.4)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{source}\NormalTok{(}\StringTok{"day1script.R"}\NormalTok{)}
+\NormalTok{q}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{bioconductor}{%
+\chapter{Bioconductor}\label{bioconductor}}
+
+\begin{itemize}
+\tightlist
+\item
+  \url{https://www.bioconductor.org}
+\end{itemize}
+
+Bioconductor는 바이오인포메틱스를 위한 R기반의 데이터, 메소드, 그리고 패키지들의 모음입니다. 2002년 microarray 데이터 분석을 위한 플랫폼으로 시작되었으며 현재 2000개 이상의 패키지로 구성되어 있습니다. R은 분산형 오픈소스이나 Bioconductor는 Full-time developer들에 의해서 유지되고 있습니다. \texttt{CRAN}에 배포되지 않고 \texttt{CRAN}에 비해 더 많은 필수 자료들 (vignettes 등)이 필요하며 높은 수준으로 quality control이 되고 있습니다.
+
+사용 가능한 패키지들은 \href{http://bioconductor.org/packages/release/BiocViews.html\#___Software}{이곳}을 참고하시면 되겠습니다.
+
+\includegraphics[width=6.25in,height=\textheight]{images/04/bioconductor.JPG}
+
+Bioconductor 코어 개발 그룹은 사용자들이 지놈스케일 데이터를 더 편리하게 다루룰 수 있도록 데이터의 구조를 개발하는데 많은 시간을 들입니다.
+
+\begin{itemize}
+\tightlist
+\item
+  지놈스케일의 서열이나 발현등 대용량 유전자형 데이터 \textbf{관리} 및 \textbf{통계적 분석}을 위한 툴 제공
+\item
+  분자수준의 현상과 생장이나 질병 등 표현형수준의 관계를 규명하기 위한 정량 데이터 통합 및 관리
+\end{itemize}
+
+\hypertarget{packages}{%
+\section{Packages}\label{packages}}
+
+Use \textgreater\textgreater{} Software, Annotation, Experiment
+
+\begin{itemize}
+\tightlist
+\item
+  Software: 분석을 위한 툴 모음
+\item
+  Annotation: 유전자 symbol/ID mapping, gene ontology 기반 유전자 분류, 유전체상에서 exon, transcript, gene 등의 위치, 단백질 기능 등
+\item
+  Experiment data: 학습 가능할 정도의 Highly curated datasets (실험 데이터)
+\item
+  Workflow: 특정 데이터 분석을 위한 프로세스 모음 RNA-seq, ChIP seq, copy number analysis, microarray methylation, classic expression analysis, flow cytometry 등
+\end{itemize}
+
+\includegraphics[width=6.25in,height=\textheight]{images/bioconductor_list.PNG}
+
+\hypertarget{installation}{%
+\subsection{Installation}\label{installation}}
+
+\texttt{BiocManager}를 먼저 설치하고 해당 패키지를 설치하시기 바랍니다. \texttt{BiocManager}에는 \texttt{available()}이라는 함수로 (특정 문자가 포함된) 사용 가능한 패키지를 검색할 수 도 있습니다.
+
+Use \textgreater\textgreater{} Software \textgreater\textgreater{} IRanges
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"IRanges"}\NormalTok{)}
+\DocumentationTok{\#\# .libPaths()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{learning-and-support}{%
+\section{Learning and support}\label{learning-and-support}}
+
+각 패키지는 제목, 저자, 유지관리자, 설명, 참조, 설치법 등의 정보가 포함된 landing page가 있으며 패키지 내 함수들은 상세한 설명과 예제가 제공됩니다. 예를 들어 \href{http://bioconductor.org/packages/release/bioc/html/IRanges.html}{IRanges}의 landing page를 참고하세요
+
+vignettes는 bioconductor의 중요한 특징 중 하나로 R 코드와 함께 패키지를 사용하는 방법에 대한 상세한 설명을 제공하는 문서입니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(IRanges)}
+
+\FunctionTok{vignette}\NormalTok{(}\AttributeTok{package=}\StringTok{"IRanges"}\NormalTok{)}
+\FunctionTok{browseVignettes}\NormalTok{(}\StringTok{"IRanges"}\NormalTok{)}
+\FunctionTok{vignette}\NormalTok{(}\StringTok{"IRangesOverview"}\NormalTok{, }\AttributeTok{package=}\StringTok{"IRanges"}\NormalTok{)}
+
+\NormalTok{ir1 }\OtherTok{\textless{}{-}} \FunctionTok{IRanges}\NormalTok{(}\AttributeTok{start=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{, }\AttributeTok{width=}\DecValTok{10}\SpecialCharTok{:}\DecValTok{1}\NormalTok{)}
+\NormalTok{ir1}
+\FunctionTok{class}\NormalTok{(ir1)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"IRanges"}\NormalTok{)}
+
+\FunctionTok{example}\NormalTok{(IRanges)}
+\NormalTok{?IRanges}
+\NormalTok{??IRanges}
+\end{Highlighting}
+\end{Shaded}
+
+Learn \textgreater\textgreater{} Support site 게시판에는 관련된 여러 QnA 들이 있어서 유사 문제에 대한 도움을 받을 수 있습니다.
+
+\hypertarget{class-object-and-method}{%
+\section{Class, Object and Method}\label{class-object-and-method}}
+
+객체지향프로그래밍 (OOP)은 복잡한 문제를 프로그래밍할 때 발생되는 코드의 복잡성을 해결할 수 있는 하나의 방안으로 1990년대부터 많이 사용되었습니다.
+
+R도 객체지향 프로그래밍 언어입니다. 그런데 R은 다른 언어들에 비해서 좀 어려운 (다른) 개념으로 사용됩니다. R에서 사용하는 Class에는 크게 base type, S3, S4, RC, 그리고 R6 등 다양한 타입이 있고 이 중 S3를 많이 사용해 왔으며 S3의 단점을 보완한 S4 형식의 class와 R6를 주로 사용합니다 \citep{AdvancedR}. 본 강의에서는 S3 형식의 class만 다루도록 하겠습니다.
+
+클래스를 사용하는 이유는 여러가지가 있겠지만 복잡한 개념의 데이터를 구조화하고 쉽게 관리하기 위해서 사용한다고 보면 될 것 같습니다. 여러분이 알아야할 개념은 Class와 Object 그리고 Method 입니다. 사실 R의 모든것이 Object이고 이러한 Object들의 정의가 Class 입니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{), }\AttributeTok{y=}\NormalTok{LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{])}
+\NormalTok{df}
+\FunctionTok{class}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+위에서 df는 변수라고 부르지만 object이기도 합니다. df의 class는 data.frame 입니다. 클래스는 누구든 원하는 만큼 얼마든지 만들 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{class}\NormalTok{(df) }\OtherTok{\textless{}{-}} \StringTok{"myclass"}
+\FunctionTok{class}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+그런데 모든 object들이 OOP 유래는 아닙니다 base object들이 그 예입니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}
+\FunctionTok{class}\NormalTok{(x)}
+\FunctionTok{attr}\NormalTok{(x, }\StringTok{"class"}\NormalTok{)}
+
+\NormalTok{mtcars}
+\FunctionTok{attr}\NormalTok{(mtcars, }\StringTok{"class"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+method는 위와 같은 클래스들에 특화된 어떤 기능을 하는 함수라고 생각하시면 됩니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mt }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{9}\NormalTok{, }\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\DecValTok{4}\SpecialCharTok{:}\DecValTok{6}\NormalTok{, }\DecValTok{7}\SpecialCharTok{:}\DecValTok{9}\NormalTok{)}
+
+\FunctionTok{class}\NormalTok{(mt)}
+\FunctionTok{class}\NormalTok{(df)}
+\FunctionTok{str}\NormalTok{(mt)}
+\FunctionTok{str}\NormalTok{(df)}
+
+
+\NormalTok{diamonds }\OtherTok{\textless{}{-}}\NormalTok{ ggplot2}\SpecialCharTok{::}\NormalTok{diamonds}
+
+\FunctionTok{summary}\NormalTok{(diamonds}\SpecialCharTok{$}\NormalTok{carat)}
+\FunctionTok{summary}\NormalTok{(diamonds}\SpecialCharTok{$}\NormalTok{cut)}
+
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"data.frame"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+위 summary, str 등이 generic function이라 불리는 method들 입니다. class마다 사용 가능한 method가 어떠한 정보가 있는지 알기 위해서 \texttt{methods()}라는 함수를 사용합니다.
+
+\hypertarget{bioconductoruxc758-oop}{%
+\section{Bioconductor의 OOP}\label{bioconductoruxc758-oop}}
+
+bioconductor에서 다루는 genome 스케일의 experiment나 annotation은 대표적인 복잡한 데이터 중 하나 입니다. Bioconductor에서 OOP 개념은 다음과 같습니다.
+
+\begin{quote}
+class - 복잡한 생물학적 데이터 구조의 틀 정의\\
+object - 특정 클래스가 특정 구현된 실체\\
+method - 특정 클래스에 대한 기능 수행
+\end{quote}
+
+예를 들어 객체 \texttt{Homo.sapience}를 살펴보면 다음과 같습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"Homo.sapiens"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(Homo.sapiens)}
+\FunctionTok{class}\NormalTok{(Homo.sapiens)}
+\NormalTok{?OrganismDb}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+The OrganismDb class is a container for storing knowledge about existing Annotation packages and the relationships between these resources.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\FunctionTok{class}\NormalTok{(Homo.sapiens))}
+\FunctionTok{genes}\NormalTok{(Homo.sapiens)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\FunctionTok{exons}\NormalTok{(Homo.sapiens)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\NormalTok{homo\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seqinfo}\NormalTok{(Homo.sapiens)}
+\FunctionTok{class}\NormalTok{(homo\_seq)}
+\NormalTok{?seqinfo}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+A Seqinfo object is a table-like object that contains basic information about a set of genomic sequences. \ldots{}
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(homo\_seq)}
+\FunctionTok{seqnames}\NormalTok{(homo\_seq)}
+\end{Highlighting}
+\end{Shaded}
+
+bioconductor에는 대용량 정보가 object 형태로 구조화되어 저장되어 있으며 \texttt{library()}함수로 읽어올 수 있고 다양한 함수로 해당 object의 정보를 읽어올 수 있습니다.
+
+\hypertarget{exercise-4}{%
+\subsection{Exercise}\label{exercise-4}}
+
+\url{https://adv-r.hadley.nz/s3.html}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+이 저작물은 크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스에 따라 이용할 수 있습니다.
+
+\hypertarget{working-with-dna-sequences}{%
+\chapter{Working with DNA sequences}\label{working-with-dna-sequences}}
+
+서열을 이용한 분석은 Biostrings, IRanges/GenomicRanges 등 몇몇 핵심 패키지들에 기반해서 수행됩니다.
+
+\hypertarget{biostrings}{%
+\section{Biostrings}\label{biostrings}}
+
+\texttt{Biostrings}는 DNA, RNA, amino acids와 같은 생물학적 string을 다루기 위한 다양한 함수를 제공하는 패키지 입니다. 특히 서열에서의 패턴 탐색이나 Smith-Waterman local alignments, Needleman-Wunsch global alignments 등의 서열 비교함수를 제공하여 간단한 서열 분석에 자주 활용되는 패키지 입니다 \citep{sippl1999biological}. 아래와 같이 설치할 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"Biostrings"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(Biostrings)}
+\end{Highlighting}
+\end{Shaded}
+
+Biostrings 패키지는 기본적으로 \texttt{XString,\ XStringSet,\ XStringViews} 3가지의 class를 정의하고 있습니다. XString은 DNA나 RNA, AA 등 생물학적 서열 한 가닥을 다루기위한 클래스이며 XStringSet은 여러 가닥을 다루기위한 클래스 입니다.
+
+\includegraphics{images/04/biostrings.JPG}
+
+DNAString 함수를 이용해서 객체를 만들어낼 수 있으며 `A', `C', `G', `T' 외에 `-' (insertion), `N' 을 허용합니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dna1 }\OtherTok{\textless{}{-}} \FunctionTok{DNAString}\NormalTok{(}\StringTok{"ACGT?"}\NormalTok{)}
+\NormalTok{dna1 }\OtherTok{\textless{}{-}} \FunctionTok{DNAString}\NormalTok{(}\StringTok{"ACGT{-}N"}\NormalTok{)}
+\NormalTok{dna1[}\DecValTok{1}\NormalTok{]}
+\NormalTok{dna1[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+
+\NormalTok{dna2 }\OtherTok{\textless{}{-}} \FunctionTok{DNAStringSet}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"ACGT"}\NormalTok{, }\StringTok{"GTCA"}\NormalTok{, }\StringTok{"GCTA"}\NormalTok{))}
+\NormalTok{dna2[}\DecValTok{1}\NormalTok{]}
+\NormalTok{dna2[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{dna2[[}\DecValTok{1}\NormalTok{]][}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+다음 내장변수 들은 \texttt{Biostrings} 패키지를 로드하면 자동으로 저장되는 변수들로 생물학적 서열을 미리 정의해 놓았습니다. IUPAC (International Union of Pure and Applied Chemistry, 국제 순수·응용 화학 연합)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DNA\_BASES}
+\NormalTok{DNA\_ALPHABET}
+\NormalTok{IUPAC\_CODE\_MAP}
+\NormalTok{GENETIC\_CODE}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=4.16667in,height=\textheight]{images/rna-codon-chart.jpg}
+
+위 변수들을 이용하면 다음처럼 \texttt{sample()} 함수를 이용해서 랜덤하게 DNA 서열을 얻을 수 있습니다. \texttt{DNA\_BASES}가 4개 길이를 갖는 벡터인데 이 중 10개를 뽑으려면 \texttt{replace=T}로 해야 합니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x0 }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(DNA\_BASES, }\DecValTok{10}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T)}
+\NormalTok{x0}
+\NormalTok{s1 }\OtherTok{\textless{}{-}} \StringTok{"ATG"}
+\NormalTok{s2 }\OtherTok{\textless{}{-}} \StringTok{"CCC"}
+\NormalTok{s3 }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(s1, s2, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+\NormalTok{s3}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(x0, }\AttributeTok{collapse=}\StringTok{""}\NormalTok{)}
+\NormalTok{x1}
+\end{Highlighting}
+\end{Shaded}
+
+관련 함수는 \href{http://bioconductor.org/packages/release/bioc/vignettes/Biostrings/inst/doc/BiostringsQuickOverview.pdf}{Cheat sheat} 참고
+
+\hypertarget{dnastring}{%
+\subsection{DNAString}\label{dnastring}}
+
+\texttt{DNAString} class에서 \texttt{length} 함수는 핵산의 갯수를 (\texttt{DNAStringSet} 타입의 변수에서 length는 DNA 가닥의 갯수) 계산하며 핵산의 갯수는 \texttt{nchar}함수로 얻어낼 수 있습니다. \texttt{toString}은 DNAString 타입을 단순 문자열로 변환해주는 함수이며 상보서열, 역상보서열 등의 정보도 \texttt{complement}, \texttt{reverseComplement} 등을 사용하여 찾아낼 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x0 }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\FunctionTok{sample}\NormalTok{(DNA\_BASES, }\DecValTok{10}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T), }\AttributeTok{collapse=}\StringTok{""}\NormalTok{)}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{DNAString}\NormalTok{(x0)}
+\FunctionTok{class}\NormalTok{(x0)}
+\FunctionTok{class}\NormalTok{(x1)}
+\FunctionTok{length}\NormalTok{(x1)}
+\FunctionTok{toString}\NormalTok{(x1)}
+\FunctionTok{complement}\NormalTok{(x1)}
+\NormalTok{Biostrings}\SpecialCharTok{::}\FunctionTok{complement}\NormalTok{(x1)}
+\FunctionTok{reverseComplement}\NormalTok{(x1)}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{DNAString}의 인덱싱은 vector (string)과 같으며 DNAStringSet은 list의 인덱싱과 같습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# indexing}
+\NormalTok{x1[}\DecValTok{1}\NormalTok{]}
+\NormalTok{x1[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\FunctionTok{subseq}\NormalTok{(x1, }\AttributeTok{start=}\DecValTok{3}\NormalTok{, }\AttributeTok{end=}\DecValTok{5}\NormalTok{)}
+\FunctionTok{subseq}\NormalTok{(x1, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+
+\DocumentationTok{\#\# letter frequency}
+\FunctionTok{alphabetFrequency}\NormalTok{(x1, }\AttributeTok{baseOnly=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{as.prob=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{letterFrequency}\NormalTok{(x1, }\FunctionTok{c}\NormalTok{(}\StringTok{"G"}\NormalTok{, }\StringTok{"C"}\NormalTok{), }\AttributeTok{as.prob=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dnastringset}{%
+\subsection{DNAStringSet}\label{dnastringset}}
+
+\texttt{DNAStringSet} class는 여러개의 \texttt{DNAString} 을 모아 놓은 집합이라고 보면 됩니다. \texttt{length} 함수는 DNA string의 갯수이며 \texttt{width} 또는 \texttt{nchar} 함수로 각 string의 길이를 구할 수 있으며 이 외 대부분의 \texttt{DNAString} 에서 사용되는 함수가 동일하게 사용될 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"CTC{-}NACCAGTAT"}\NormalTok{, }\StringTok{"TTGA"}\NormalTok{, }\StringTok{"TACCTAGAG"}\NormalTok{)}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{DNAStringSet}\NormalTok{(x0)}
+\FunctionTok{class}\NormalTok{(x0)}
+\FunctionTok{class}\NormalTok{(x1)}
+\FunctionTok{names}\NormalTok{(x1)}
+\FunctionTok{names}\NormalTok{(x1) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{)}
+\FunctionTok{length}\NormalTok{(x1)}
+\FunctionTok{width}\NormalTok{(x1)}
+\FunctionTok{subseq}\NormalTok{(x1, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\NormalTok{x1[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{x1[}\DecValTok{1}\NormalTok{]}
+
+
+\NormalTok{x3 }\OtherTok{\textless{}{-}} \FunctionTok{DNAString}\NormalTok{(}\StringTok{"ATGAGTAGTTAG"}\NormalTok{)}
+\NormalTok{x4 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(x1, }\FunctionTok{DNAStringSet}\NormalTok{(x3))}
+\NormalTok{x4[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{x4}
+\FunctionTok{alphabetFrequency}\NormalTok{(x1, }\AttributeTok{baseOnly=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{as.prob=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{letterFrequency}\NormalTok{(x1, }\FunctionTok{c}\NormalTok{(}\StringTok{"G"}\NormalTok{, }\StringTok{"C"}\NormalTok{), }\AttributeTok{as.prob=}\ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{rowSums}\NormalTok{(}\FunctionTok{letterFrequency}\NormalTok{(x1, }\FunctionTok{c}\NormalTok{(}\StringTok{"G"}\NormalTok{, }\StringTok{"C"}\NormalTok{), }\AttributeTok{as.prob=}\ConstantTok{TRUE}\NormalTok{))}
+\FunctionTok{subseq}\NormalTok{(x4, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\FunctionTok{sample}\NormalTok{(DNA\_BASES, }\DecValTok{10}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T), }\AttributeTok{collapse=}\StringTok{""}\NormalTok{)}
+\NormalTok{x2 }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\FunctionTok{sample}\NormalTok{(DNA\_BASES, }\DecValTok{10}\NormalTok{, }\AttributeTok{replace=}\NormalTok{T), }\AttributeTok{collapse=}\StringTok{""}\NormalTok{)}
+
+\NormalTok{x3 }\OtherTok{\textless{}{-}} \FunctionTok{DNAString}\NormalTok{(x1)}
+\NormalTok{x4 }\OtherTok{\textless{}{-}} \FunctionTok{DNAString}\NormalTok{(x2)}
+
+\FunctionTok{DNAStringSet}\NormalTok{(}\FunctionTok{c}\NormalTok{(x1, x2))}
+\FunctionTok{DNAStringSet}\NormalTok{(}\FunctionTok{c}\NormalTok{(x3, x4))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercise-5}{%
+\subsection{Exercise}\label{exercise-5}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  시작코돈과 종결코돈이 있는 길이 36bp 짜리 DNA (랜덤) 서열을 10개 만들어서 DNAStringSet class로 저장하시오
+\item
+  위 생성한 10개 서열의 GC 비율을 계산하시오
+\end{enumerate}
+
+아래는 가장 직관적으로 생각할 수 있는 \texttt{for}를 이용한 방법입니다. 즉, 10개 저장소를 갖는 x0 변수를 미리 생성해 두고 for 문을 돌면서 서열을 하나씩 만들어 저장하는 방법입니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x0 }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\StringTok{""}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(x0))\{}
+\NormalTok{  tmp }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\FunctionTok{sample}\NormalTok{(DNA\_BASES, }\DecValTok{30}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T), }\AttributeTok{collapse=}\StringTok{""}\NormalTok{)}
+\NormalTok{  x0[i] }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"ATG"}\NormalTok{, tmp, }\StringTok{"TAG"}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{x0}
+\end{Highlighting}
+\end{Shaded}
+
+위 코드를 함수로 만들어 보겠습니다. random dna를 만들 때 길이만 다를뿐 같은 코드를 반복해서 사용하고 있습니다. 이럴 경우 DNA 길이를 사용자가 정해주도록 input parameter로 하고 해당 파라메터를 받아 DNA를 만들어 주는 함수를 만들어 사용하면 편리합니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(DNA\_BASES)}
+\NormalTok{random\_dna }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(len)\{}
+\NormalTok{  tmp }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\FunctionTok{sample}\NormalTok{(DNA\_BASES, len, }\AttributeTok{replace =}\NormalTok{ T), }\AttributeTok{collapse=}\StringTok{""}\NormalTok{)}
+\NormalTok{  x0 }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\StringTok{"ATG"}\NormalTok{, tmp, }\StringTok{"TAG"}\NormalTok{, }\AttributeTok{sep=}\StringTok{""}\NormalTok{)}
+  \FunctionTok{return}\NormalTok{(x0)}
+\NormalTok{\}}
+\FunctionTok{random\_dna}\NormalTok{(}\AttributeTok{len=}\DecValTok{30}\NormalTok{)}
+\FunctionTok{random\_dna}\NormalTok{(}\AttributeTok{len=}\DecValTok{40}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+파라메터로 넘겨진 len 값이 sample 함수의 len에 사용된 것을 참고하세요.
+
+이제 길이 30bp짜리 10개의 서열을 반복해서 만들 때 위 함수를 앞서와 같이 for문을 이용하여 10번 반복해서 실행해 주면 같은 결과를 얻습니다. 위와 같이 함수를 만들어 두면 언제든 DNA 서열을 만들 때 재사용 할 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x0 }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\StringTok{""}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(x0))\{}
+\NormalTok{  x0[i] }\OtherTok{\textless{}{-}} \FunctionTok{random\_dna}\NormalTok{(}\DecValTok{30}\NormalTok{)}
+\NormalTok{\}}
+\NormalTok{x0}
+\end{Highlighting}
+\end{Shaded}
+
+그런데 R에는 \texttt{apply} 와 같은 행렬연산 함수가 있어서 for문을 사용하지 않고 편리하게 반복문을 실행할 수 있습니다. \texttt{replicate} 함수는 \texttt{apply}와 같은 기능으로 list나 vector 변수에 대해서 사용할 수 있습니다. 즉, 다음과 같이 사용자가 원하는 함수를 반복해서 실행하고 반복 수 만큼의 길이를 갖는 결과를 반환합니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x0 }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(}\DecValTok{10}\NormalTok{, }\FunctionTok{random\_dna}\NormalTok{(}\DecValTok{30}\NormalTok{))}
+\NormalTok{x0}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{DNAStringSet}\NormalTok{(x0)}
+\NormalTok{x1}
+\end{Highlighting}
+\end{Shaded}
+
+위 x0 스트링들을 XStringSet으로 바꾸고 GC 비율을 구한 후 bargraph를 그리겠습니다. gc\_ratio가 G와 C의 비율값을 저장한 10x2 테이블이므로 x축에 10개의 서열과 각 서열의 GC비율을 나타내고 y축에 비율 값을 그리는 것으로 생각한 후 ggplot의 aes와 파라메터를 적절히 지정해 줍니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{DNAStringSet}\NormalTok{(x0)}
+\NormalTok{gc\_ratio1 }\OtherTok{\textless{}{-}} \FunctionTok{letterFrequency}\NormalTok{(x1, }\FunctionTok{c}\NormalTok{(}\StringTok{"G"}\NormalTok{, }\StringTok{"C"}\NormalTok{), }\AttributeTok{as.prob=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{gc\_ratio2 }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(gc\_ratio1)}
+\FunctionTok{barplot}\NormalTok{(gc\_ratio2, }\AttributeTok{beside=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{apply-functions}{%
+\subsection{Apply functions}\label{apply-functions}}
+
+\texttt{apply}는 데이터를 변형하기 위한 함수라기 보다는 데이터를 다룰 때 각 원소별, 그룹별, row, 또는 column 별로 반복적으로 수행되는 작업을 효율적으로 수행할 수 있도록 해주는 함수입니다. \texttt{apply} 계열의 함수를 적절히 사용하면 효율성이나 편리성 뿐만 아니라 코드의 간결성 등 많은 장점이 있습니다. \texttt{apply}의 두 번째 인자인 margin의 값으로 (\texttt{?apply}참고) 여기서는 \texttt{2}가 사용되었으며 margin 값이 1인지 2인지에 따라서 다음과 같이 작동을 합니다.
+
+\includegraphics[width=4.16667in,height=\textheight]{images/05/01.png}
+
+\texttt{mean}외에도 다양한 함수들이 사용될 수 있으며 아래와 같이 임의의 함수를 만들어서 사용할 수 도 있습니다. 아래 코드에서는 \texttt{function(x)...}로 바로 함수의 정의를 넣어서 사용했으나 그 아래 \texttt{mysd} 함수와 같이 미리 함수 하나를 만들고 난 후 함수 이름을 이용해서 \texttt{apply}를 적용할 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nums }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T)}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(nums, }\AttributeTok{nrow=}\DecValTok{20}\NormalTok{, }\AttributeTok{ncol=}\DecValTok{5}\NormalTok{)}
+\FunctionTok{apply}\NormalTok{(df, }\DecValTok{2}\NormalTok{, sd)}
+\FunctionTok{apply}\NormalTok{(df, }\DecValTok{2}\NormalTok{, mean)}
+\FunctionTok{apply}\NormalTok{(df, }\DecValTok{1}\NormalTok{, sd)}
+\FunctionTok{sd}\NormalTok{(df[}\DecValTok{1}\NormalTok{,])}
+
+\FunctionTok{apply}\NormalTok{(df, }\DecValTok{2}\NormalTok{, sd, }\AttributeTok{na.rm=}\NormalTok{T)}
+\FunctionTok{apply}\NormalTok{(df, }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x)\{ }
+\NormalTok{  xmean }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(x, }\AttributeTok{na.rm=}\NormalTok{T) }
+  \FunctionTok{return}\NormalTok{(xmean)}
+\NormalTok{  \})}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{apply} 함수 외에도 \texttt{sapply}, \texttt{lapply}, \texttt{mapply} 등의 다양한 \texttt{apply}계열 함수가 쓰일 수 있습니다. 먼저 \texttt{lapply}는 \texttt{matrix} 형태 데이터가 아닌 \texttt{list} 데이터에 사용되어 각 \texttt{list} 원소별로 주어진 기능을 반복해서 수행하며 \texttt{sapply}는 \texttt{lapply}와 유사하나 벡터, 리스트, 데이터프레임 등에 함수를 적용할 수 있고 그 결과를 벡터 또는 행렬로 반환합니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
+\NormalTok{l[[}\DecValTok{1}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T)}
+\NormalTok{l[[}\DecValTok{2}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T)}
+\NormalTok{l[[}\DecValTok{3}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T)}
+\NormalTok{l[[}\DecValTok{4}\NormalTok{]] }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T)}
+
+\FunctionTok{lapply}\NormalTok{(l, sd)}
+\FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x)\{}
+  \FunctionTok{sample}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{100}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{replace =}\NormalTok{ T)}
+\NormalTok{  \})}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{xstringview}{%
+\subsection{XStringView}\label{xstringview}}
+
+\texttt{Biostrings}의 또 다른 class인 \texttt{XStringView}는 \texttt{XString} class의 DNA서열을 사용자가 원하는대로 볼 수 있는 인터페이스를 제공합니다. 사용법은 다음과 같습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x2 }\OtherTok{\textless{}{-}}\NormalTok{ x1[[}\DecValTok{1}\NormalTok{]]}
+\FunctionTok{Views}\NormalTok{(x2, }\AttributeTok{start=}\DecValTok{1}\NormalTok{, }\AttributeTok{width=}\DecValTok{20}\NormalTok{)}
+\FunctionTok{Views}\NormalTok{(x2, }\AttributeTok{start=}\DecValTok{1}\NormalTok{, }\AttributeTok{end=}\DecValTok{4}\NormalTok{)}
+\FunctionTok{Views}\NormalTok{(x2, }\AttributeTok{start=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{end=}\DecValTok{4}\NormalTok{)}
+\FunctionTok{Views}\NormalTok{(x2, }\AttributeTok{start=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{), }\AttributeTok{width=}\DecValTok{20}\NormalTok{)}
+\FunctionTok{Views}\NormalTok{(x2, }\AttributeTok{start=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{), }\AttributeTok{width=}\DecValTok{20}\NormalTok{)}
+\NormalTok{i }\OtherTok{\textless{}{-}} \FunctionTok{Views}\NormalTok{(x2, }\AttributeTok{start=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{), }\AttributeTok{width=}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+다음과 같이 한 서열에 대한 여러 부분의 서열 조각도 볼 수 있으며 \texttt{gaps} 함수는 매개변수로 주어진 서열 view의 구간을 제외한 나머지 구간의 서열을 보여주는 함수입니다. \texttt{successiveviews} 함수는 처음 서열부터 매개변수 width에 주어진 갯수 만큼의 서열을 보여주며 \texttt{rep()} 함수를 이용해서 서열의 처음부터 끝까지 보여주는 기능을 합니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v }\OtherTok{\textless{}{-}} \FunctionTok{Views}\NormalTok{(x2, }\AttributeTok{start=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{), }\AttributeTok{end=}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{15}\NormalTok{))}
+\FunctionTok{gaps}\NormalTok{(v)}
+
+\FunctionTok{successiveViews}\NormalTok{(x2, }\AttributeTok{width=}\DecValTok{20}\NormalTok{)}
+\FunctionTok{successiveViews}\NormalTok{(x2, }\AttributeTok{width=}\FunctionTok{rep}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\FunctionTok{successiveViews}\NormalTok{(x2, }\AttributeTok{width=}\FunctionTok{rep}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{sequence-read-and-write}{%
+\subsection{sequence read and write}\label{sequence-read-and-write}}
+
+기본 DNA 서열의 읽고 쓰기이벼 fasta와 fastq 등이 가능합니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{writeXStringSet}\NormalTok{(}\FunctionTok{DNAStringSet}\NormalTok{(x0), }\StringTok{"myfastaseq.fasta"}\NormalTok{, }\AttributeTok{format=}\StringTok{"fasta"}\NormalTok{)}
+
+\NormalTok{myseq }\OtherTok{\textless{}{-}} \FunctionTok{readDNAStringSet}\NormalTok{(}\StringTok{"myfastaseq.fasta"}\NormalTok{, }\AttributeTok{format=}\StringTok{"fasta"}\NormalTok{)}
+\NormalTok{myseq}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercise-6}{%
+\subsection{Exercise}\label{exercise-6}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  1000bp 길이의 랜덤 DNA 서열을 만들고 40bp 단위의 길이로 보는 코드를 작성하시오.
+\end{enumerate}
+
+앞서 만들어둔 \texttt{random\_dna()} 함수를 사용하면 되며 \texttt{successiveview} 함수를 사용해야 하므로 \texttt{DNAString}으로 변환이 필요하며 서열의 길이에 따라서 \texttt{rep()} 를 이용하여 반복 횟수를 자동 계산합니다.
+
+\hypertarget{sequences-from-ncbi}{%
+\section{Sequences from NCBI}\label{sequences-from-ncbi}}
+
+전세계 연구자들이 서열 데이터를 분석하는데 가장 많이 이용하는 사이트 중 하나가 NCBI 이며 따라서 NCBI에서는 연구자들이 데이터베이스에 접근하기위한 편리한 방법을 제공하고 있고 그 중 하나가 Entrez 입니다.
+
+R에서도 Entrez 기능을 도입한 package들이 제공되고 있으며 그 중 하나가 \texttt{rentrez} 입니다. \url{https://www.ncbi.nlm.nih.gov/books/NBK25500/} 이 곳의 Downloading Full Records 를 참고하시면 좋습니다. Entrez는 대략적으로 다음 9개의 유틸리티를 제공합니다.
+
+\begin{quote}
+EInfo (database statistics)\\
+ESearch (text searches)\\
+EPost (UID uploads)\\
+ESummary (document summary downloads)\\
+EFetch (data record downloads)\\
+ELink (Entrez links)\\
+EGQuery (global query)\\
+ESpell (spelling suggestions)\\
+ECitMatch (batch citation searching in PubMed)
+\end{quote}
+
+이 중 \texttt{ESerach}, \texttt{EPost}, \texttt{ESummary}, \texttt{EFetch} 등이 많이 사용하는 유틸이며 정보를 다운로드 받을 경우는 \texttt{EFetch} 를 주로 사용하게 됩니다. rentrez 는 위와 같은 NCBI Eutils API를 활용하여 R 환경에서 탐색이나 다운로드 등 NCBI 데이터베이스와 상호작용이 용이하도록 만들어 놓은 tool 입니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rentrez)}
+
+\FunctionTok{entrez\_dbs}\NormalTok{()}
+\FunctionTok{entrez\_db\_summary}\NormalTok{(}\StringTok{"nuccore"}\NormalTok{)}
+
+
+\NormalTok{covid\_paper }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_search}\NormalTok{(}\AttributeTok{db=}\StringTok{"pubmed"}\NormalTok{, }\AttributeTok{term=}\StringTok{"covid19"}\NormalTok{)}
+\NormalTok{covid\_paper}\SpecialCharTok{$}\NormalTok{ids}
+
+\FunctionTok{names}\NormalTok{(covid\_paper)}
+\NormalTok{covid\_paper}\SpecialCharTok{$}\NormalTok{ids}
+
+
+\NormalTok{covid\_link }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_link}\NormalTok{(}\AttributeTok{db=}\StringTok{"all"}\NormalTok{, }\AttributeTok{id=}\NormalTok{covid\_paper}\SpecialCharTok{$}\NormalTok{ids, }\AttributeTok{dbfrom=}\StringTok{"pubmed"}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(covid\_link)}
+\FunctionTok{names}\NormalTok{(covid\_link}\SpecialCharTok{$}\NormalTok{links)}
+\end{Highlighting}
+\end{Shaded}
+
+특정 균주에 대한 정보를 찾은 후 두 개의 loci에 대한 서열 정보를 다운로드 하는 코드입니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{katipo\_search }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_search}\NormalTok{(}\AttributeTok{db=}\StringTok{"popset"}\NormalTok{, }\AttributeTok{term=}\StringTok{"Latrodectus katipo[Organism]"}\NormalTok{)}
+\NormalTok{katipo\_search}\SpecialCharTok{$}\NormalTok{count}
+
+\NormalTok{katipo\_summs }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_summary}\NormalTok{(}\AttributeTok{db=}\StringTok{"popset"}\NormalTok{, }\AttributeTok{id=}\NormalTok{katipo\_search}\SpecialCharTok{$}\NormalTok{ids)}
+\FunctionTok{names}\NormalTok{(katipo\_summs)}
+\NormalTok{katipo\_summs}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{41350664}\StringTok{\textasciigrave{}}
+\FunctionTok{class}\NormalTok{(katipo\_summs)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"esummary\_list"}\NormalTok{)}
+
+\NormalTok{titles }\OtherTok{\textless{}{-}} \FunctionTok{extract\_from\_esummary}\NormalTok{(katipo\_summs, }\StringTok{"title"}\NormalTok{)}
+\FunctionTok{unname}\NormalTok{(titles)}
+
+\FunctionTok{print}\NormalTok{(katipo\_summs)}
+\NormalTok{katipo\_summs}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{1790798044}\StringTok{\textasciigrave{}}\SpecialCharTok{$}\NormalTok{gi}
+
+
+\NormalTok{COI\_ids }\OtherTok{\textless{}{-}}\NormalTok{ katipo\_search}\SpecialCharTok{$}\NormalTok{ids[}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{)]}
+\NormalTok{trnL\_ids }\OtherTok{\textless{}{-}}\NormalTok{ katipo\_search}\SpecialCharTok{$}\NormalTok{ids[}\DecValTok{5}\NormalTok{]}
+\NormalTok{COI }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_fetch}\NormalTok{(}\AttributeTok{db=}\StringTok{"popset"}\NormalTok{, }\AttributeTok{id=}\NormalTok{COI\_ids, }\AttributeTok{rettype=}\StringTok{"fasta"}\NormalTok{)}
+\NormalTok{trnL }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_fetch}\NormalTok{(}\AttributeTok{db=}\StringTok{"popset"}\NormalTok{, }\AttributeTok{id=}\NormalTok{trnL\_ids, }\AttributeTok{rettype=}\StringTok{"fasta"}\NormalTok{)}
+
+
+\FunctionTok{write}\NormalTok{(COI, }\StringTok{"COI.fasta"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+아래는 관련 서열들을 비교해서 트리를 그리는 코드 입니다. ape라는 패키지를 사용하며 align tool은 대부분 linux 기반 commandline 프로그램들이 많습니다. window 기반 환경에서는 docker 등을 활용해서 관련 분석을 수행할 수 있습니다.
+
+\includegraphics{images/ape.PNG}
+
+\hypertarget{exercise-7}{%
+\subsection{Exercise}\label{exercise-7}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  뎅기바이러스 서열 4종에 대한 NCBI의 accession 번호가 다음과 같음 NC\_001477, NC\_001474, NC\_001475, NC\_002640 해당 DNA 서열을 fasta 형식으로 \texttt{nuccore} 데이터베이스에서 다운로드 하시오
+\end{enumerate}
+
+\hypertarget{sequence-statistics}{%
+\section{Sequence statistics}\label{sequence-statistics}}
+
+oligonucleotideFrequency 는 width와 step 이라는 옵션에 따라서 해당 서열의 모든 핵산의 수를 세어주는 합수입니다. 다음에 사용되는 yeastSEQCHR1는 yeast의 첫 번째 염색체 정보를 담고 있는 데이터 입니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(yeastSEQCHR1)}
+\NormalTok{yeast1 }\OtherTok{\textless{}{-}} \FunctionTok{DNAString}\NormalTok{(yeastSEQCHR1)}
+
+\FunctionTok{oligonucleotideFrequency}\NormalTok{(yeast1)}
+\FunctionTok{dinucleotideFrequency}\NormalTok{(yeast1)}
+\FunctionTok{trinucleotideFrequency}\NormalTok{(yeast1)}
+
+\NormalTok{tri }\OtherTok{\textless{}{-}} \FunctionTok{trinucleotideFrequency}\NormalTok{(yeast1, }\AttributeTok{as.array=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+yeast1 서열을 아미노산 서열로 변환한 후 코돈과 아미노산들의 분포를 보겠습니다. 참고로 너무 많은 범위의 탐색은 계산을 느려지게 할 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tri1 }\OtherTok{\textless{}{-}} \FunctionTok{trinucleotideFrequency}\NormalTok{(yeast1)}
+\FunctionTok{names}\NormalTok{(tri1) }\OtherTok{\textless{}{-}}\NormalTok{ GENETIC\_CODE[}\FunctionTok{names}\NormalTok{(tri1)]}
+\FunctionTok{sapply}\NormalTok{(}\FunctionTok{split}\NormalTok{(tri1, }\FunctionTok{names}\NormalTok{(tri1)), sum) }
+\end{Highlighting}
+\end{Shaded}
+
+ORF 단위로 묶어서 탐색을 할 수 있습니다. ORF를 찾는 다양한 툴이 있고 만들수도 있지만 본 강의에서는 NCBI에서 제공하는 orffinder를 사용하도록 하겠습니다.
+
+\includegraphics{images/orffinder.PNG}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_ORFs }\OtherTok{\textless{}{-}} \FunctionTok{readDNAStringSet}\NormalTok{(}\StringTok{"yeast1orf.fasta"}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(my\_ORFs), }\AttributeTok{br=}\DecValTok{100}\NormalTok{)}
+\NormalTok{codon\_usage }\OtherTok{\textless{}{-}} \FunctionTok{trinucleotideFrequency}\NormalTok{(my\_ORFs, }\AttributeTok{step=}\DecValTok{3}\NormalTok{)}
+\NormalTok{global\_codon\_usage }\OtherTok{\textless{}{-}} \FunctionTok{trinucleotideFrequency}\NormalTok{(my\_ORFs, }\AttributeTok{step=}\DecValTok{3}\NormalTok{, }\AttributeTok{simplify.as=}\StringTok{"collapsed"}\NormalTok{)}
+\FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{all}\NormalTok{(}\FunctionTok{colSums}\NormalTok{(codon\_usage) }\SpecialCharTok{==}\NormalTok{ global\_codon\_usage))  }\CommentTok{\# sanity check}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{mydat }\OtherTok{\textless{}{-}}\NormalTok{ global\_codon\_usage }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  data.frame }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  rownames\_to\_column }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{codon =} \StringTok{"rowname"}\NormalTok{, }\AttributeTok{freq =} \StringTok{"."}\NormalTok{) }
+
+\FunctionTok{ggplot}\NormalTok{(mydat, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{codon, }\AttributeTok{y=}\NormalTok{freq)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercise-8}{%
+\subsection{Exercise}\label{exercise-8}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  위에서 그려진 그림에서 dplyr::arrange를 사용해서 데이터를 다시 배치하고 x 라벨은 세로로 90도 회전시키는 둥 적절한 theme 옵션을 사용해서 명확하게 식별 가능한 그림으로 다시 그리시오
+\end{enumerate}
+
+\hypertarget{align-two-sequences}{%
+\section{Align two sequences}\label{align-two-sequences}}
+
+Biostrings 패키지에는 다음과 같이 local, global alignment를 수행할 수 있는 함수를 제공하고 있습니다. pattern과 subject 구분 주의하세요
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aln }\OtherTok{\textless{}{-}} \FunctionTok{pairwiseAlignment}\NormalTok{(dang[[}\DecValTok{1}\NormalTok{]], dang[[}\DecValTok{2}\NormalTok{]])}
+\NormalTok{alnseqs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{alignedPattern}\NormalTok{(aln), }\FunctionTok{alignedSubject}\NormalTok{(aln))}
+\FunctionTok{class}\NormalTok{(aln)}
+\FunctionTok{class}\NormalTok{(alnseqs)}
+
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"PairwiseAlignmentsSingleSubject"}\NormalTok{)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"DNAStringSet"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(DECIPHER)}
+\FunctionTok{BrowseSeqs}\NormalTok{(alnseqs)}
+\end{Highlighting}
+\end{Shaded}
+
+\href{https://www.bioconductor.org/packages/release/bioc/html/DECIPHER.html}{DECIPHER} 패키지는 서열 alignment나 primer design 등을 수행할 수 있는 패키지로 다음과 같이 별도 메모리에 서열을 저장하고 빠르게 alignment를 수행할 수 있어서 중소 규모의 서열에 대한 분석으로 유용하게 사용될 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(DECIPHER)}
+\NormalTok{dbConn }\OtherTok{\textless{}{-}} \FunctionTok{dbConnect}\NormalTok{(}\FunctionTok{SQLite}\NormalTok{(), }\StringTok{":memory:"}\NormalTok{)}
+\FunctionTok{Seqs2DB}\NormalTok{(dang, }\StringTok{"XStringSet"}\NormalTok{, dbConn, }\StringTok{"dang"}\NormalTok{)}
+\FunctionTok{BrowseDB}\NormalTok{(dbConn)}
+
+\NormalTok{l }\OtherTok{\textless{}{-}} \FunctionTok{IdLengths}\NormalTok{(dbConn)}
+\FunctionTok{Add2DB}\NormalTok{(l, dbConn)}
+\FunctionTok{BrowseDB}\NormalTok{(dbConn)}
+
+\DocumentationTok{\#\# sequence}
+\NormalTok{dna }\OtherTok{\textless{}{-}} \FunctionTok{SearchDB}\NormalTok{(dbConn, }\AttributeTok{identifier=}\StringTok{"dang"}\NormalTok{)}
+\FunctionTok{BrowseSeqs}\NormalTok{(dna)}
+
+\FunctionTok{dbDisconnect}\NormalTok{(dbConn)}
+\CommentTok{\#BrowseSeqs(dna, patterns=forpatterns, colWidth=500)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+** 다음 시간 **
+Docker 
+multiple sequence alignment
+genbank file read/write
+IRanges/GenomicRanges 
+Sequence pattern match
+\end{verbatim}
 
 \end{document}

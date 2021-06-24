@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Working with DNA sequences | 2021 연구데이터 분석과정</title>
+  <meta name="description" content="Lecture" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Working with DNA sequences | 2021 연구데이터 분석과정" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Lecture" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Working with DNA sequences | 2021 연구데이터 분석과정" />
+  
+  <meta name="twitter:description" content="Lecture" />
+  
+
+<meta name="author" content="한국생명공학연구원 김하성" />
+
+
+<meta name="date" content="2021-06-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bioconductor.html"/>
+
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">[2021 KRIBB 특강] R을 이용한 생명데이터 분석</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 강의 개요</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#References_n_books"><i class="fa fa-check"></i><b>1.1</b> 참고 교제</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#References"><i class="fa fa-check"></i><b>1.2</b> 참고 자료</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#Schedule"><i class="fa fa-check"></i><b>1.3</b> 강의 계획</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html"><i class="fa fa-check"></i><b>2</b> R/Rstudio basics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#what-is-r-rstudio"><i class="fa fa-check"></i><b>2.1</b> What is R / Rstudio</a></li>
+<li class="chapter" data-level="2.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-rstudio-installation"><i class="fa fa-check"></i><b>2.2</b> R / Rstudio Installation</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-설치"><i class="fa fa-check"></i><b>2.2.1</b> R 설치</a></li>
+<li class="chapter" data-level="2.2.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#rstudio-설치"><i class="fa fa-check"></i><b>2.2.2</b> Rstudio 설치</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#rstudio-interface"><i class="fa fa-check"></i><b>2.3</b> Rstudio interface</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#keyboard-shortcuts"><i class="fa fa-check"></i><b>2.3.1</b> Keyboard shortcuts</a></li>
+<li class="chapter" data-level="2.3.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise"><i class="fa fa-check"></i><b>2.3.2</b> Exercise</a></li>
+<li class="chapter" data-level="2.3.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#set-a-project"><i class="fa fa-check"></i><b>2.3.3</b> Set a project</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-programming"><i class="fa fa-check"></i><b>2.4</b> R programming</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#console-calculator"><i class="fa fa-check"></i><b>2.4.1</b> Console calculator</a></li>
+<li class="chapter" data-level="2.4.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-1"><i class="fa fa-check"></i><b>2.4.2</b> Exercise</a></li>
+<li class="chapter" data-level="2.4.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#variables-and-values"><i class="fa fa-check"></i><b>2.4.3</b> Variables and values</a></li>
+<li class="chapter" data-level="2.4.4" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-2"><i class="fa fa-check"></i><b>2.4.4</b> Exercise</a></li>
+<li class="chapter" data-level="2.4.5" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#functions"><i class="fa fa-check"></i><b>2.4.5</b> Functions</a></li>
+<li class="chapter" data-level="2.4.6" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-3"><i class="fa fa-check"></i><b>2.4.6</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#terminology"><i class="fa fa-check"></i><b>2.5</b> Terminology</a></li>
+<li class="chapter" data-level="2.6" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#supports"><i class="fa fa-check"></i><b>2.6</b> Supports</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
+<li class="chapter" data-level="2.6.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#cheatsheet"><i class="fa fa-check"></i><b>2.6.2</b> Cheatsheet</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-packages-and-dataset"><i class="fa fa-check"></i><b>2.7</b> R packages and Dataset</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-packages"><i class="fa fa-check"></i><b>2.7.1</b> R packages</a></li>
+<li class="chapter" data-level="2.7.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#data-sets"><i class="fa fa-check"></i><b>2.7.2</b> Data sets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html"><i class="fa fa-check"></i><b>3</b> Tidyverse for Data science</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#tibble-object-type"><i class="fa fa-check"></i><b>3.1</b> Tibble object type</a></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#tidy-data-structure"><i class="fa fa-check"></i><b>3.2</b> Tidy data structure</a></li>
+<li class="chapter" data-level="3.3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#pivoting"><i class="fa fa-check"></i><b>3.3</b> Pivoting</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex7.3.1"><i class="fa fa-check"></i><b>3.3.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#separating-and-uniting"><i class="fa fa-check"></i><b>3.4</b> Separating and uniting</a></li>
+<li class="chapter" data-level="3.5" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#dplyr-and-pipe-operator"><i class="fa fa-check"></i><b>3.5</b> dplyr and pipe operator</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex7.5.1"><i class="fa fa-check"></i><b>3.5.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#dplyr---important-functions"><i class="fa fa-check"></i><b>3.6</b> dplyr - Important functions</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#filter"><i class="fa fa-check"></i><b>3.6.1</b> filter</a></li>
+<li class="chapter" data-level="3.6.2" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#arrange"><i class="fa fa-check"></i><b>3.6.2</b> arrange</a></li>
+<li class="chapter" data-level="3.6.3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#select"><i class="fa fa-check"></i><b>3.6.3</b> select</a></li>
+<li class="chapter" data-level="3.6.4" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#mutate"><i class="fa fa-check"></i><b>3.6.4</b> mutate</a></li>
+<li class="chapter" data-level="3.6.5" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#summarise"><i class="fa fa-check"></i><b>3.6.5</b> summarise</a></li>
+<li class="chapter" data-level="3.6.6" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#join"><i class="fa fa-check"></i><b>3.6.6</b> join</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#airquality-example"><i class="fa fa-check"></i><b>3.7</b> Airquality example</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex8.3.1"><i class="fa fa-check"></i><b>3.7.1</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html"><i class="fa fa-check"></i><b>4</b> ggplot2 for data visualization</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#basics"><i class="fa fa-check"></i><b>4.1</b> Basics</a></li>
+<li class="chapter" data-level="4.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#bar-graph"><i class="fa fa-check"></i><b>4.2</b> Bar graph</a></li>
+<li class="chapter" data-level="4.3" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#line-graph"><i class="fa fa-check"></i><b>4.3</b> Line graph</a></li>
+<li class="chapter" data-level="4.4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#smoothing"><i class="fa fa-check"></i><b>4.4</b> Smoothing</a></li>
+<li class="chapter" data-level="4.5" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#statstics-and-positions"><i class="fa fa-check"></i><b>4.5</b> Statstics and positions</a></li>
+<li class="chapter" data-level="4.6" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#facets"><i class="fa fa-check"></i><b>4.6</b> Facets</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.1"><i class="fa fa-check"></i><b>4.6.1</b> Exercise</a></li>
+<li class="chapter" data-level="4.6.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.2"><i class="fa fa-check"></i><b>4.6.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#themes-labels-and-scales"><i class="fa fa-check"></i><b>4.7</b> Themes, Labels, and Scales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.3"><i class="fa fa-check"></i><b>4.7.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ggplot-examples"><i class="fa fa-check"></i><b>4.8</b> ggplot examples</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#violin-plot"><i class="fa fa-check"></i><b>4.8.1</b> Violin plot</a></li>
+<li class="chapter" data-level="4.8.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#bubble-plot"><i class="fa fa-check"></i><b>4.8.2</b> Bubble plot</a></li>
+<li class="chapter" data-level="4.8.3" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#barplot-with-errorbars"><i class="fa fa-check"></i><b>4.8.3</b> Barplot with errorbars</a></li>
+<li class="chapter" data-level="4.8.4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#horizontal-barplot"><i class="fa fa-check"></i><b>4.8.4</b> horizontal barplot</a></li>
+<li class="chapter" data-level="4.8.5" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#circular-barplot"><i class="fa fa-check"></i><b>4.8.5</b> Circular barplot</a></li>
+<li class="chapter" data-level="4.8.6" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#stacked-area-chart"><i class="fa fa-check"></i><b>4.8.6</b> Stacked area chart</a></li>
+<li class="chapter" data-level="4.8.7" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#density-plot"><i class="fa fa-check"></i><b>4.8.7</b> Density plot</a></li>
+<li class="chapter" data-level="4.8.8" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#waffle-chart"><i class="fa fa-check"></i><b>4.8.8</b> Waffle chart</a></li>
+<li class="chapter" data-level="4.8.9" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#marginal-histogram"><i class="fa fa-check"></i><b>4.8.9</b> Marginal histogram</a></li>
+<li class="chapter" data-level="4.8.10" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#density-ridgeline-plots"><i class="fa fa-check"></i><b>4.8.10</b> Density ridgeline plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html"><i class="fa fa-check"></i><b>5</b> Day1 강의 정리</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#class-1---기초-사용법-프로그래밍"><i class="fa fa-check"></i><b>5.1</b> Class 1 - 기초, 사용법, 프로그래밍</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#목표"><i class="fa fa-check"></i><b>5.1.1</b> 목표</a></li>
+<li class="chapter" data-level="5.1.2" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#rstudio"><i class="fa fa-check"></i><b>5.1.2</b> Rstudio</a></li>
+<li class="chapter" data-level="5.1.3" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#rmarkdown-사용법"><i class="fa fa-check"></i><b>5.1.3</b> Rmarkdown 사용법</a></li>
+<li class="chapter" data-level="5.1.4" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#변수"><i class="fa fa-check"></i><b>5.1.4</b> 변수</a></li>
+<li class="chapter" data-level="5.1.5" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#함수"><i class="fa fa-check"></i><b>5.1.5</b> 함수</a></li>
+<li class="chapter" data-level="5.1.6" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#지역변수-광역변수"><i class="fa fa-check"></i><b>5.1.6</b> 지역변수 광역변수</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#class-2---데이터의-이해"><i class="fa fa-check"></i><b>5.2</b> Class 2 - 데이터의 이해</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#목표-1"><i class="fa fa-check"></i><b>5.2.1</b> 목표</a></li>
+<li class="chapter" data-level="5.2.2" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#tibble"><i class="fa fa-check"></i><b>5.2.2</b> tibble</a></li>
+<li class="chapter" data-level="5.2.3" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#tidy-data"><i class="fa fa-check"></i><b>5.2.3</b> tidy data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#class-3---데이터-형변환의-이해"><i class="fa fa-check"></i><b>5.3</b> class 3 - 데이터 형변환의 이해</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#목표-2"><i class="fa fa-check"></i><b>5.3.1</b> 목표</a></li>
+<li class="chapter" data-level="5.3.2" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#파이프오퍼레이터"><i class="fa fa-check"></i><b>5.3.2</b> 파이프오퍼레이터</a></li>
+<li class="chapter" data-level="5.3.3" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#dplyr-사용"><i class="fa fa-check"></i><b>5.3.3</b> dplyr 사용</a></li>
+<li class="chapter" data-level="5.3.4" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#예제"><i class="fa fa-check"></i><b>5.3.4</b> 예제</a></li>
+<li class="chapter" data-level="5.3.5" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#스크립트-활용"><i class="fa fa-check"></i><b>5.3.5</b> 스크립트 활용</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>6</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bioconductor.html"><a href="bioconductor.html#packages"><i class="fa fa-check"></i><b>6.1</b> Packages</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="bioconductor.html"><a href="bioconductor.html#installation"><i class="fa fa-check"></i><b>6.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="bioconductor.html"><a href="bioconductor.html#learning-and-support"><i class="fa fa-check"></i><b>6.2</b> Learning and support</a></li>
+<li class="chapter" data-level="6.3" data-path="bioconductor.html"><a href="bioconductor.html#class-object-and-method"><i class="fa fa-check"></i><b>6.3</b> Class, Object and Method</a></li>
+<li class="chapter" data-level="6.4" data-path="bioconductor.html"><a href="bioconductor.html#bioconductor의-oop"><i class="fa fa-check"></i><b>6.4</b> Bioconductor의 OOP</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="bioconductor.html"><a href="bioconductor.html#exercise-4"><i class="fa fa-check"></i><b>6.4.1</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html"><i class="fa fa-check"></i><b>7</b> Working with DNA sequences</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#biostrings"><i class="fa fa-check"></i><b>7.1</b> Biostrings</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#dnastring"><i class="fa fa-check"></i><b>7.1.1</b> DNAString</a></li>
+<li class="chapter" data-level="7.1.2" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#dnastringset"><i class="fa fa-check"></i><b>7.1.2</b> DNAStringSet</a></li>
+<li class="chapter" data-level="7.1.3" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#exercise-5"><i class="fa fa-check"></i><b>7.1.3</b> Exercise</a></li>
+<li class="chapter" data-level="7.1.4" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#apply-functions"><i class="fa fa-check"></i><b>7.1.4</b> Apply functions</a></li>
+<li class="chapter" data-level="7.1.5" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#xstringview"><i class="fa fa-check"></i><b>7.1.5</b> XStringView</a></li>
+<li class="chapter" data-level="7.1.6" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#sequence-read-and-write"><i class="fa fa-check"></i><b>7.1.6</b> sequence read and write</a></li>
+<li class="chapter" data-level="7.1.7" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#exercise-6"><i class="fa fa-check"></i><b>7.1.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#sequences-from-ncbi"><i class="fa fa-check"></i><b>7.2</b> Sequences from NCBI</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#exercise-7"><i class="fa fa-check"></i><b>7.2.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#sequence-statistics"><i class="fa fa-check"></i><b>7.3</b> Sequence statistics</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#exercise-8"><i class="fa fa-check"></i><b>7.3.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#align-two-sequences"><i class="fa fa-check"></i><b>7.4</b> Align two sequences</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">2021 연구데이터 분석과정</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="working-with-dna-sequences" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Working with DNA sequences</h1>
+<p>서열을 이용한 분석은 Biostrings, IRanges/GenomicRanges 등 몇몇 핵심 패키지들에 기반해서 수행됩니다.</p>
+<div id="biostrings" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Biostrings</h2>
+<p><code>Biostrings</code>는 DNA, RNA, amino acids와 같은 생물학적 string을 다루기 위한 다양한 함수를 제공하는 패키지 입니다. 특히 서열에서의 패턴 탐색이나 Smith-Waterman local alignments, Needleman-Wunsch global alignments 등의 서열 비교함수를 제공하여 간단한 서열 분석에 자주 활용되는 패키지 입니다 <span class="citation">[@sippl1999biological]</span>. 아래와 같이 설치할 수 있습니다.</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="working-with-dna-sequences.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb137-2"><a href="working-with-dna-sequences.html#cb137-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb137-3"><a href="working-with-dna-sequences.html#cb137-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb137-4"><a href="working-with-dna-sequences.html#cb137-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Biostrings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="working-with-dna-sequences.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Biostrings)</span></code></pre></div>
+<p>Biostrings 패키지는 기본적으로 <code>XString, XStringSet, XStringViews</code> 3가지의 class를 정의하고 있습니다. XString은 DNA나 RNA, AA 등 생물학적 서열 한 가닥을 다루기위한 클래스이며 XStringSet은 여러 가닥을 다루기위한 클래스 입니다.</p>
+<p><img src="images/04/biostrings.JPG" /></p>
+<p>DNAString 함수를 이용해서 객체를 만들어낼 수 있으며 ‘A’, ‘C’, ‘G’, ‘T’ 외에 ‘-’ (insertion), ‘N’ 을 허용합니다.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="working-with-dna-sequences.html#cb139-1" aria-hidden="true" tabindex="-1"></a>dna1 <span class="ot">&lt;-</span> <span class="fu">DNAString</span>(<span class="st">&quot;ACGT?&quot;</span>)</span>
+<span id="cb139-2"><a href="working-with-dna-sequences.html#cb139-2" aria-hidden="true" tabindex="-1"></a>dna1 <span class="ot">&lt;-</span> <span class="fu">DNAString</span>(<span class="st">&quot;ACGT-N&quot;</span>)</span>
+<span id="cb139-3"><a href="working-with-dna-sequences.html#cb139-3" aria-hidden="true" tabindex="-1"></a>dna1[<span class="dv">1</span>]</span>
+<span id="cb139-4"><a href="working-with-dna-sequences.html#cb139-4" aria-hidden="true" tabindex="-1"></a>dna1[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb139-5"><a href="working-with-dna-sequences.html#cb139-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb139-6"><a href="working-with-dna-sequences.html#cb139-6" aria-hidden="true" tabindex="-1"></a>dna2 <span class="ot">&lt;-</span> <span class="fu">DNAStringSet</span>(<span class="fu">c</span>(<span class="st">&quot;ACGT&quot;</span>, <span class="st">&quot;GTCA&quot;</span>, <span class="st">&quot;GCTA&quot;</span>))</span>
+<span id="cb139-7"><a href="working-with-dna-sequences.html#cb139-7" aria-hidden="true" tabindex="-1"></a>dna2[<span class="dv">1</span>]</span>
+<span id="cb139-8"><a href="working-with-dna-sequences.html#cb139-8" aria-hidden="true" tabindex="-1"></a>dna2[[<span class="dv">1</span>]]</span>
+<span id="cb139-9"><a href="working-with-dna-sequences.html#cb139-9" aria-hidden="true" tabindex="-1"></a>dna2[[<span class="dv">1</span>]][<span class="dv">1</span>]</span></code></pre></div>
+<p>다음 내장변수 들은 <code>Biostrings</code> 패키지를 로드하면 자동으로 저장되는 변수들로 생물학적 서열을 미리 정의해 놓았습니다. IUPAC (International Union of Pure and Applied Chemistry, 국제 순수·응용 화학 연합)</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="working-with-dna-sequences.html#cb140-1" aria-hidden="true" tabindex="-1"></a>DNA_BASES</span>
+<span id="cb140-2"><a href="working-with-dna-sequences.html#cb140-2" aria-hidden="true" tabindex="-1"></a>DNA_ALPHABET</span>
+<span id="cb140-3"><a href="working-with-dna-sequences.html#cb140-3" aria-hidden="true" tabindex="-1"></a>IUPAC_CODE_MAP</span>
+<span id="cb140-4"><a href="working-with-dna-sequences.html#cb140-4" aria-hidden="true" tabindex="-1"></a>GENETIC_CODE</span></code></pre></div>
+<p><img src="images/rna-codon-chart.jpg" width="400" /></p>
+<p>위 변수들을 이용하면 다음처럼 <code>sample()</code> 함수를 이용해서 랜덤하게 DNA 서열을 얻을 수 있습니다. <code>DNA_BASES</code>가 4개 길이를 갖는 벡터인데 이 중 10개를 뽑으려면 <code>replace=T</code>로 해야 합니다.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="working-with-dna-sequences.html#cb141-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="fu">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="at">replace =</span> T)</span>
+<span id="cb141-2"><a href="working-with-dna-sequences.html#cb141-2" aria-hidden="true" tabindex="-1"></a>x0</span>
+<span id="cb141-3"><a href="working-with-dna-sequences.html#cb141-3" aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="st">&quot;ATG&quot;</span></span>
+<span id="cb141-4"><a href="working-with-dna-sequences.html#cb141-4" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="st">&quot;CCC&quot;</span></span>
+<span id="cb141-5"><a href="working-with-dna-sequences.html#cb141-5" aria-hidden="true" tabindex="-1"></a>s3 <span class="ot">&lt;-</span> <span class="fu">paste</span>(s1, s2, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb141-6"><a href="working-with-dna-sequences.html#cb141-6" aria-hidden="true" tabindex="-1"></a>s3</span>
+<span id="cb141-7"><a href="working-with-dna-sequences.html#cb141-7" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">paste</span>(x0, <span class="at">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb141-8"><a href="working-with-dna-sequences.html#cb141-8" aria-hidden="true" tabindex="-1"></a>x1</span></code></pre></div>
+<p>관련 함수는 <a href="http://bioconductor.org/packages/release/bioc/vignettes/Biostrings/inst/doc/BiostringsQuickOverview.pdf">Cheat sheat</a> 참고</p>
+<div id="dnastring" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> DNAString</h3>
+<p><code>DNAString</code> class에서 <code>length</code> 함수는 핵산의 갯수를 (<code>DNAStringSet</code> 타입의 변수에서 length는 DNA 가닥의 갯수) 계산하며 핵산의 갯수는 <code>nchar</code>함수로 얻어낼 수 있습니다. <code>toString</code>은 DNAString 타입을 단순 문자열로 변환해주는 함수이며 상보서열, 역상보서열 등의 정보도 <code>complement</code>, <code>reverseComplement</code> 등을 사용하여 찾아낼 수 있습니다.</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="working-with-dna-sequences.html#cb142-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="at">replace =</span> T), <span class="at">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb142-2"><a href="working-with-dna-sequences.html#cb142-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">DNAString</span>(x0)</span>
+<span id="cb142-3"><a href="working-with-dna-sequences.html#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x0)</span>
+<span id="cb142-4"><a href="working-with-dna-sequences.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x1)</span>
+<span id="cb142-5"><a href="working-with-dna-sequences.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x1)</span>
+<span id="cb142-6"><a href="working-with-dna-sequences.html#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="fu">toString</span>(x1)</span>
+<span id="cb142-7"><a href="working-with-dna-sequences.html#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="fu">complement</span>(x1)</span>
+<span id="cb142-8"><a href="working-with-dna-sequences.html#cb142-8" aria-hidden="true" tabindex="-1"></a>Biostrings<span class="sc">::</span><span class="fu">complement</span>(x1)</span>
+<span id="cb142-9"><a href="working-with-dna-sequences.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="fu">reverseComplement</span>(x1)</span></code></pre></div>
+<p><code>DNAString</code>의 인덱싱은 vector (string)과 같으며 DNAStringSet은 list의 인덱싱과 같습니다.</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="working-with-dna-sequences.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="do">## indexing</span></span>
+<span id="cb143-2"><a href="working-with-dna-sequences.html#cb143-2" aria-hidden="true" tabindex="-1"></a>x1[<span class="dv">1</span>]</span>
+<span id="cb143-3"><a href="working-with-dna-sequences.html#cb143-3" aria-hidden="true" tabindex="-1"></a>x1[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb143-4"><a href="working-with-dna-sequences.html#cb143-4" aria-hidden="true" tabindex="-1"></a><span class="fu">subseq</span>(x1, <span class="at">start=</span><span class="dv">3</span>, <span class="at">end=</span><span class="dv">5</span>)</span>
+<span id="cb143-5"><a href="working-with-dna-sequences.html#cb143-5" aria-hidden="true" tabindex="-1"></a><span class="fu">subseq</span>(x1, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb143-6"><a href="working-with-dna-sequences.html#cb143-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-7"><a href="working-with-dna-sequences.html#cb143-7" aria-hidden="true" tabindex="-1"></a><span class="do">## letter frequency</span></span>
+<span id="cb143-8"><a href="working-with-dna-sequences.html#cb143-8" aria-hidden="true" tabindex="-1"></a><span class="fu">alphabetFrequency</span>(x1, <span class="at">baseOnly=</span><span class="cn">TRUE</span>, <span class="at">as.prob=</span><span class="cn">TRUE</span>)</span>
+<span id="cb143-9"><a href="working-with-dna-sequences.html#cb143-9" aria-hidden="true" tabindex="-1"></a><span class="fu">letterFrequency</span>(x1, <span class="fu">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="at">as.prob=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="dnastringset" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> DNAStringSet</h3>
+<p><code>DNAStringSet</code> class는 여러개의 <code>DNAString</code> 을 모아 놓은 집합이라고 보면 됩니다. <code>length</code> 함수는 DNA string의 갯수이며 <code>width</code> 또는 <code>nchar</code> 함수로 각 string의 길이를 구할 수 있으며 이 외 대부분의 <code>DNAString</code> 에서 사용되는 함수가 동일하게 사용될 수 있습니다.</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="working-with-dna-sequences.html#cb144-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;CTC-NACCAGTAT&quot;</span>, <span class="st">&quot;TTGA&quot;</span>, <span class="st">&quot;TACCTAGAG&quot;</span>)</span>
+<span id="cb144-2"><a href="working-with-dna-sequences.html#cb144-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">DNAStringSet</span>(x0)</span>
+<span id="cb144-3"><a href="working-with-dna-sequences.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x0)</span>
+<span id="cb144-4"><a href="working-with-dna-sequences.html#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x1)</span>
+<span id="cb144-5"><a href="working-with-dna-sequences.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(x1)</span>
+<span id="cb144-6"><a href="working-with-dna-sequences.html#cb144-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(x1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
+<span id="cb144-7"><a href="working-with-dna-sequences.html#cb144-7" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x1)</span>
+<span id="cb144-8"><a href="working-with-dna-sequences.html#cb144-8" aria-hidden="true" tabindex="-1"></a><span class="fu">width</span>(x1)</span>
+<span id="cb144-9"><a href="working-with-dna-sequences.html#cb144-9" aria-hidden="true" tabindex="-1"></a><span class="fu">subseq</span>(x1, <span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb144-10"><a href="working-with-dna-sequences.html#cb144-10" aria-hidden="true" tabindex="-1"></a>x1[[<span class="dv">1</span>]]</span>
+<span id="cb144-11"><a href="working-with-dna-sequences.html#cb144-11" aria-hidden="true" tabindex="-1"></a>x1[<span class="dv">1</span>]</span>
+<span id="cb144-12"><a href="working-with-dna-sequences.html#cb144-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-13"><a href="working-with-dna-sequences.html#cb144-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb144-14"><a href="working-with-dna-sequences.html#cb144-14" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">DNAString</span>(<span class="st">&quot;ATGAGTAGTTAG&quot;</span>)</span>
+<span id="cb144-15"><a href="working-with-dna-sequences.html#cb144-15" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">c</span>(x1, <span class="fu">DNAStringSet</span>(x3))</span>
+<span id="cb144-16"><a href="working-with-dna-sequences.html#cb144-16" aria-hidden="true" tabindex="-1"></a>x4[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb144-17"><a href="working-with-dna-sequences.html#cb144-17" aria-hidden="true" tabindex="-1"></a>x4</span>
+<span id="cb144-18"><a href="working-with-dna-sequences.html#cb144-18" aria-hidden="true" tabindex="-1"></a><span class="fu">alphabetFrequency</span>(x1, <span class="at">baseOnly=</span><span class="cn">TRUE</span>, <span class="at">as.prob=</span><span class="cn">TRUE</span>)</span>
+<span id="cb144-19"><a href="working-with-dna-sequences.html#cb144-19" aria-hidden="true" tabindex="-1"></a><span class="fu">letterFrequency</span>(x1, <span class="fu">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="at">as.prob=</span><span class="cn">TRUE</span>)</span>
+<span id="cb144-20"><a href="working-with-dna-sequences.html#cb144-20" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(<span class="fu">letterFrequency</span>(x1, <span class="fu">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="at">as.prob=</span><span class="cn">TRUE</span>))</span>
+<span id="cb144-21"><a href="working-with-dna-sequences.html#cb144-21" aria-hidden="true" tabindex="-1"></a><span class="fu">subseq</span>(x4, <span class="dv">2</span>, <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="working-with-dna-sequences.html#cb145-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="at">replace =</span> T), <span class="at">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb145-2"><a href="working-with-dna-sequences.html#cb145-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">sample</span>(DNA_BASES, <span class="dv">10</span>, <span class="at">replace=</span>T), <span class="at">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb145-3"><a href="working-with-dna-sequences.html#cb145-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-4"><a href="working-with-dna-sequences.html#cb145-4" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">DNAString</span>(x1)</span>
+<span id="cb145-5"><a href="working-with-dna-sequences.html#cb145-5" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">DNAString</span>(x2)</span>
+<span id="cb145-6"><a href="working-with-dna-sequences.html#cb145-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-7"><a href="working-with-dna-sequences.html#cb145-7" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSet</span>(<span class="fu">c</span>(x1, x2))</span>
+<span id="cb145-8"><a href="working-with-dna-sequences.html#cb145-8" aria-hidden="true" tabindex="-1"></a><span class="fu">DNAStringSet</span>(<span class="fu">c</span>(x3, x4))</span></code></pre></div>
+</div>
+<div id="exercise-5" class="section level3" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> Exercise</h3>
+<ol style="list-style-type: decimal">
+<li><p>시작코돈과 종결코돈이 있는 길이 36bp 짜리 DNA (랜덤) 서열을 10개 만들어서 DNAStringSet class로 저장하시오</p></li>
+<li><p>위 생성한 10개 서열의 GC 비율을 계산하시오</p></li>
+</ol>
+<p>아래는 가장 직관적으로 생각할 수 있는 <code>for</code>를 이용한 방법입니다. 즉, 10개 저장소를 갖는 x0 변수를 미리 생성해 두고 for 문을 돌면서 서열을 하나씩 만들어 저장하는 방법입니다.</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="working-with-dna-sequences.html#cb146-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;&quot;</span>, <span class="dv">10</span>)</span>
+<span id="cb146-2"><a href="working-with-dna-sequences.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x0)){</span>
+<span id="cb146-3"><a href="working-with-dna-sequences.html#cb146-3" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">sample</span>(DNA_BASES, <span class="dv">30</span>, <span class="at">replace =</span> T), <span class="at">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb146-4"><a href="working-with-dna-sequences.html#cb146-4" aria-hidden="true" tabindex="-1"></a>  x0[i] <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;ATG&quot;</span>, tmp, <span class="st">&quot;TAG&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb146-5"><a href="working-with-dna-sequences.html#cb146-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb146-6"><a href="working-with-dna-sequences.html#cb146-6" aria-hidden="true" tabindex="-1"></a>x0</span></code></pre></div>
+<p>위 코드를 함수로 만들어 보겠습니다. random dna를 만들 때 길이만 다를뿐 같은 코드를 반복해서 사용하고 있습니다. 이럴 경우 DNA 길이를 사용자가 정해주도록 input parameter로 하고 해당 파라메터를 받아 DNA를 만들어 주는 함수를 만들어 사용하면 편리합니다.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="working-with-dna-sequences.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(DNA_BASES)</span>
+<span id="cb147-2"><a href="working-with-dna-sequences.html#cb147-2" aria-hidden="true" tabindex="-1"></a>random_dna <span class="ot">&lt;-</span> <span class="cf">function</span>(len){</span>
+<span id="cb147-3"><a href="working-with-dna-sequences.html#cb147-3" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">sample</span>(DNA_BASES, len, <span class="at">replace =</span> T), <span class="at">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb147-4"><a href="working-with-dna-sequences.html#cb147-4" aria-hidden="true" tabindex="-1"></a>  x0 <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;ATG&quot;</span>, tmp, <span class="st">&quot;TAG&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb147-5"><a href="working-with-dna-sequences.html#cb147-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x0)</span>
+<span id="cb147-6"><a href="working-with-dna-sequences.html#cb147-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb147-7"><a href="working-with-dna-sequences.html#cb147-7" aria-hidden="true" tabindex="-1"></a><span class="fu">random_dna</span>(<span class="at">len=</span><span class="dv">30</span>)</span>
+<span id="cb147-8"><a href="working-with-dna-sequences.html#cb147-8" aria-hidden="true" tabindex="-1"></a><span class="fu">random_dna</span>(<span class="at">len=</span><span class="dv">40</span>)</span></code></pre></div>
+<p>파라메터로 넘겨진 len 값이 sample 함수의 len에 사용된 것을 참고하세요.</p>
+<p>이제 길이 30bp짜리 10개의 서열을 반복해서 만들 때 위 함수를 앞서와 같이 for문을 이용하여 10번 반복해서 실행해 주면 같은 결과를 얻습니다. 위와 같이 함수를 만들어 두면 언제든 DNA 서열을 만들 때 재사용 할 수 있습니다.</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="working-with-dna-sequences.html#cb148-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;&quot;</span>, <span class="dv">10</span>)</span>
+<span id="cb148-2"><a href="working-with-dna-sequences.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x0)){</span>
+<span id="cb148-3"><a href="working-with-dna-sequences.html#cb148-3" aria-hidden="true" tabindex="-1"></a>  x0[i] <span class="ot">&lt;-</span> <span class="fu">random_dna</span>(<span class="dv">30</span>)</span>
+<span id="cb148-4"><a href="working-with-dna-sequences.html#cb148-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb148-5"><a href="working-with-dna-sequences.html#cb148-5" aria-hidden="true" tabindex="-1"></a>x0</span></code></pre></div>
+<p>그런데 R에는 <code>apply</code> 와 같은 행렬연산 함수가 있어서 for문을 사용하지 않고 편리하게 반복문을 실행할 수 있습니다. <code>replicate</code> 함수는 <code>apply</code>와 같은 기능으로 list나 vector 변수에 대해서 사용할 수 있습니다. 즉, 다음과 같이 사용자가 원하는 함수를 반복해서 실행하고 반복 수 만큼의 길이를 갖는 결과를 반환합니다.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="working-with-dna-sequences.html#cb149-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10</span>, <span class="fu">random_dna</span>(<span class="dv">30</span>))</span>
+<span id="cb149-2"><a href="working-with-dna-sequences.html#cb149-2" aria-hidden="true" tabindex="-1"></a>x0</span>
+<span id="cb149-3"><a href="working-with-dna-sequences.html#cb149-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">DNAStringSet</span>(x0)</span>
+<span id="cb149-4"><a href="working-with-dna-sequences.html#cb149-4" aria-hidden="true" tabindex="-1"></a>x1</span></code></pre></div>
+<p>위 x0 스트링들을 XStringSet으로 바꾸고 GC 비율을 구한 후 bargraph를 그리겠습니다. gc_ratio가 G와 C의 비율값을 저장한 10x2 테이블이므로 x축에 10개의 서열과 각 서열의 GC비율을 나타내고 y축에 비율 값을 그리는 것으로 생각한 후 ggplot의 aes와 파라메터를 적절히 지정해 줍니다.</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="working-with-dna-sequences.html#cb150-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">DNAStringSet</span>(x0)</span>
+<span id="cb150-2"><a href="working-with-dna-sequences.html#cb150-2" aria-hidden="true" tabindex="-1"></a>gc_ratio1 <span class="ot">&lt;-</span> <span class="fu">letterFrequency</span>(x1, <span class="fu">c</span>(<span class="st">&quot;G&quot;</span>, <span class="st">&quot;C&quot;</span>), <span class="at">as.prob=</span><span class="cn">TRUE</span>)</span>
+<span id="cb150-3"><a href="working-with-dna-sequences.html#cb150-3" aria-hidden="true" tabindex="-1"></a>gc_ratio2 <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(gc_ratio1)</span>
+<span id="cb150-4"><a href="working-with-dna-sequences.html#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(gc_ratio2, <span class="at">beside=</span>T)</span></code></pre></div>
+</div>
+<div id="apply-functions" class="section level3" number="7.1.4">
+<h3><span class="header-section-number">7.1.4</span> Apply functions</h3>
+<p><code>apply</code>는 데이터를 변형하기 위한 함수라기 보다는 데이터를 다룰 때 각 원소별, 그룹별, row, 또는 column 별로 반복적으로 수행되는 작업을 효율적으로 수행할 수 있도록 해주는 함수입니다. <code>apply</code> 계열의 함수를 적절히 사용하면 효율성이나 편리성 뿐만 아니라 코드의 간결성 등 많은 장점이 있습니다. <code>apply</code>의 두 번째 인자인 margin의 값으로 (<code>?apply</code>참고) 여기서는 <code>2</code>가 사용되었으며 margin 값이 1인지 2인지에 따라서 다음과 같이 작동을 합니다.</p>
+<p><img src="images/05/01.png" width="400" /></p>
+<p><code>mean</code>외에도 다양한 함수들이 사용될 수 있으며 아래와 같이 임의의 함수를 만들어서 사용할 수 도 있습니다. 아래 코드에서는 <code>function(x)...</code>로 바로 함수의 정의를 넣어서 사용했으나 그 아래 <code>mysd</code> 함수와 같이 미리 함수 하나를 만들고 난 후 함수 이름을 이용해서 <code>apply</code>를 적용할 수 있습니다.</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="working-with-dna-sequences.html#cb151-1" aria-hidden="true" tabindex="-1"></a>nums <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb151-2"><a href="working-with-dna-sequences.html#cb151-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">matrix</span>(nums, <span class="at">nrow=</span><span class="dv">20</span>, <span class="at">ncol=</span><span class="dv">5</span>)</span>
+<span id="cb151-3"><a href="working-with-dna-sequences.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(df, <span class="dv">2</span>, sd)</span>
+<span id="cb151-4"><a href="working-with-dna-sequences.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(df, <span class="dv">2</span>, mean)</span>
+<span id="cb151-5"><a href="working-with-dna-sequences.html#cb151-5" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(df, <span class="dv">1</span>, sd)</span>
+<span id="cb151-6"><a href="working-with-dna-sequences.html#cb151-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(df[<span class="dv">1</span>,])</span>
+<span id="cb151-7"><a href="working-with-dna-sequences.html#cb151-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb151-8"><a href="working-with-dna-sequences.html#cb151-8" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(df, <span class="dv">2</span>, sd, <span class="at">na.rm=</span>T)</span>
+<span id="cb151-9"><a href="working-with-dna-sequences.html#cb151-9" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(df, <span class="dv">2</span>, <span class="cf">function</span>(x){ </span>
+<span id="cb151-10"><a href="working-with-dna-sequences.html#cb151-10" aria-hidden="true" tabindex="-1"></a>  xmean <span class="ot">&lt;-</span> <span class="fu">mean</span>(x, <span class="at">na.rm=</span>T) </span>
+<span id="cb151-11"><a href="working-with-dna-sequences.html#cb151-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(xmean)</span>
+<span id="cb151-12"><a href="working-with-dna-sequences.html#cb151-12" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+<p><code>apply</code> 함수 외에도 <code>sapply</code>, <code>lapply</code>, <code>mapply</code> 등의 다양한 <code>apply</code>계열 함수가 쓰일 수 있습니다. 먼저 <code>lapply</code>는 <code>matrix</code> 형태 데이터가 아닌 <code>list</code> 데이터에 사용되어 각 <code>list</code> 원소별로 주어진 기능을 반복해서 수행하며 <code>sapply</code>는 <code>lapply</code>와 유사하나 벡터, 리스트, 데이터프레임 등에 함수를 적용할 수 있고 그 결과를 벡터 또는 행렬로 반환합니다.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="working-with-dna-sequences.html#cb152-1" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb152-2"><a href="working-with-dna-sequences.html#cb152-2" aria-hidden="true" tabindex="-1"></a>l[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb152-3"><a href="working-with-dna-sequences.html#cb152-3" aria-hidden="true" tabindex="-1"></a>l[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb152-4"><a href="working-with-dna-sequences.html#cb152-4" aria-hidden="true" tabindex="-1"></a>l[[<span class="dv">3</span>]] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb152-5"><a href="working-with-dna-sequences.html#cb152-5" aria-hidden="true" tabindex="-1"></a>l[[<span class="dv">4</span>]] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb152-6"><a href="working-with-dna-sequences.html#cb152-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb152-7"><a href="working-with-dna-sequences.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(l, sd)</span>
+<span id="cb152-8"><a href="working-with-dna-sequences.html#cb152-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="cf">function</span>(x){</span>
+<span id="cb152-9"><a href="working-with-dna-sequences.html#cb152-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">100</span>, <span class="at">replace =</span> T)</span>
+<span id="cb152-10"><a href="working-with-dna-sequences.html#cb152-10" aria-hidden="true" tabindex="-1"></a>  })</span></code></pre></div>
+</div>
+<div id="xstringview" class="section level3" number="7.1.5">
+<h3><span class="header-section-number">7.1.5</span> XStringView</h3>
+<p><code>Biostrings</code>의 또 다른 class인 <code>XStringView</code>는 <code>XString</code> class의 DNA서열을 사용자가 원하는대로 볼 수 있는 인터페이스를 제공합니다. 사용법은 다음과 같습니다.</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="working-with-dna-sequences.html#cb153-1" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> x1[[<span class="dv">1</span>]]</span>
+<span id="cb153-2"><a href="working-with-dna-sequences.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(x2, <span class="at">start=</span><span class="dv">1</span>, <span class="at">width=</span><span class="dv">20</span>)</span>
+<span id="cb153-3"><a href="working-with-dna-sequences.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(x2, <span class="at">start=</span><span class="dv">1</span>, <span class="at">end=</span><span class="dv">4</span>)</span>
+<span id="cb153-4"><a href="working-with-dna-sequences.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(x2, <span class="at">start=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">end=</span><span class="dv">4</span>)</span>
+<span id="cb153-5"><a href="working-with-dna-sequences.html#cb153-5" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(x2, <span class="at">start=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="at">width=</span><span class="dv">20</span>)</span>
+<span id="cb153-6"><a href="working-with-dna-sequences.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="fu">Views</span>(x2, <span class="at">start=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="at">width=</span><span class="dv">20</span>)</span>
+<span id="cb153-7"><a href="working-with-dna-sequences.html#cb153-7" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="fu">Views</span>(x2, <span class="at">start=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="at">width=</span><span class="dv">20</span>)</span></code></pre></div>
+<p>다음과 같이 한 서열에 대한 여러 부분의 서열 조각도 볼 수 있으며 <code>gaps</code> 함수는 매개변수로 주어진 서열 view의 구간을 제외한 나머지 구간의 서열을 보여주는 함수입니다. <code>successiveviews</code> 함수는 처음 서열부터 매개변수 width에 주어진 갯수 만큼의 서열을 보여주며 <code>rep()</code> 함수를 이용해서 서열의 처음부터 끝까지 보여주는 기능을 합니다.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="working-with-dna-sequences.html#cb154-1" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">Views</span>(x2, <span class="at">start=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">10</span>), <span class="at">end=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">15</span>))</span>
+<span id="cb154-2"><a href="working-with-dna-sequences.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gaps</span>(v)</span>
+<span id="cb154-3"><a href="working-with-dna-sequences.html#cb154-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-4"><a href="working-with-dna-sequences.html#cb154-4" aria-hidden="true" tabindex="-1"></a><span class="fu">successiveViews</span>(x2, <span class="at">width=</span><span class="dv">20</span>)</span>
+<span id="cb154-5"><a href="working-with-dna-sequences.html#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="fu">successiveViews</span>(x2, <span class="at">width=</span><span class="fu">rep</span>(<span class="dv">20</span>, <span class="dv">2</span>))</span>
+<span id="cb154-6"><a href="working-with-dna-sequences.html#cb154-6" aria-hidden="true" tabindex="-1"></a><span class="fu">successiveViews</span>(x2, <span class="at">width=</span><span class="fu">rep</span>(<span class="dv">20</span>, <span class="dv">3</span>))</span></code></pre></div>
+</div>
+<div id="sequence-read-and-write" class="section level3" number="7.1.6">
+<h3><span class="header-section-number">7.1.6</span> sequence read and write</h3>
+<p>기본 DNA 서열의 읽고 쓰기이벼 fasta와 fastq 등이 가능합니다.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="working-with-dna-sequences.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">writeXStringSet</span>(<span class="fu">DNAStringSet</span>(x0), <span class="st">&quot;myfastaseq.fasta&quot;</span>, <span class="at">format=</span><span class="st">&quot;fasta&quot;</span>)</span>
+<span id="cb155-2"><a href="working-with-dna-sequences.html#cb155-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb155-3"><a href="working-with-dna-sequences.html#cb155-3" aria-hidden="true" tabindex="-1"></a>myseq <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">&quot;myfastaseq.fasta&quot;</span>, <span class="at">format=</span><span class="st">&quot;fasta&quot;</span>)</span>
+<span id="cb155-4"><a href="working-with-dna-sequences.html#cb155-4" aria-hidden="true" tabindex="-1"></a>myseq</span></code></pre></div>
+</div>
+<div id="exercise-6" class="section level3" number="7.1.7">
+<h3><span class="header-section-number">7.1.7</span> Exercise</h3>
+<ol style="list-style-type: decimal">
+<li>1000bp 길이의 랜덤 DNA 서열을 만들고 40bp 단위의 길이로 보는 코드를 작성하시오.</li>
+</ol>
+<p>앞서 만들어둔 <code>random_dna()</code> 함수를 사용하면 되며 <code>successiveview</code> 함수를 사용해야 하므로 <code>DNAString</code>으로 변환이 필요하며 서열의 길이에 따라서 <code>rep()</code> 를 이용하여 반복 횟수를 자동 계산합니다.</p>
+</div>
+</div>
+<div id="sequences-from-ncbi" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Sequences from NCBI</h2>
+<p>전세계 연구자들이 서열 데이터를 분석하는데 가장 많이 이용하는 사이트 중 하나가 NCBI 이며 따라서 NCBI에서는 연구자들이 데이터베이스에 접근하기위한 편리한 방법을 제공하고 있고 그 중 하나가 Entrez 입니다.</p>
+<p>R에서도 Entrez 기능을 도입한 package들이 제공되고 있으며 그 중 하나가 <code>rentrez</code> 입니다. <a href="https://www.ncbi.nlm.nih.gov/books/NBK25500/" class="uri">https://www.ncbi.nlm.nih.gov/books/NBK25500/</a> 이 곳의 Downloading Full Records 를 참고하시면 좋습니다. Entrez는 대략적으로 다음 9개의 유틸리티를 제공합니다.</p>
+<blockquote>
+<p>EInfo (database statistics)<br />
+ESearch (text searches)<br />
+EPost (UID uploads)<br />
+ESummary (document summary downloads)<br />
+EFetch (data record downloads)<br />
+ELink (Entrez links)<br />
+EGQuery (global query)<br />
+ESpell (spelling suggestions)<br />
+ECitMatch (batch citation searching in PubMed)</p>
+</blockquote>
+<p>이 중 <code>ESerach</code>, <code>EPost</code>, <code>ESummary</code>, <code>EFetch</code> 등이 많이 사용하는 유틸이며 정보를 다운로드 받을 경우는 <code>EFetch</code> 를 주로 사용하게 됩니다. rentrez 는 위와 같은 NCBI Eutils API를 활용하여 R 환경에서 탐색이나 다운로드 등 NCBI 데이터베이스와 상호작용이 용이하도록 만들어 놓은 tool 입니다.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="working-with-dna-sequences.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rentrez)</span>
+<span id="cb156-2"><a href="working-with-dna-sequences.html#cb156-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-3"><a href="working-with-dna-sequences.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="fu">entrez_dbs</span>()</span>
+<span id="cb156-4"><a href="working-with-dna-sequences.html#cb156-4" aria-hidden="true" tabindex="-1"></a><span class="fu">entrez_db_summary</span>(<span class="st">&quot;nuccore&quot;</span>)</span>
+<span id="cb156-5"><a href="working-with-dna-sequences.html#cb156-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-6"><a href="working-with-dna-sequences.html#cb156-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-7"><a href="working-with-dna-sequences.html#cb156-7" aria-hidden="true" tabindex="-1"></a>covid_paper <span class="ot">&lt;-</span> <span class="fu">entrez_search</span>(<span class="at">db=</span><span class="st">&quot;pubmed&quot;</span>, <span class="at">term=</span><span class="st">&quot;covid19&quot;</span>)</span>
+<span id="cb156-8"><a href="working-with-dna-sequences.html#cb156-8" aria-hidden="true" tabindex="-1"></a>covid_paper<span class="sc">$</span>ids</span>
+<span id="cb156-9"><a href="working-with-dna-sequences.html#cb156-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-10"><a href="working-with-dna-sequences.html#cb156-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covid_paper)</span>
+<span id="cb156-11"><a href="working-with-dna-sequences.html#cb156-11" aria-hidden="true" tabindex="-1"></a>covid_paper<span class="sc">$</span>ids</span>
+<span id="cb156-12"><a href="working-with-dna-sequences.html#cb156-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-13"><a href="working-with-dna-sequences.html#cb156-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-14"><a href="working-with-dna-sequences.html#cb156-14" aria-hidden="true" tabindex="-1"></a>covid_link <span class="ot">&lt;-</span> <span class="fu">entrez_link</span>(<span class="at">db=</span><span class="st">&quot;all&quot;</span>, <span class="at">id=</span>covid_paper<span class="sc">$</span>ids, <span class="at">dbfrom=</span><span class="st">&quot;pubmed&quot;</span>)</span>
+<span id="cb156-15"><a href="working-with-dna-sequences.html#cb156-15" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covid_link)</span>
+<span id="cb156-16"><a href="working-with-dna-sequences.html#cb156-16" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covid_link<span class="sc">$</span>links)</span></code></pre></div>
+<p>특정 균주에 대한 정보를 찾은 후 두 개의 loci에 대한 서열 정보를 다운로드 하는 코드입니다.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="working-with-dna-sequences.html#cb157-1" aria-hidden="true" tabindex="-1"></a>katipo_search <span class="ot">&lt;-</span> <span class="fu">entrez_search</span>(<span class="at">db=</span><span class="st">&quot;popset&quot;</span>, <span class="at">term=</span><span class="st">&quot;Latrodectus katipo[Organism]&quot;</span>)</span>
+<span id="cb157-2"><a href="working-with-dna-sequences.html#cb157-2" aria-hidden="true" tabindex="-1"></a>katipo_search<span class="sc">$</span>count</span>
+<span id="cb157-3"><a href="working-with-dna-sequences.html#cb157-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-4"><a href="working-with-dna-sequences.html#cb157-4" aria-hidden="true" tabindex="-1"></a>katipo_summs <span class="ot">&lt;-</span> <span class="fu">entrez_summary</span>(<span class="at">db=</span><span class="st">&quot;popset&quot;</span>, <span class="at">id=</span>katipo_search<span class="sc">$</span>ids)</span>
+<span id="cb157-5"><a href="working-with-dna-sequences.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(katipo_summs)</span>
+<span id="cb157-6"><a href="working-with-dna-sequences.html#cb157-6" aria-hidden="true" tabindex="-1"></a>katipo_summs<span class="sc">$</span><span class="st">`</span><span class="at">41350664</span><span class="st">`</span></span>
+<span id="cb157-7"><a href="working-with-dna-sequences.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(katipo_summs)</span>
+<span id="cb157-8"><a href="working-with-dna-sequences.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;esummary_list&quot;</span>)</span>
+<span id="cb157-9"><a href="working-with-dna-sequences.html#cb157-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-10"><a href="working-with-dna-sequences.html#cb157-10" aria-hidden="true" tabindex="-1"></a>titles <span class="ot">&lt;-</span> <span class="fu">extract_from_esummary</span>(katipo_summs, <span class="st">&quot;title&quot;</span>)</span>
+<span id="cb157-11"><a href="working-with-dna-sequences.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="fu">unname</span>(titles)</span>
+<span id="cb157-12"><a href="working-with-dna-sequences.html#cb157-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-13"><a href="working-with-dna-sequences.html#cb157-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(katipo_summs)</span>
+<span id="cb157-14"><a href="working-with-dna-sequences.html#cb157-14" aria-hidden="true" tabindex="-1"></a>katipo_summs<span class="sc">$</span><span class="st">`</span><span class="at">1790798044</span><span class="st">`</span><span class="sc">$</span>gi</span>
+<span id="cb157-15"><a href="working-with-dna-sequences.html#cb157-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-16"><a href="working-with-dna-sequences.html#cb157-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-17"><a href="working-with-dna-sequences.html#cb157-17" aria-hidden="true" tabindex="-1"></a>COI_ids <span class="ot">&lt;-</span> katipo_search<span class="sc">$</span>ids[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">6</span>)]</span>
+<span id="cb157-18"><a href="working-with-dna-sequences.html#cb157-18" aria-hidden="true" tabindex="-1"></a>trnL_ids <span class="ot">&lt;-</span> katipo_search<span class="sc">$</span>ids[<span class="dv">5</span>]</span>
+<span id="cb157-19"><a href="working-with-dna-sequences.html#cb157-19" aria-hidden="true" tabindex="-1"></a>COI <span class="ot">&lt;-</span> <span class="fu">entrez_fetch</span>(<span class="at">db=</span><span class="st">&quot;popset&quot;</span>, <span class="at">id=</span>COI_ids, <span class="at">rettype=</span><span class="st">&quot;fasta&quot;</span>)</span>
+<span id="cb157-20"><a href="working-with-dna-sequences.html#cb157-20" aria-hidden="true" tabindex="-1"></a>trnL <span class="ot">&lt;-</span> <span class="fu">entrez_fetch</span>(<span class="at">db=</span><span class="st">&quot;popset&quot;</span>, <span class="at">id=</span>trnL_ids, <span class="at">rettype=</span><span class="st">&quot;fasta&quot;</span>)</span>
+<span id="cb157-21"><a href="working-with-dna-sequences.html#cb157-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-22"><a href="working-with-dna-sequences.html#cb157-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-23"><a href="working-with-dna-sequences.html#cb157-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(COI, <span class="st">&quot;COI.fasta&quot;</span>)</span></code></pre></div>
+<p>아래는 관련 서열들을 비교해서 트리를 그리는 코드 입니다. ape라는 패키지를 사용하며 align tool은 대부분 linux 기반 commandline 프로그램들이 많습니다. window 기반 환경에서는 docker 등을 활용해서 관련 분석을 수행할 수 있습니다.</p>
+<p><img src="images/ape.PNG" /></p>
+<div id="exercise-7" class="section level3" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Exercise</h3>
+<ol style="list-style-type: decimal">
+<li>뎅기바이러스 서열 4종에 대한 NCBI의 accession 번호가 다음과 같음 NC_001477, NC_001474, NC_001475, NC_002640 해당 DNA 서열을 fasta 형식으로 <code>nuccore</code> 데이터베이스에서 다운로드 하시오</li>
+</ol>
+</div>
+</div>
+<div id="sequence-statistics" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Sequence statistics</h2>
+<p>oligonucleotideFrequency 는 width와 step 이라는 옵션에 따라서 해당 서열의 모든 핵산의 수를 세어주는 합수입니다. 다음에 사용되는 yeastSEQCHR1는 yeast의 첫 번째 염색체 정보를 담고 있는 데이터 입니다.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="working-with-dna-sequences.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(yeastSEQCHR1)</span>
+<span id="cb158-2"><a href="working-with-dna-sequences.html#cb158-2" aria-hidden="true" tabindex="-1"></a>yeast1 <span class="ot">&lt;-</span> <span class="fu">DNAString</span>(yeastSEQCHR1)</span>
+<span id="cb158-3"><a href="working-with-dna-sequences.html#cb158-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-4"><a href="working-with-dna-sequences.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="fu">oligonucleotideFrequency</span>(yeast1)</span>
+<span id="cb158-5"><a href="working-with-dna-sequences.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dinucleotideFrequency</span>(yeast1)</span>
+<span id="cb158-6"><a href="working-with-dna-sequences.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="fu">trinucleotideFrequency</span>(yeast1)</span>
+<span id="cb158-7"><a href="working-with-dna-sequences.html#cb158-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-8"><a href="working-with-dna-sequences.html#cb158-8" aria-hidden="true" tabindex="-1"></a>tri <span class="ot">&lt;-</span> <span class="fu">trinucleotideFrequency</span>(yeast1, <span class="at">as.array=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p>yeast1 서열을 아미노산 서열로 변환한 후 코돈과 아미노산들의 분포를 보겠습니다. 참고로 너무 많은 범위의 탐색은 계산을 느려지게 할 수 있습니다.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="working-with-dna-sequences.html#cb159-1" aria-hidden="true" tabindex="-1"></a>tri1 <span class="ot">&lt;-</span> <span class="fu">trinucleotideFrequency</span>(yeast1)</span>
+<span id="cb159-2"><a href="working-with-dna-sequences.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tri1) <span class="ot">&lt;-</span> GENETIC_CODE[<span class="fu">names</span>(tri1)]</span>
+<span id="cb159-3"><a href="working-with-dna-sequences.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">split</span>(tri1, <span class="fu">names</span>(tri1)), sum) </span></code></pre></div>
+<p>ORF 단위로 묶어서 탐색을 할 수 있습니다. ORF를 찾는 다양한 툴이 있고 만들수도 있지만 본 강의에서는 NCBI에서 제공하는 orffinder를 사용하도록 하겠습니다.</p>
+<p><img src="images/orffinder.PNG" /></p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="working-with-dna-sequences.html#cb160-1" aria-hidden="true" tabindex="-1"></a>my_ORFs <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">&quot;yeast1orf.fasta&quot;</span>)</span>
+<span id="cb160-2"><a href="working-with-dna-sequences.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">nchar</span>(my_ORFs), <span class="at">br=</span><span class="dv">100</span>)</span>
+<span id="cb160-3"><a href="working-with-dna-sequences.html#cb160-3" aria-hidden="true" tabindex="-1"></a>codon_usage <span class="ot">&lt;-</span> <span class="fu">trinucleotideFrequency</span>(my_ORFs, <span class="at">step=</span><span class="dv">3</span>)</span>
+<span id="cb160-4"><a href="working-with-dna-sequences.html#cb160-4" aria-hidden="true" tabindex="-1"></a>global_codon_usage <span class="ot">&lt;-</span> <span class="fu">trinucleotideFrequency</span>(my_ORFs, <span class="at">step=</span><span class="dv">3</span>, <span class="at">simplify.as=</span><span class="st">&quot;collapsed&quot;</span>)</span>
+<span id="cb160-5"><a href="working-with-dna-sequences.html#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(<span class="fu">colSums</span>(codon_usage) <span class="sc">==</span> global_codon_usage))  <span class="co"># sanity check</span></span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="working-with-dna-sequences.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb161-2"><a href="working-with-dna-sequences.html#cb161-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-3"><a href="working-with-dna-sequences.html#cb161-3" aria-hidden="true" tabindex="-1"></a>mydat <span class="ot">&lt;-</span> global_codon_usage <span class="sc">%&gt;%</span> </span>
+<span id="cb161-4"><a href="working-with-dna-sequences.html#cb161-4" aria-hidden="true" tabindex="-1"></a>  data.frame <span class="sc">%&gt;%</span> </span>
+<span id="cb161-5"><a href="working-with-dna-sequences.html#cb161-5" aria-hidden="true" tabindex="-1"></a>  rownames_to_column <span class="sc">%&gt;%</span> </span>
+<span id="cb161-6"><a href="working-with-dna-sequences.html#cb161-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">codon =</span> <span class="st">&quot;rowname&quot;</span>, <span class="at">freq =</span> <span class="st">&quot;.&quot;</span>) </span>
+<span id="cb161-7"><a href="working-with-dna-sequences.html#cb161-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-8"><a href="working-with-dna-sequences.html#cb161-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydat, <span class="fu">aes</span>(<span class="at">x=</span>codon, <span class="at">y=</span>freq)) <span class="sc">+</span></span>
+<span id="cb161-9"><a href="working-with-dna-sequences.html#cb161-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) </span></code></pre></div>
+<div id="exercise-8" class="section level3" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Exercise</h3>
+<ol style="list-style-type: decimal">
+<li>위에서 그려진 그림에서 dplyr::arrange를 사용해서 데이터를 다시 배치하고 x 라벨은 세로로 90도 회전시키는 둥 적절한 theme 옵션을 사용해서 명확하게 식별 가능한 그림으로 다시 그리시오</li>
+</ol>
+</div>
+</div>
+<div id="align-two-sequences" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Align two sequences</h2>
+<p>Biostrings 패키지에는 다음과 같이 local, global alignment를 수행할 수 있는 함수를 제공하고 있습니다. pattern과 subject 구분 주의하세요</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="working-with-dna-sequences.html#cb162-1" aria-hidden="true" tabindex="-1"></a>aln <span class="ot">&lt;-</span> <span class="fu">pairwiseAlignment</span>(dang[[<span class="dv">1</span>]], dang[[<span class="dv">2</span>]])</span>
+<span id="cb162-2"><a href="working-with-dna-sequences.html#cb162-2" aria-hidden="true" tabindex="-1"></a>alnseqs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">alignedPattern</span>(aln), <span class="fu">alignedSubject</span>(aln))</span>
+<span id="cb162-3"><a href="working-with-dna-sequences.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(aln)</span>
+<span id="cb162-4"><a href="working-with-dna-sequences.html#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(alnseqs)</span>
+<span id="cb162-5"><a href="working-with-dna-sequences.html#cb162-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-6"><a href="working-with-dna-sequences.html#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;PairwiseAlignmentsSingleSubject&quot;</span>)</span>
+<span id="cb162-7"><a href="working-with-dna-sequences.html#cb162-7" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;DNAStringSet&quot;</span>)</span>
+<span id="cb162-8"><a href="working-with-dna-sequences.html#cb162-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-9"><a href="working-with-dna-sequences.html#cb162-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DECIPHER)</span>
+<span id="cb162-10"><a href="working-with-dna-sequences.html#cb162-10" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(alnseqs)</span></code></pre></div>
+<p><a href="https://www.bioconductor.org/packages/release/bioc/html/DECIPHER.html">DECIPHER</a> 패키지는 서열 alignment나 primer design 등을 수행할 수 있는 패키지로 다음과 같이 별도 메모리에 서열을 저장하고 빠르게 alignment를 수행할 수 있어서 중소 규모의 서열에 대한 분석으로 유용하게 사용될 수 있습니다.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="working-with-dna-sequences.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DECIPHER)</span>
+<span id="cb163-2"><a href="working-with-dna-sequences.html#cb163-2" aria-hidden="true" tabindex="-1"></a>dbConn <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">SQLite</span>(), <span class="st">&quot;:memory:&quot;</span>)</span>
+<span id="cb163-3"><a href="working-with-dna-sequences.html#cb163-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Seqs2DB</span>(dang, <span class="st">&quot;XStringSet&quot;</span>, dbConn, <span class="st">&quot;dang&quot;</span>)</span>
+<span id="cb163-4"><a href="working-with-dna-sequences.html#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseDB</span>(dbConn)</span>
+<span id="cb163-5"><a href="working-with-dna-sequences.html#cb163-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-6"><a href="working-with-dna-sequences.html#cb163-6" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">IdLengths</span>(dbConn)</span>
+<span id="cb163-7"><a href="working-with-dna-sequences.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Add2DB</span>(l, dbConn)</span>
+<span id="cb163-8"><a href="working-with-dna-sequences.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseDB</span>(dbConn)</span>
+<span id="cb163-9"><a href="working-with-dna-sequences.html#cb163-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-10"><a href="working-with-dna-sequences.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="do">## sequence</span></span>
+<span id="cb163-11"><a href="working-with-dna-sequences.html#cb163-11" aria-hidden="true" tabindex="-1"></a>dna <span class="ot">&lt;-</span> <span class="fu">SearchDB</span>(dbConn, <span class="at">identifier=</span><span class="st">&quot;dang&quot;</span>)</span>
+<span id="cb163-12"><a href="working-with-dna-sequences.html#cb163-12" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(dna)</span>
+<span id="cb163-13"><a href="working-with-dna-sequences.html#cb163-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-14"><a href="working-with-dna-sequences.html#cb163-14" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(dbConn)</span>
+<span id="cb163-15"><a href="working-with-dna-sequences.html#cb163-15" aria-hidden="true" tabindex="-1"></a><span class="co">#BrowseSeqs(dna, patterns=forpatterns, colWidth=500)</span></span></code></pre></div>
+<pre><code>** 다음 시간 **
+Docker 
+multiple sequence alignment
+genbank file read/write
+IRanges/GenomicRanges 
+Sequence pattern match</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bioconductor.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["KRIBBR.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
