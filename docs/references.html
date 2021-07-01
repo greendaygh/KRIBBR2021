@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Bioconductor | 2021 연구데이터 분석과정</title>
+  <title>Chapter 11 References | 2021 연구데이터 분석과정</title>
   <meta name="description" content="Lecture" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Bioconductor | 2021 연구데이터 분석과정" />
+  <meta property="og:title" content="Chapter 11 References | 2021 연구데이터 분석과정" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Bioconductor | 2021 연구데이터 분석과정" />
+  <meta name="twitter:title" content="Chapter 11 References | 2021 연구데이터 분석과정" />
   
   <meta name="twitter:description" content="Lecture" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="day1-강의-정리.html"/>
-<link rel="next" href="working-with-dna-sequences.html"/>
+<link rel="prev" href="genomic-data-analysis.html"/>
+
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -364,143 +364,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bioconductor" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Bioconductor</h1>
-<ul>
-<li><a href="https://www.bioconductor.org" class="uri">https://www.bioconductor.org</a></li>
-</ul>
-<p>Bioconductor는 바이오인포메틱스를 위한 R기반의 데이터, 메소드, 그리고 패키지들의 모음입니다. 2002년 microarray 데이터 분석을 위한 플랫폼으로 시작되었으며 현재 2000개 이상의 패키지로 구성되어 있습니다. R은 분산형 오픈소스이나 Bioconductor는 Full-time developer들에 의해서 유지되고 있습니다. <code>CRAN</code>에 배포되지 않고 <code>CRAN</code>에 비해 더 많은 필수 자료들 (vignettes 등)이 필요하며 높은 수준으로 quality control이 되고 있습니다.</p>
-<p>사용 가능한 패키지들은 <a href="http://bioconductor.org/packages/release/BiocViews.html#___Software">이곳</a>을 참고하시면 되겠습니다.</p>
-<p><img src="images/04/bioconductor.JPG" width="600" /></p>
-<p>Bioconductor 코어 개발 그룹은 사용자들이 지놈스케일 데이터를 더 편리하게 다루룰 수 있도록 데이터의 구조를 개발하는데 많은 시간을 들입니다.</p>
-<ul>
-<li>지놈스케일의 서열이나 발현등 대용량 유전자형 데이터 <strong>관리</strong> 및 <strong>통계적 분석</strong>을 위한 툴 제공</li>
-<li>분자수준의 현상과 생장이나 질병 등 표현형수준의 관계를 규명하기 위한 정량 데이터 통합 및 관리</li>
-</ul>
-<div id="packages" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Packages</h2>
-<p>Use &gt;&gt; Software, Annotation, Experiment</p>
-<ul>
-<li>Software: 분석을 위한 툴 모음</li>
-<li>Annotation: 유전자 symbol/ID mapping, gene ontology 기반 유전자 분류, 유전체상에서 exon, transcript, gene 등의 위치, 단백질 기능 등</li>
-<li>Experiment data: 학습 가능할 정도의 Highly curated datasets (실험 데이터)</li>
-<li>Workflow: 특정 데이터 분석을 위한 프로세스 모음 RNA-seq, ChIP seq, copy number analysis, microarray methylation, classic expression analysis, flow cytometry 등</li>
-</ul>
-<p><img src="images/bioconductor_list.PNG" width="600" /></p>
-<div id="installation" class="section level3" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Installation</h3>
-<p><code>BiocManager</code>를 먼저 설치하고 해당 패키지를 설치하시기 바랍니다. <code>BiocManager</code>에는 <code>available()</code>이라는 함수로 (특정 문자가 포함된) 사용 가능한 패키지를 검색할 수 도 있습니다.</p>
-<p>Use &gt;&gt; Software &gt;&gt; IRanges</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="bioconductor.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb128-2"><a href="bioconductor.html#cb128-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
-<span id="cb128-3"><a href="bioconductor.html#cb128-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-4"><a href="bioconductor.html#cb128-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb128-5"><a href="bioconductor.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="do">## .libPaths()</span></span></code></pre></div>
-</div>
-</div>
-<div id="learning-and-support" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Learning and support</h2>
-<p>각 패키지는 제목, 저자, 유지관리자, 설명, 참조, 설치법 등의 정보가 포함된 landing page가 있으며 패키지 내 함수들은 상세한 설명과 예제가 제공됩니다. 예를 들어 <a href="http://bioconductor.org/packages/release/bioc/html/IRanges.html">IRanges</a>의 landing page를 참고하세요</p>
-<p>vignettes는 bioconductor의 중요한 특징 중 하나로 R 코드와 함께 패키지를 사용하는 방법에 대한 상세한 설명을 제공하는 문서입니다.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="bioconductor.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(IRanges)</span>
-<span id="cb129-2"><a href="bioconductor.html#cb129-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-3"><a href="bioconductor.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package=</span><span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb129-4"><a href="bioconductor.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="fu">browseVignettes</span>(<span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb129-5"><a href="bioconductor.html#cb129-5" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;IRangesOverview&quot;</span>, <span class="at">package=</span><span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb129-6"><a href="bioconductor.html#cb129-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-7"><a href="bioconductor.html#cb129-7" aria-hidden="true" tabindex="-1"></a>ir1 <span class="ot">&lt;-</span> <span class="fu">IRanges</span>(<span class="at">start=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">width=</span><span class="dv">10</span><span class="sc">:</span><span class="dv">1</span>)</span>
-<span id="cb129-8"><a href="bioconductor.html#cb129-8" aria-hidden="true" tabindex="-1"></a>ir1</span>
-<span id="cb129-9"><a href="bioconductor.html#cb129-9" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ir1)</span>
-<span id="cb129-10"><a href="bioconductor.html#cb129-10" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb129-11"><a href="bioconductor.html#cb129-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-12"><a href="bioconductor.html#cb129-12" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(IRanges)</span>
-<span id="cb129-13"><a href="bioconductor.html#cb129-13" aria-hidden="true" tabindex="-1"></a>?IRanges</span>
-<span id="cb129-14"><a href="bioconductor.html#cb129-14" aria-hidden="true" tabindex="-1"></a>??IRanges</span></code></pre></div>
-<p>Learn &gt;&gt; Support site 게시판에는 관련된 여러 QnA 들이 있어서 유사 문제에 대한 도움을 받을 수 있습니다.</p>
-</div>
-<div id="class-object-and-method" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Class, Object and Method</h2>
-<p>객체지향프로그래밍 (OOP)은 복잡한 문제를 프로그래밍할 때 발생되는 코드의 복잡성을 해결할 수 있는 하나의 방안으로 1990년대부터 많이 사용되었습니다.</p>
-<p>R도 객체지향 프로그래밍 언어입니다. 그런데 R은 다른 언어들에 비해서 좀 어려운 (다른) 개념으로 사용됩니다. R에서 사용하는 Class에는 크게 base type, S3, S4, RC, 그리고 R6 등 다양한 타입이 있고 이 중 S3를 많이 사용해 왔으며 S3의 단점을 보완한 S4 형식의 class와 R6를 주로 사용합니다 <span class="citation">[@AdvancedR]</span>. 본 강의에서는 S3 형식의 class만 다루도록 하겠습니다.</p>
-<p>클래스를 사용하는 이유는 여러가지가 있겠지만 복잡한 개념의 데이터를 구조화하고 쉽게 관리하기 위해서 사용한다고 보면 될 것 같습니다. 여러분이 알아야할 개념은 Class와 Object 그리고 Method 입니다. 사실 R의 모든것이 Object이고 이러한 Object들의 정의가 Class 입니다.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="bioconductor.html#cb130-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">y=</span>LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
-<span id="cb130-2"><a href="bioconductor.html#cb130-2" aria-hidden="true" tabindex="-1"></a>df</span>
-<span id="cb130-3"><a href="bioconductor.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span></code></pre></div>
-<p>위에서 df는 변수라고 부르지만 object이기도 합니다. df의 class는 data.frame 입니다. 클래스는 누구든 원하는 만큼 얼마든지 만들 수 있습니다.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="bioconductor.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df) <span class="ot">&lt;-</span> <span class="st">&quot;myclass&quot;</span></span>
-<span id="cb131-2"><a href="bioconductor.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span></code></pre></div>
-<p>그런데 모든 object들이 OOP 유래는 아닙니다 base object들이 그 예입니다.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="bioconductor.html#cb132-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb132-2"><a href="bioconductor.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
-<span id="cb132-3"><a href="bioconductor.html#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(x, <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb132-4"><a href="bioconductor.html#cb132-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb132-5"><a href="bioconductor.html#cb132-5" aria-hidden="true" tabindex="-1"></a>mtcars</span>
-<span id="cb132-6"><a href="bioconductor.html#cb132-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(mtcars, <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
-<p>method는 위와 같은 클래스들에 특화된 어떤 기능을 하는 함수라고 생각하시면 됩니다.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="bioconductor.html#cb133-1" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb133-2"><a href="bioconductor.html#cb133-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>)</span>
-<span id="cb133-3"><a href="bioconductor.html#cb133-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-4"><a href="bioconductor.html#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mt)</span>
-<span id="cb133-5"><a href="bioconductor.html#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span>
-<span id="cb133-6"><a href="bioconductor.html#cb133-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mt)</span>
-<span id="cb133-7"><a href="bioconductor.html#cb133-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span>
-<span id="cb133-8"><a href="bioconductor.html#cb133-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-9"><a href="bioconductor.html#cb133-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-10"><a href="bioconductor.html#cb133-10" aria-hidden="true" tabindex="-1"></a>diamonds <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span>diamonds</span>
-<span id="cb133-11"><a href="bioconductor.html#cb133-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-12"><a href="bioconductor.html#cb133-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diamonds<span class="sc">$</span>carat)</span>
-<span id="cb133-13"><a href="bioconductor.html#cb133-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diamonds<span class="sc">$</span>cut)</span>
-<span id="cb133-14"><a href="bioconductor.html#cb133-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-15"><a href="bioconductor.html#cb133-15" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;data.frame&quot;</span>)</span></code></pre></div>
-<p>위 summary, str 등이 generic function이라 불리는 method들 입니다. class마다 사용 가능한 method가 어떠한 정보가 있는지 알기 위해서 <code>methods()</code>라는 함수를 사용합니다.</p>
-</div>
-<div id="bioconductor의-oop" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Bioconductor의 OOP</h2>
-<p>bioconductor에서 다루는 genome 스케일의 experiment나 annotation은 대표적인 복잡한 데이터 중 하나 입니다. Bioconductor에서 OOP 개념은 다음과 같습니다.</p>
-<blockquote>
-<p>class - 복잡한 생물학적 데이터 구조의 틀 정의<br />
-object - 특정 클래스가 특정 구현된 실체<br />
-method - 특정 클래스에 대한 기능 수행</p>
-</blockquote>
-<p>예를 들어 객체 <code>Homo.sapience</code>를 살펴보면 다음과 같습니다.</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="bioconductor.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb134-2"><a href="bioconductor.html#cb134-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
-<span id="cb134-3"><a href="bioconductor.html#cb134-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Homo.sapiens&quot;</span>)</span>
-<span id="cb134-4"><a href="bioconductor.html#cb134-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb134-5"><a href="bioconductor.html#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Homo.sapiens)</span>
-<span id="cb134-6"><a href="bioconductor.html#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Homo.sapiens)</span>
-<span id="cb134-7"><a href="bioconductor.html#cb134-7" aria-hidden="true" tabindex="-1"></a>?OrganismDb</span></code></pre></div>
-<blockquote>
-<p>The OrganismDb class is a container for storing knowledge about existing Annotation packages and the relationships between these resources.</p>
-</blockquote>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="bioconductor.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="fu">class</span>(Homo.sapiens))</span>
-<span id="cb135-2"><a href="bioconductor.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">genes</span>(Homo.sapiens)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb135-3"><a href="bioconductor.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exons</span>(Homo.sapiens)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb135-4"><a href="bioconductor.html#cb135-4" aria-hidden="true" tabindex="-1"></a>homo_seq <span class="ot">&lt;-</span> <span class="fu">seqinfo</span>(Homo.sapiens)</span>
-<span id="cb135-5"><a href="bioconductor.html#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(homo_seq)</span>
-<span id="cb135-6"><a href="bioconductor.html#cb135-6" aria-hidden="true" tabindex="-1"></a>?seqinfo</span></code></pre></div>
-<blockquote>
-<p>A Seqinfo object is a table-like object that contains basic information about a set of genomic sequences. …</p>
-</blockquote>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="bioconductor.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(homo_seq)</span>
-<span id="cb136-2"><a href="bioconductor.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seqnames</span>(homo_seq)</span></code></pre></div>
-<p>bioconductor에는 대용량 정보가 object 형태로 구조화되어 저장되어 있으며 <code>library()</code>함수로 읽어올 수 있고 다양한 함수로 해당 object의 정보를 읽어올 수 있습니다.</p>
-<div id="exercise-4" class="section level3" number="6.4.1">
-<h3><span class="header-section-number">6.4.1</span> Exercise</h3>
-<p><a href="https://adv-r.hadley.nz/s3.html" class="uri">https://adv-r.hadley.nz/s3.html</a></p>
+<div id="references" class="section level1" number="11">
+<h1><span class="header-section-number">Chapter 11</span> References</h1>
 <hr />
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.</p>
 
-</div>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="day1-강의-정리.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="working-with-dna-sequences.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="genomic-data-analysis.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

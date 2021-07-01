@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Bioconductor | 2021 연구데이터 분석과정</title>
+  <title>Chapter 9 Working with DNA sequences II | 2021 연구데이터 분석과정</title>
   <meta name="description" content="Lecture" />
   <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Bioconductor | 2021 연구데이터 분석과정" />
+  <meta property="og:title" content="Chapter 9 Working with DNA sequences II | 2021 연구데이터 분석과정" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Bioconductor | 2021 연구데이터 분석과정" />
+  <meta name="twitter:title" content="Chapter 9 Working with DNA sequences II | 2021 연구데이터 분석과정" />
   
   <meta name="twitter:description" content="Lecture" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="day1-강의-정리.html"/>
-<link rel="next" href="working-with-dna-sequences.html"/>
+<link rel="prev" href="day2-강의-정리.html"/>
+<link rel="next" href="genomic-data-analysis.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -364,134 +364,183 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bioconductor" class="section level1" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Bioconductor</h1>
-<ul>
-<li><a href="https://www.bioconductor.org" class="uri">https://www.bioconductor.org</a></li>
-</ul>
-<p>Bioconductor는 바이오인포메틱스를 위한 R기반의 데이터, 메소드, 그리고 패키지들의 모음입니다. 2002년 microarray 데이터 분석을 위한 플랫폼으로 시작되었으며 현재 2000개 이상의 패키지로 구성되어 있습니다. R은 분산형 오픈소스이나 Bioconductor는 Full-time developer들에 의해서 유지되고 있습니다. <code>CRAN</code>에 배포되지 않고 <code>CRAN</code>에 비해 더 많은 필수 자료들 (vignettes 등)이 필요하며 높은 수준으로 quality control이 되고 있습니다.</p>
-<p>사용 가능한 패키지들은 <a href="http://bioconductor.org/packages/release/BiocViews.html#___Software">이곳</a>을 참고하시면 되겠습니다.</p>
-<p><img src="images/04/bioconductor.JPG" width="600" /></p>
-<p>Bioconductor 코어 개발 그룹은 사용자들이 지놈스케일 데이터를 더 편리하게 다루룰 수 있도록 데이터의 구조를 개발하는데 많은 시간을 들입니다.</p>
-<ul>
-<li>지놈스케일의 서열이나 발현등 대용량 유전자형 데이터 <strong>관리</strong> 및 <strong>통계적 분석</strong>을 위한 툴 제공</li>
-<li>분자수준의 현상과 생장이나 질병 등 표현형수준의 관계를 규명하기 위한 정량 데이터 통합 및 관리</li>
-</ul>
-<div id="packages" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Packages</h2>
-<p>Use &gt;&gt; Software, Annotation, Experiment</p>
-<ul>
-<li>Software: 분석을 위한 툴 모음</li>
-<li>Annotation: 유전자 symbol/ID mapping, gene ontology 기반 유전자 분류, 유전체상에서 exon, transcript, gene 등의 위치, 단백질 기능 등</li>
-<li>Experiment data: 학습 가능할 정도의 Highly curated datasets (실험 데이터)</li>
-<li>Workflow: 특정 데이터 분석을 위한 프로세스 모음 RNA-seq, ChIP seq, copy number analysis, microarray methylation, classic expression analysis, flow cytometry 등</li>
-</ul>
-<p><img src="images/bioconductor_list.PNG" width="600" /></p>
-<div id="installation" class="section level3" number="6.1.1">
-<h3><span class="header-section-number">6.1.1</span> Installation</h3>
-<p><code>BiocManager</code>를 먼저 설치하고 해당 패키지를 설치하시기 바랍니다. <code>BiocManager</code>에는 <code>available()</code>이라는 함수로 (특정 문자가 포함된) 사용 가능한 패키지를 검색할 수 도 있습니다.</p>
-<p>Use &gt;&gt; Software &gt;&gt; IRanges</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="bioconductor.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb128-2"><a href="bioconductor.html#cb128-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
-<span id="cb128-3"><a href="bioconductor.html#cb128-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb128-4"><a href="bioconductor.html#cb128-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb128-5"><a href="bioconductor.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="do">## .libPaths()</span></span></code></pre></div>
-</div>
-</div>
-<div id="learning-and-support" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Learning and support</h2>
-<p>각 패키지는 제목, 저자, 유지관리자, 설명, 참조, 설치법 등의 정보가 포함된 landing page가 있으며 패키지 내 함수들은 상세한 설명과 예제가 제공됩니다. 예를 들어 <a href="http://bioconductor.org/packages/release/bioc/html/IRanges.html">IRanges</a>의 landing page를 참고하세요</p>
-<p>vignettes는 bioconductor의 중요한 특징 중 하나로 R 코드와 함께 패키지를 사용하는 방법에 대한 상세한 설명을 제공하는 문서입니다.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="bioconductor.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(IRanges)</span>
-<span id="cb129-2"><a href="bioconductor.html#cb129-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-3"><a href="bioconductor.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="at">package=</span><span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb129-4"><a href="bioconductor.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="fu">browseVignettes</span>(<span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb129-5"><a href="bioconductor.html#cb129-5" aria-hidden="true" tabindex="-1"></a><span class="fu">vignette</span>(<span class="st">&quot;IRangesOverview&quot;</span>, <span class="at">package=</span><span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb129-6"><a href="bioconductor.html#cb129-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-7"><a href="bioconductor.html#cb129-7" aria-hidden="true" tabindex="-1"></a>ir1 <span class="ot">&lt;-</span> <span class="fu">IRanges</span>(<span class="at">start=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">width=</span><span class="dv">10</span><span class="sc">:</span><span class="dv">1</span>)</span>
-<span id="cb129-8"><a href="bioconductor.html#cb129-8" aria-hidden="true" tabindex="-1"></a>ir1</span>
-<span id="cb129-9"><a href="bioconductor.html#cb129-9" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ir1)</span>
-<span id="cb129-10"><a href="bioconductor.html#cb129-10" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;IRanges&quot;</span>)</span>
-<span id="cb129-11"><a href="bioconductor.html#cb129-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb129-12"><a href="bioconductor.html#cb129-12" aria-hidden="true" tabindex="-1"></a><span class="fu">example</span>(IRanges)</span>
-<span id="cb129-13"><a href="bioconductor.html#cb129-13" aria-hidden="true" tabindex="-1"></a>?IRanges</span>
-<span id="cb129-14"><a href="bioconductor.html#cb129-14" aria-hidden="true" tabindex="-1"></a>??IRanges</span></code></pre></div>
-<p>Learn &gt;&gt; Support site 게시판에는 관련된 여러 QnA 들이 있어서 유사 문제에 대한 도움을 받을 수 있습니다.</p>
-</div>
-<div id="class-object-and-method" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Class, Object and Method</h2>
-<p>객체지향프로그래밍 (OOP)은 복잡한 문제를 프로그래밍할 때 발생되는 코드의 복잡성을 해결할 수 있는 하나의 방안으로 1990년대부터 많이 사용되었습니다.</p>
-<p>R도 객체지향 프로그래밍 언어입니다. 그런데 R은 다른 언어들에 비해서 좀 어려운 (다른) 개념으로 사용됩니다. R에서 사용하는 Class에는 크게 base type, S3, S4, RC, 그리고 R6 등 다양한 타입이 있고 이 중 S3를 많이 사용해 왔으며 S3의 단점을 보완한 S4 형식의 class와 R6를 주로 사용합니다 <span class="citation">[@AdvancedR]</span>. 본 강의에서는 S3 형식의 class만 다루도록 하겠습니다.</p>
-<p>클래스를 사용하는 이유는 여러가지가 있겠지만 복잡한 개념의 데이터를 구조화하고 쉽게 관리하기 위해서 사용한다고 보면 될 것 같습니다. 여러분이 알아야할 개념은 Class와 Object 그리고 Method 입니다. 사실 R의 모든것이 Object이고 이러한 Object들의 정의가 Class 입니다.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="bioconductor.html#cb130-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>), <span class="at">y=</span>LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span>
-<span id="cb130-2"><a href="bioconductor.html#cb130-2" aria-hidden="true" tabindex="-1"></a>df</span>
-<span id="cb130-3"><a href="bioconductor.html#cb130-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span></code></pre></div>
-<p>위에서 df는 변수라고 부르지만 object이기도 합니다. df의 class는 data.frame 입니다. 클래스는 누구든 원하는 만큼 얼마든지 만들 수 있습니다.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="bioconductor.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df) <span class="ot">&lt;-</span> <span class="st">&quot;myclass&quot;</span></span>
-<span id="cb131-2"><a href="bioconductor.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span></code></pre></div>
-<p>그런데 모든 object들이 OOP 유래는 아닙니다 base object들이 그 예입니다.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="bioconductor.html#cb132-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb132-2"><a href="bioconductor.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
-<span id="cb132-3"><a href="bioconductor.html#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(x, <span class="st">&quot;class&quot;</span>)</span>
-<span id="cb132-4"><a href="bioconductor.html#cb132-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb132-5"><a href="bioconductor.html#cb132-5" aria-hidden="true" tabindex="-1"></a>mtcars</span>
-<span id="cb132-6"><a href="bioconductor.html#cb132-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(mtcars, <span class="st">&quot;class&quot;</span>)</span></code></pre></div>
-<p>method는 위와 같은 클래스들에 특화된 어떤 기능을 하는 함수라고 생각하시면 됩니다.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="bioconductor.html#cb133-1" aria-hidden="true" tabindex="-1"></a>mt <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb133-2"><a href="bioconductor.html#cb133-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">9</span>)</span>
-<span id="cb133-3"><a href="bioconductor.html#cb133-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-4"><a href="bioconductor.html#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mt)</span>
-<span id="cb133-5"><a href="bioconductor.html#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(df)</span>
-<span id="cb133-6"><a href="bioconductor.html#cb133-6" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mt)</span>
-<span id="cb133-7"><a href="bioconductor.html#cb133-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df)</span>
-<span id="cb133-8"><a href="bioconductor.html#cb133-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-9"><a href="bioconductor.html#cb133-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-10"><a href="bioconductor.html#cb133-10" aria-hidden="true" tabindex="-1"></a>diamonds <span class="ot">&lt;-</span> ggplot2<span class="sc">::</span>diamonds</span>
-<span id="cb133-11"><a href="bioconductor.html#cb133-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-12"><a href="bioconductor.html#cb133-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diamonds<span class="sc">$</span>carat)</span>
-<span id="cb133-13"><a href="bioconductor.html#cb133-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diamonds<span class="sc">$</span>cut)</span>
-<span id="cb133-14"><a href="bioconductor.html#cb133-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-15"><a href="bioconductor.html#cb133-15" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;data.frame&quot;</span>)</span></code></pre></div>
-<p>위 summary, str 등이 generic function이라 불리는 method들 입니다. class마다 사용 가능한 method가 어떠한 정보가 있는지 알기 위해서 <code>methods()</code>라는 함수를 사용합니다.</p>
-</div>
-<div id="bioconductor의-oop" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Bioconductor의 OOP</h2>
-<p>bioconductor에서 다루는 genome 스케일의 experiment나 annotation은 대표적인 복잡한 데이터 중 하나 입니다. Bioconductor에서 OOP 개념은 다음과 같습니다.</p>
+<div id="working-with-dna-sequences-ii" class="section level1" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Working with DNA sequences II</h1>
+<div id="sequences-from-ncbi-1" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Sequences from NCBI</h2>
+<p>전세계 연구자들이 서열 데이터를 분석하는데 가장 많이 이용하는 사이트 중 하나가 NCBI 이며 따라서 NCBI에서는 연구자들이 데이터베이스에 접근하기위한 편리한 방법을 제공하고 있고 그 중 하나가 Entrez 입니다.</p>
+<p>R에서도 Entrez 기능을 도입한 package들이 제공되고 있으며 그 중 하나가 <code>rentrez</code> 입니다. <a href="https://www.ncbi.nlm.nih.gov/books/NBK25500/" class="uri">https://www.ncbi.nlm.nih.gov/books/NBK25500/</a> 이 곳의 Downloading Full Records 를 참고하시면 좋습니다. Entrez는 대략적으로 다음 9개의 유틸리티를 제공합니다.</p>
 <blockquote>
-<p>class - 복잡한 생물학적 데이터 구조의 틀 정의<br />
-object - 특정 클래스가 특정 구현된 실체<br />
-method - 특정 클래스에 대한 기능 수행</p>
+<p>EInfo (database statistics)<br />
+ESearch (text searches)<br />
+EPost (UID uploads)<br />
+ESummary (document summary downloads)<br />
+EFetch (data record downloads)<br />
+ELink (Entrez links)<br />
+EGQuery (global query)<br />
+ESpell (spelling suggestions)<br />
+ECitMatch (batch citation searching in PubMed)</p>
 </blockquote>
-<p>예를 들어 객체 <code>Homo.sapience</code>를 살펴보면 다음과 같습니다.</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="bioconductor.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb134-2"><a href="bioconductor.html#cb134-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
-<span id="cb134-3"><a href="bioconductor.html#cb134-3" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;Homo.sapiens&quot;</span>)</span>
-<span id="cb134-4"><a href="bioconductor.html#cb134-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb134-5"><a href="bioconductor.html#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Homo.sapiens)</span>
-<span id="cb134-6"><a href="bioconductor.html#cb134-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Homo.sapiens)</span>
-<span id="cb134-7"><a href="bioconductor.html#cb134-7" aria-hidden="true" tabindex="-1"></a>?OrganismDb</span></code></pre></div>
-<blockquote>
-<p>The OrganismDb class is a container for storing knowledge about existing Annotation packages and the relationships between these resources.</p>
-</blockquote>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="bioconductor.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="fu">class</span>(Homo.sapiens))</span>
-<span id="cb135-2"><a href="bioconductor.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">genes</span>(Homo.sapiens)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb135-3"><a href="bioconductor.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exons</span>(Homo.sapiens)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb135-4"><a href="bioconductor.html#cb135-4" aria-hidden="true" tabindex="-1"></a>homo_seq <span class="ot">&lt;-</span> <span class="fu">seqinfo</span>(Homo.sapiens)</span>
-<span id="cb135-5"><a href="bioconductor.html#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(homo_seq)</span>
-<span id="cb135-6"><a href="bioconductor.html#cb135-6" aria-hidden="true" tabindex="-1"></a>?seqinfo</span></code></pre></div>
-<blockquote>
-<p>A Seqinfo object is a table-like object that contains basic information about a set of genomic sequences. …</p>
-</blockquote>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="bioconductor.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(homo_seq)</span>
-<span id="cb136-2"><a href="bioconductor.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seqnames</span>(homo_seq)</span></code></pre></div>
-<p>bioconductor에는 대용량 정보가 object 형태로 구조화되어 저장되어 있으며 <code>library()</code>함수로 읽어올 수 있고 다양한 함수로 해당 object의 정보를 읽어올 수 있습니다.</p>
-<div id="exercise-4" class="section level3" number="6.4.1">
-<h3><span class="header-section-number">6.4.1</span> Exercise</h3>
-<p><a href="https://adv-r.hadley.nz/s3.html" class="uri">https://adv-r.hadley.nz/s3.html</a></p>
-<hr />
-<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.</p>
+<p>이 중 <code>ESerach</code>, <code>EPost</code>, <code>ESummary</code>, <code>EFetch</code> 등이 많이 사용하는 유틸이며 정보를 다운로드 받을 경우는 <code>EFetch</code> 를 주로 사용하게 됩니다. rentrez 는 위와 같은 NCBI Eutils API를 활용하여 R 환경에서 탐색이나 다운로드 등 NCBI 데이터베이스와 상호작용이 용이하도록 만들어 놓은 tool 입니다.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="working-with-dna-sequences-ii.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rentrez)</span>
+<span id="cb177-2"><a href="working-with-dna-sequences-ii.html#cb177-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-3"><a href="working-with-dna-sequences-ii.html#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="fu">entrez_dbs</span>()</span>
+<span id="cb177-4"><a href="working-with-dna-sequences-ii.html#cb177-4" aria-hidden="true" tabindex="-1"></a><span class="fu">entrez_db_summary</span>(<span class="st">&quot;nuccore&quot;</span>)</span>
+<span id="cb177-5"><a href="working-with-dna-sequences-ii.html#cb177-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-6"><a href="working-with-dna-sequences-ii.html#cb177-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-7"><a href="working-with-dna-sequences-ii.html#cb177-7" aria-hidden="true" tabindex="-1"></a>covid_paper <span class="ot">&lt;-</span> <span class="fu">entrez_search</span>(<span class="at">db=</span><span class="st">&quot;pubmed&quot;</span>, <span class="at">term=</span><span class="st">&quot;covid19&quot;</span>)</span>
+<span id="cb177-8"><a href="working-with-dna-sequences-ii.html#cb177-8" aria-hidden="true" tabindex="-1"></a>covid_paper<span class="sc">$</span>ids</span>
+<span id="cb177-9"><a href="working-with-dna-sequences-ii.html#cb177-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-10"><a href="working-with-dna-sequences-ii.html#cb177-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covid_paper)</span>
+<span id="cb177-11"><a href="working-with-dna-sequences-ii.html#cb177-11" aria-hidden="true" tabindex="-1"></a>covid_paper<span class="sc">$</span>ids</span>
+<span id="cb177-12"><a href="working-with-dna-sequences-ii.html#cb177-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-13"><a href="working-with-dna-sequences-ii.html#cb177-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-14"><a href="working-with-dna-sequences-ii.html#cb177-14" aria-hidden="true" tabindex="-1"></a>covid_link <span class="ot">&lt;-</span> <span class="fu">entrez_link</span>(<span class="at">db=</span><span class="st">&quot;all&quot;</span>, <span class="at">id=</span>covid_paper<span class="sc">$</span>ids, <span class="at">dbfrom=</span><span class="st">&quot;pubmed&quot;</span>)</span>
+<span id="cb177-15"><a href="working-with-dna-sequences-ii.html#cb177-15" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covid_link)</span>
+<span id="cb177-16"><a href="working-with-dna-sequences-ii.html#cb177-16" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(covid_link<span class="sc">$</span>links)</span>
+<span id="cb177-17"><a href="working-with-dna-sequences-ii.html#cb177-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(covid_link<span class="sc">$</span>links<span class="sc">$</span>pubmed_pubmed)</span></code></pre></div>
+<p>특정 균주에 대한 정보를 찾은 후 두 개의 loci에 대한 서열 정보를 다운로드 하는 코드입니다. rettype (return type) 등 자세한 정보는 <a href="https://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/">Eutils table</a> 또는 <a href="https://www.ncbi.nlm.nih.gov/books/NBK25499/">NCBI Eutils</a> 페이지를 참고하시기 바랍니다.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="working-with-dna-sequences-ii.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># popset database is a collection of related DNA sequences derived from population</span></span>
+<span id="cb178-2"><a href="working-with-dna-sequences-ii.html#cb178-2" aria-hidden="true" tabindex="-1"></a>katipo_search <span class="ot">&lt;-</span> <span class="fu">entrez_search</span>(<span class="at">db=</span><span class="st">&quot;popset&quot;</span>, <span class="at">term=</span><span class="st">&quot;Latrodectus katipo[Organism]&quot;</span>)</span>
+<span id="cb178-3"><a href="working-with-dna-sequences-ii.html#cb178-3" aria-hidden="true" tabindex="-1"></a>katipo_search<span class="sc">$</span>ids</span>
+<span id="cb178-4"><a href="working-with-dna-sequences-ii.html#cb178-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-5"><a href="working-with-dna-sequences-ii.html#cb178-5" aria-hidden="true" tabindex="-1"></a>katipo_summs <span class="ot">&lt;-</span> <span class="fu">entrez_summary</span>(<span class="at">db=</span><span class="st">&quot;popset&quot;</span>, <span class="at">id=</span>katipo_search<span class="sc">$</span>ids)</span>
+<span id="cb178-6"><a href="working-with-dna-sequences-ii.html#cb178-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(katipo_summs)</span>
+<span id="cb178-7"><a href="working-with-dna-sequences-ii.html#cb178-7" aria-hidden="true" tabindex="-1"></a>katipo_summs<span class="sc">$</span><span class="st">`</span><span class="at">41350664</span><span class="st">`</span></span>
+<span id="cb178-8"><a href="working-with-dna-sequences-ii.html#cb178-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(katipo_summs)</span>
+<span id="cb178-9"><a href="working-with-dna-sequences-ii.html#cb178-9" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;esummary_list&quot;</span>)</span>
+<span id="cb178-10"><a href="working-with-dna-sequences-ii.html#cb178-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-11"><a href="working-with-dna-sequences-ii.html#cb178-11" aria-hidden="true" tabindex="-1"></a>titles <span class="ot">&lt;-</span> <span class="fu">extract_from_esummary</span>(katipo_summs, <span class="st">&quot;title&quot;</span>)</span>
+<span id="cb178-12"><a href="working-with-dna-sequences-ii.html#cb178-12" aria-hidden="true" tabindex="-1"></a><span class="fu">unname</span>(titles)</span>
+<span id="cb178-13"><a href="working-with-dna-sequences-ii.html#cb178-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-14"><a href="working-with-dna-sequences-ii.html#cb178-14" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(katipo_summs)</span>
+<span id="cb178-15"><a href="working-with-dna-sequences-ii.html#cb178-15" aria-hidden="true" tabindex="-1"></a>katipo_summs<span class="sc">$</span><span class="st">`</span><span class="at">1790798044</span><span class="st">`</span><span class="sc">$</span>gi</span>
+<span id="cb178-16"><a href="working-with-dna-sequences-ii.html#cb178-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-17"><a href="working-with-dna-sequences-ii.html#cb178-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-18"><a href="working-with-dna-sequences-ii.html#cb178-18" aria-hidden="true" tabindex="-1"></a>COI_ids <span class="ot">&lt;-</span> katipo_search<span class="sc">$</span>ids[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">6</span>)]</span>
+<span id="cb178-19"><a href="working-with-dna-sequences-ii.html#cb178-19" aria-hidden="true" tabindex="-1"></a>trnL_ids <span class="ot">&lt;-</span> katipo_search<span class="sc">$</span>ids[<span class="dv">5</span>]</span>
+<span id="cb178-20"><a href="working-with-dna-sequences-ii.html#cb178-20" aria-hidden="true" tabindex="-1"></a>COI <span class="ot">&lt;-</span> <span class="fu">entrez_fetch</span>(<span class="at">db=</span><span class="st">&quot;popset&quot;</span>, <span class="at">id=</span>COI_ids, <span class="at">rettype=</span><span class="st">&quot;fasta&quot;</span>)</span>
+<span id="cb178-21"><a href="working-with-dna-sequences-ii.html#cb178-21" aria-hidden="true" tabindex="-1"></a>trnL <span class="ot">&lt;-</span> <span class="fu">entrez_fetch</span>(<span class="at">db=</span><span class="st">&quot;popset&quot;</span>, <span class="at">id=</span>trnL_ids, <span class="at">rettype=</span><span class="st">&quot;fasta&quot;</span>)</span>
+<span id="cb178-22"><a href="working-with-dna-sequences-ii.html#cb178-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-23"><a href="working-with-dna-sequences-ii.html#cb178-23" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(COI, <span class="st">&quot;COI.fasta&quot;</span>)</span>
+<span id="cb178-24"><a href="working-with-dna-sequences-ii.html#cb178-24" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(trnL, <span class="st">&quot;trnl.fasta&quot;</span>)</span>
+<span id="cb178-25"><a href="working-with-dna-sequences-ii.html#cb178-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb178-26"><a href="working-with-dna-sequences-ii.html#cb178-26" aria-hidden="true" tabindex="-1"></a><span class="co">#library(Biostrings)</span></span>
+<span id="cb178-27"><a href="working-with-dna-sequences-ii.html#cb178-27" aria-hidden="true" tabindex="-1"></a>coi <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">&quot;COI.fasta&quot;</span>)</span>
+<span id="cb178-28"><a href="working-with-dna-sequences-ii.html#cb178-28" aria-hidden="true" tabindex="-1"></a>trnl <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">&quot;trnl.fasta&quot;</span>)</span></code></pre></div>
+<div id="day3-chapter06-rentrez-exercise" class="section level3" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Exercise</h3>
+<ol style="list-style-type: decimal">
+<li><p>뎅기바이러스 서열 4종에 대한 NCBI의 accession 번호가 다음과 같음 NC_001477, NC_001474, NC_001475, NC_002640 해당 DNA 서열을 fasta 형식으로 <code>nuccore</code> 데이터베이스에서 다운로드 하시오</p></li>
+<li><p>COVID-19 서열의 NCBI accession 번호를 찾고 <code>nuccore</code> 데이터베이스에서 <code>fasta</code> 포멧과 <code>genbank</code> 포멧의 정보를 다운로드 하고 파일에 저장하시오. 또한 이 파일들을 각각 <code>Biostrings</code> 패키지와 <code>genbankr</code> 패키지를 사용해서 읽어들이시오.</p></li>
+</ol>
+</div>
+</div>
+<div id="pattern-matching" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> Pattern matching</h2>
+<p>Biostrings 패키지에는 하나의 subject 서열에 특정 pattern이 존재하는지 탐색하는 <code>matchPattern</code>함수를 제공합니다. 만약 여러개의 subject 서열에서 하나의 pattern을 찾을 경우에는 <code>vmatchPattern</code>함수를 사용하고 하나의 subject 서열에 여러개의 pattern을 찾는 경우에는 <code>matchPDict</code> 함수를 사용합니다.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="working-with-dna-sequences-ii.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Biostrings)</span>
+<span id="cb179-2"><a href="working-with-dna-sequences-ii.html#cb179-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-3"><a href="working-with-dna-sequences-ii.html#cb179-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(coi)</span>
+<span id="cb179-4"><a href="working-with-dna-sequences-ii.html#cb179-4" aria-hidden="true" tabindex="-1"></a>hits <span class="ot">&lt;-</span> <span class="fu">matchPattern</span>(<span class="st">&quot;ATG&quot;</span>, coi[[<span class="dv">1</span>]], <span class="at">min.mismatch=</span><span class="dv">0</span>, <span class="at">max.mismatch=</span><span class="dv">0</span>)</span>
+<span id="cb179-5"><a href="working-with-dna-sequences-ii.html#cb179-5" aria-hidden="true" tabindex="-1"></a>hits</span>
+<span id="cb179-6"><a href="working-with-dna-sequences-ii.html#cb179-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(hits)</span>
+<span id="cb179-7"><a href="working-with-dna-sequences-ii.html#cb179-7" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;XStringViews&quot;</span>)</span>
+<span id="cb179-8"><a href="working-with-dna-sequences-ii.html#cb179-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ranges</span>(hits)</span>
+<span id="cb179-9"><a href="working-with-dna-sequences-ii.html#cb179-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb179-10"><a href="working-with-dna-sequences-ii.html#cb179-10" aria-hidden="true" tabindex="-1"></a>hits <span class="ot">&lt;-</span> <span class="fu">vmatchPattern</span>(<span class="st">&quot;ATG&quot;</span>, coi, <span class="at">min.mismatch=</span><span class="dv">0</span>, <span class="at">max.mismatch=</span><span class="dv">0</span>)</span>
+<span id="cb179-11"><a href="working-with-dna-sequences-ii.html#cb179-11" aria-hidden="true" tabindex="-1"></a><span class="fu">stack</span>(hits)</span></code></pre></div>
+</div>
+<div id="align-two-sequences-1" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Align two sequences</h2>
+<p>Biostrings 패키지에는 다음과 같이 local, global alignment를 수행할 수 있는 함수를 제공하고 있습니다. 첫 번째 파라메터는 pattern이며 두 번째는 subject 로서 pattern은 query로서 해당 서열이 subject (target)에 있는지를 보는 것과 같습니다.</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="working-with-dna-sequences-ii.html#cb180-1" aria-hidden="true" tabindex="-1"></a>coi <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">&quot;COI.fasta&quot;</span>)</span>
+<span id="cb180-2"><a href="working-with-dna-sequences-ii.html#cb180-2" aria-hidden="true" tabindex="-1"></a>coi</span>
+<span id="cb180-3"><a href="working-with-dna-sequences-ii.html#cb180-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-4"><a href="working-with-dna-sequences-ii.html#cb180-4" aria-hidden="true" tabindex="-1"></a>aln <span class="ot">&lt;-</span> <span class="fu">pairwiseAlignment</span>(coi[[<span class="dv">1</span>]], coi[[<span class="dv">2</span>]])</span>
+<span id="cb180-5"><a href="working-with-dna-sequences-ii.html#cb180-5" aria-hidden="true" tabindex="-1"></a>alnseqs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">alignedPattern</span>(aln), <span class="fu">alignedSubject</span>(aln))</span>
+<span id="cb180-6"><a href="working-with-dna-sequences-ii.html#cb180-6" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(aln)</span>
+<span id="cb180-7"><a href="working-with-dna-sequences-ii.html#cb180-7" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(alnseqs)</span>
+<span id="cb180-8"><a href="working-with-dna-sequences-ii.html#cb180-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-9"><a href="working-with-dna-sequences-ii.html#cb180-9" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;PairwiseAlignmentsSingleSubject&quot;</span>)</span>
+<span id="cb180-10"><a href="working-with-dna-sequences-ii.html#cb180-10" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;DNAStringSet&quot;</span>)</span>
+<span id="cb180-11"><a href="working-with-dna-sequences-ii.html#cb180-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-12"><a href="working-with-dna-sequences-ii.html#cb180-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DECIPHER)</span>
+<span id="cb180-13"><a href="working-with-dna-sequences-ii.html#cb180-13" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(alnseqs)</span>
+<span id="cb180-14"><a href="working-with-dna-sequences-ii.html#cb180-14" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(alnseqs, <span class="at">colWidth=</span><span class="dv">200</span>)</span>
+<span id="cb180-15"><a href="working-with-dna-sequences-ii.html#cb180-15" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(alnseqs, <span class="at">colWidth=</span><span class="dv">200</span>, <span class="at">patterns =</span> <span class="st">&quot;TCCTGCCCGGGGCCT&quot;</span>)</span></code></pre></div>
+<p><a href="https://www.bioconductor.org/packages/release/bioc/html/DECIPHER.html">DECIPHER</a> 패키지는 서열 alignment나 primer design 등을 수행할 수 있는 패키지로 다음과 같이 별도 메모리에 서열을 저장하고 빠르게 alignment를 수행할 수 있어서 중소 규모의 서열에 대한 분석으로 유용하게 사용될 수 있습니다.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="working-with-dna-sequences-ii.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DECIPHER)</span>
+<span id="cb181-2"><a href="working-with-dna-sequences-ii.html#cb181-2" aria-hidden="true" tabindex="-1"></a>dbConn <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(<span class="fu">SQLite</span>(), <span class="st">&quot;:memory:&quot;</span>)</span>
+<span id="cb181-3"><a href="working-with-dna-sequences-ii.html#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Seqs2DB</span>(coi, <span class="st">&quot;XStringSet&quot;</span>, dbConn, <span class="st">&quot;coi&quot;</span>)</span>
+<span id="cb181-4"><a href="working-with-dna-sequences-ii.html#cb181-4" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseDB</span>(dbConn)</span>
+<span id="cb181-5"><a href="working-with-dna-sequences-ii.html#cb181-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-6"><a href="working-with-dna-sequences-ii.html#cb181-6" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">IdLengths</span>(dbConn)</span>
+<span id="cb181-7"><a href="working-with-dna-sequences-ii.html#cb181-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Add2DB</span>(l, dbConn)</span>
+<span id="cb181-8"><a href="working-with-dna-sequences-ii.html#cb181-8" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseDB</span>(dbConn)</span>
+<span id="cb181-9"><a href="working-with-dna-sequences-ii.html#cb181-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-10"><a href="working-with-dna-sequences-ii.html#cb181-10" aria-hidden="true" tabindex="-1"></a><span class="fu">Seqs2DB</span>(trnl, <span class="st">&quot;XStringSet&quot;</span>, dbConn, <span class="st">&quot;trnl&quot;</span>)</span>
+<span id="cb181-11"><a href="working-with-dna-sequences-ii.html#cb181-11" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseDB</span>(dbConn)</span>
+<span id="cb181-12"><a href="working-with-dna-sequences-ii.html#cb181-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-13"><a href="working-with-dna-sequences-ii.html#cb181-13" aria-hidden="true" tabindex="-1"></a><span class="do">## extract sequences</span></span>
+<span id="cb181-14"><a href="working-with-dna-sequences-ii.html#cb181-14" aria-hidden="true" tabindex="-1"></a>dna <span class="ot">&lt;-</span> <span class="fu">SearchDB</span>(dbConn, <span class="at">identifier=</span><span class="st">&quot;coi&quot;</span>)</span>
+<span id="cb181-15"><a href="working-with-dna-sequences-ii.html#cb181-15" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(dna)</span>
+<span id="cb181-16"><a href="working-with-dna-sequences-ii.html#cb181-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb181-17"><a href="working-with-dna-sequences-ii.html#cb181-17" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(dbConn)</span></code></pre></div>
+</div>
+<div id="multiple-sequence-alignment" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Multiple sequence alignment</h2>
+<p>Multiple sequence alignment(MSA) tool은 서열 데이터의 양과 계산량의 문제로 linux 기반 commandline 프로그램들이 많습니다. 대표적으로 <a href="https://www.ebi.ac.uk/Tools/msa/clustalo/">CLUSTAL-Omega</a>, <a href="https://www.ebi.ac.uk/Tools/msa/muscle/">MUSCLE</a>. window 기반 환경에서는 docker 등을 활용해서 관련 분석을 수행할 수 있습니다. 본 강의에서는 <code>DECIPHER</code> 패키지를 활용합니다.</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="working-with-dna-sequences-ii.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Biostrings)</span>
+<span id="cb182-2"><a href="working-with-dna-sequences-ii.html#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DECIPHER)</span>
+<span id="cb182-3"><a href="working-with-dna-sequences-ii.html#cb182-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb182-4"><a href="working-with-dna-sequences-ii.html#cb182-4" aria-hidden="true" tabindex="-1"></a>coi <span class="ot">&lt;-</span> <span class="fu">readDNAStringSet</span>(<span class="st">&quot;COI.fasta&quot;</span>)</span>
+<span id="cb182-5"><a href="working-with-dna-sequences-ii.html#cb182-5" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(coi)</span>
+<span id="cb182-6"><a href="working-with-dna-sequences-ii.html#cb182-6" aria-hidden="true" tabindex="-1"></a>alignedcoi <span class="ot">&lt;-</span> <span class="fu">AlignSeqs</span>(coi)</span>
+<span id="cb182-7"><a href="working-with-dna-sequences-ii.html#cb182-7" aria-hidden="true" tabindex="-1"></a><span class="fu">BrowseSeqs</span>(alignedcoi)</span>
+<span id="cb182-8"><a href="working-with-dna-sequences-ii.html#cb182-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(alignedcoi)</span>
+<span id="cb182-9"><a href="working-with-dna-sequences-ii.html#cb182-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb182-10"><a href="working-with-dna-sequences-ii.html#cb182-10" aria-hidden="true" tabindex="-1"></a>conseq <span class="ot">&lt;-</span> <span class="fu">ConsensusSequence</span>(alignedcoi)</span>
+<span id="cb182-11"><a href="working-with-dna-sequences-ii.html#cb182-11" aria-hidden="true" tabindex="-1"></a>IUPAC_CODE_MAP</span></code></pre></div>
+</div>
+<div id="phylogenetic-trees-with-clustering" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Phylogenetic trees with clustering</h2>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="working-with-dna-sequences-ii.html#cb183-1" aria-hidden="true" tabindex="-1"></a>dm <span class="ot">&lt;-</span> <span class="fu">DistanceMatrix</span>(alignedcoi)</span>
+<span id="cb183-2"><a href="working-with-dna-sequences-ii.html#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dm)</span>
+<span id="cb183-3"><a href="working-with-dna-sequences-ii.html#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dm)</span>
+<span id="cb183-4"><a href="working-with-dna-sequences-ii.html#cb183-4" aria-hidden="true" tabindex="-1"></a>dm[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb183-5"><a href="working-with-dna-sequences-ii.html#cb183-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-6"><a href="working-with-dna-sequences-ii.html#cb183-6" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">IdClusters</span>(dm, <span class="at">cutoff=</span><span class="dv">10</span>, <span class="at">method=</span><span class="st">&quot;NJ&quot;</span>, <span class="at">showPlot=</span><span class="cn">TRUE</span>, <span class="at">type=</span><span class="st">&quot;dendrogram&quot;</span>)</span>
+<span id="cb183-7"><a href="working-with-dna-sequences-ii.html#cb183-7" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(tree)</span>
+<span id="cb183-8"><a href="working-with-dna-sequences-ii.html#cb183-8" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;dendrogram&quot;</span>)</span>
+<span id="cb183-9"><a href="working-with-dna-sequences-ii.html#cb183-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tree)</span></code></pre></div>
+<p>트리는 ggplot 형태의 <a href="https://yulab-smu.top/treedata-book/chapter12.html">ggtree</a>, <a href="https://www.molecularecologist.com/2017/02/08/phylogenetic-trees-in-r-using-ggtree/">reference</a>를 사용하면 쉽게 그릴 수 있습니다.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="working-with-dna-sequences-ii.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">&quot;BiocManager&quot;</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb184-2"><a href="working-with-dna-sequences-ii.html#cb184-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">&quot;BiocManager&quot;</span>)</span>
+<span id="cb184-3"><a href="working-with-dna-sequences-ii.html#cb184-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-4"><a href="working-with-dna-sequences-ii.html#cb184-4" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">&quot;ggtree&quot;</span>)</span>
+<span id="cb184-5"><a href="working-with-dna-sequences-ii.html#cb184-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-6"><a href="working-with-dna-sequences-ii.html#cb184-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtree)</span>
+<span id="cb184-7"><a href="working-with-dna-sequences-ii.html#cb184-7" aria-hidden="true" tabindex="-1"></a>tree <span class="ot">&lt;-</span> <span class="fu">rtree</span>(<span class="at">n =</span> <span class="dv">20</span>)</span>
+<span id="cb184-8"><a href="working-with-dna-sequences-ii.html#cb184-8" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(tree)           </span>
+<span id="cb184-9"><a href="working-with-dna-sequences-ii.html#cb184-9" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;phylo&quot;</span>)</span>
+<span id="cb184-10"><a href="working-with-dna-sequences-ii.html#cb184-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-11"><a href="working-with-dna-sequences-ii.html#cb184-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ape&quot;</span>)</span>
+<span id="cb184-12"><a href="working-with-dna-sequences-ii.html#cb184-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-13"><a href="working-with-dna-sequences-ii.html#cb184-13" aria-hidden="true" tabindex="-1"></a><span class="do">## convert to dendrogram -&gt; hclust -&gt; phylo </span></span>
+<span id="cb184-14"><a href="working-with-dna-sequences-ii.html#cb184-14" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">as.hclust</span>(tree)</span>
+<span id="cb184-15"><a href="working-with-dna-sequences-ii.html#cb184-15" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(cl)</span>
+<span id="cb184-16"><a href="working-with-dna-sequences-ii.html#cb184-16" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class=</span><span class="st">&quot;hclust&quot;</span>)</span>
+<span id="cb184-17"><a href="working-with-dna-sequences-ii.html#cb184-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-18"><a href="working-with-dna-sequences-ii.html#cb184-18" aria-hidden="true" tabindex="-1"></a>py <span class="ot">&lt;-</span> <span class="fu">as.phylo</span>(cl)</span>
+<span id="cb184-19"><a href="working-with-dna-sequences-ii.html#cb184-19" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(py)</span>
+<span id="cb184-20"><a href="working-with-dna-sequences-ii.html#cb184-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(py)</span>
+<span id="cb184-21"><a href="working-with-dna-sequences-ii.html#cb184-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-22"><a href="working-with-dna-sequences-ii.html#cb184-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(py, <span class="at">layout=</span><span class="st">&quot;circular&quot;</span>)</span>
+<span id="cb184-23"><a href="working-with-dna-sequences-ii.html#cb184-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-24"><a href="working-with-dna-sequences-ii.html#cb184-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggtree</span>(py, <span class="at">layout=</span><span class="st">&quot;circular&quot;</span>) <span class="sc">+</span></span>
+<span id="cb184-25"><a href="working-with-dna-sequences-ii.html#cb184-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tiplab</span>(<span class="at">size=</span><span class="dv">1</span>, <span class="fu">aes</span>(<span class="at">angle=</span>angle))</span></code></pre></div>
 
-</div>
 </div>
 </div>
             </section>
@@ -499,8 +548,8 @@ method - 특정 클래스에 대한 기능 수행</p>
           </div>
         </div>
       </div>
-<a href="day1-강의-정리.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="working-with-dna-sequences.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="day2-강의-정리.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="genomic-data-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

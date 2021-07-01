@@ -1,0 +1,373 @@
+# Day2 강의 정리 
+
+## Class 1 - ggplot 활용 1 {#day2_class1}
+
+### 목표 {#day2_class1_objectives}
+
+* ggplot 개념 이해 
+* 그리는 방법 (단계) 이해
+
+### ggplot 문법 {#day2_class1_grammar}
+
+```{r, eval=F}
+library(tidyverse)
+
+head(iris)
+data(iris)
+
+iris %>% str
+ggplot(data=iris) +
+  geom_point(mapping=aes(x=Petal.Length, y=Petal.Width))
+
+
+ggplot(data=iris, 
+       mapping = aes(x=Petal.Length, 
+                     y=Petal.Width,
+                     color=Species)) +
+  geom_point(size=3) +
+  theme_bw()
+
+dat <- data.frame(x1=rnorm(100))
+ggplot(dat, aes(x=x1)) +
+  geom_bar()
+
+ggplot(dat, aes(x=x1)) +
+  geom_bar(stat="bin", bins=30)
+
+
+
+x1 <- as.factor(c(1:3))
+y1 <- c(33, 10, 82)
+dat <- data.frame(x1, y1)
+str(dat)
+
+ggplot(dat, aes(x=x1, y=y1, group=1)) +
+  geom_bar(stat="identity") +
+  geom_line(size=2) +
+  geom_point(size=4, pch=21, fill="white") +
+  guides(fill=FALSE) +
+  xlab("Discrete cases") + ylab("Value") +
+  ylim(c(0,100))+
+  ggtitle("Line for x:discrete and y:value")
+  
+
+ggplot(dat, aes(x=x1, y=y1, group=1)) +
+  geom_bar(stat="identity", fill=x1) +
+  geom_line(size=2) +
+  geom_point(size=4, pch=21, fill="white") +
+  guides(fill=FALSE) +
+  xlab("Discrete cases") + ylab("Value") +
+  ylim(c(0,100))+
+  ggtitle("Line for x:discrete and y:value")
+
+data(mtcars)
+mtcars %>% str
+ggplot(mtcars, aes(x=mpg, y=hp)) +
+  geom_point() +
+  geom_smooth()
+
+
+
+weights <- rnorm(200, 75, 5)
+heights <- weights + rnorm(200, 100, 5)
+classes <- sample(c("A", "B", "C", "D"), size=length(heights), replace = T)
+mydata <- data.frame(heights, weights, classes)
+str(mydata)
+
+ggplot(mydata, aes(x=weights, y=heights, color=classes)) +
+  geom_point() +
+  geom_smooth()
+
+
+```
+
+### facet 사용법 
+
+하나의 변수를 하나의 축에 mapping해서 그릴 경우 facet_wrap 사용, nrow, ncol로 다른 축 그래프 갯수 조절. 두 개의 변수를 x, y축에 각각 mapping해서 그래프를 나누어 그릴 때 facet_grid 사용
+
+```{r, eval=F}
+
+ggplot(iris, 
+       aes(x=Petal.Length, 
+           y=Petal.Width,
+           color=Species)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~Species, scale="free")
+
+
+```
+
+
+```{r, eval=F}
+Orange %>% str
+data(Orange)
+
+
+## 1
+ggplot(data=Orange, 
+       aes(x=age, y=circumference, color=Tree)) +
+  geom_point() +
+  geom_line()
+
+## 2
+ggplot(data=Orange, 
+       aes(x=age, y=circumference)) +
+  geom_point() + 
+  geom_line() +
+  geom_smooth() +
+  facet_wrap(~Tree)
+
+data(InsectSprays)
+InsectSprays %>% 
+  ggplot(aes(x=spray, y=count, fill=spray)) +
+  geom_bar(stat="identity",
+           position="dodge") +
+  facet_wrap(~spray) 
+
+```
+
+
+## Class 2 - ggplot 활용 2 {#day2_class2}
+
+
+### 목적 {#day2_class2_objectives}
+
+* theme 사용법 알기
+* 에러바 그리기
+
+### theme 사용 {#day2_class2_theme}
+
+x, y mapping, geometry 요소들 외에 글씨 크기나 화면 구성 등의 설정을 할 경우 theme 함수를 사용함. [ggplot2 book](https://ggplot2-book.org/polishing.html) 참고
+
+```{r, eval=F}
+
+mydf <- data.frame(x=rlnorm(1000, log(10), log(2.5)))
+mydf %>% str
+p <- ggplot(mydf, aes(x=x)) +
+  geom_histogram()
+p + 
+  theme_bw()+
+  scale_x_log10()
+
+```
+
+
+에러바 있는 막대그래프 그리기
+
+
+```{r, eval=FALSE}
+
+airquality %>% str
+data(airquality)
+
+airmean <-  airquality %>% 
+  filter(complete.cases(.)) %>% 
+  select(-Day) %>% 
+  group_by(Month) %>% 
+  summarise(across(everything(), mean)) %>% 
+  pivot_longer(-Month, values_to = "mean")
+
+airsd <- airquality %>% 
+  filter(complete.cases(.)) %>% 
+  select(-Day) %>% 
+  group_by(Month) %>% 
+  summarise(across(everything(), sd)) %>% 
+  pivot_longer(-Month, values_to = "sd")
+
+
+airdata <- left_join(airmean, airsd, by=c("Month", "name"))
+
+ggplot(airdata, aes(x=Month, 
+                    y=mean, 
+                    fill=name)) +
+  geom_bar(stat="identity", 
+           position="dodge",
+           color="#000000") +
+  geom_errorbar(aes(ymin=mean-sd,
+                    ymax=mean+sd),
+                position=position_dodge(width=0.9), 
+                width=0.4) +
+  theme_bw()
+
+
+```
+
+
+## class 3 - S3 클래스 학습 {#day2_class3}
+
+### 목적 {#day2_class3_objectives}
+
+* R언어에서 S3 클래스 이해
+* Biostrings 패키지 사용법 학습
+
+### S3 클래스 이해 {#day2_class3_class}
+
+```{r, eval=F}
+df <- data.frame(x=c(1:5), y=LETTERS[1:5])
+df
+class(df)
+
+class(df) <- "myclass"
+class(df)
+
+
+
+x <- 1:10
+class(x)
+attr(x, "class")
+
+
+mt <- matrix(1:9, 3,3)
+df <- data.frame(1:3, 4:6, 7:9)
+
+class(mt)
+str(mt)
+str(df)
+
+
+diamonds <- ggplot2::diamonds
+data(diamonds)
+
+
+summary(diamonds$carat)
+summary(diamonds$cut)
+
+mysum <- function(x){
+  if(x =="charicter"){
+    
+  }else{
+    
+  }
+  print(sum(x))
+}
+
+
+
+mysum(c(10, "20"))
+
+library(Homo.sapiens)
+class(Homo.sapiens)
+
+Homo.sapiens
+methods(class="OrganismDb")
+
+?cds
+tmp <- cds(Homo.sapiens)
+tmp
+```
+
+### Biostrings 패키지 {#day2_class3_biostrings}
+
+
+```{r, eval=F}
+library(Biostrings)
+
+dna1 <- DNAString("ACGT-N")
+class(dna1)
+dna1[1]
+dna1[2:3]
+
+dna2 <- DNAStringSet(c("ACGT", "GTCA", "GCTA"))
+dna2[1]
+class(dna2[1])
+dna2[[1]]
+```
+
+```{r, eval=F}
+
+DNA_BASES
+DNA_ALPHABET
+IUPAC_CODE_MAP
+GENETIC_CODE
+
+```
+
+```{r, eval=F}
+
+x0 <- sample(DNA_BASES, 10, replace = T)
+x0
+s1 <- "ATG"
+s2 <- "CCC"
+s3 <- paste(s1, s2, sep="")
+s3
+x1 <- paste(x0, collapse="")
+x1
+
+
+```
+
+
+## class 4 - Biostrings 활용 {#day2_class4_frequency}
+
+### 목적 {#day2_class4_objectives}
+
+* Biostrings 패키지 활용한 코돈 분석
+
+
+```{r, eval=F}
+DNAString
+x0 <- paste(sample(DNA_BASES, 10, replace = T), collapse="")
+subseq(x0, 1, 3)
+x1 <- DNAString(x0)
+letterFrequency(x1, letters = c("G", "C"))
+
+```
+
+```{r, eval=F}
+
+x0 <- rep("", 10)
+for(i in 1:length(x0)){
+  tmp <- paste(sample(DNA_BASES, 30, replace = T), collapse="")
+  x0[i] <- paste("ATG", tmp, "TAG", sep="")
+}
+x0
+length(x0)
+x1 <- DNAStringSet(x0)
+x1
+#names(x1) <- c("DNA1", "DNA2".. )
+names(x1) <- paste("DNA", 1:10, sep="")
+x1
+
+
+?letterFrequency
+tmpd <- letterFrequency(x1, letters=c("G", "C"))
+tmpv <- (tmpd[,1]+tmpd[,2])/nchar(x1[[1]])
+names(tmpv) <- names(x1)
+barplot(tmpv)
+
+
+
+tmpd %>% 
+  data.frame %>% 
+  mutate(GC=G+C, name=names(x1), n=nchar(x1)) %>% 
+  mutate(GCR = GC/n) %>% 
+  ggplot(aes(x=name, y=GCR)) +
+    geom_bar(stat="identity")
+
+
+```
+
+
+
+
+```{r, eval=F}
+data(yeastSEQCHR1)
+yeastSEQCHR1
+nchar(yeastSEQCHR1)
+yeast1 <- DNAString(yeastSEQCHR1)
+
+
+tri <- trinucleotideFrequency(yeast1)
+
+names(tri) <- GENETIC_CODE[names(tri)]
+tri
+
+tmpd <- data.frame(freq=tri, aa=names(tri))
+tmpd %>% 
+  ggplot(aes(x=aa, y=freq, fill=aa)) +
+  geom_bar(stat="identity")
+
+
+```
+

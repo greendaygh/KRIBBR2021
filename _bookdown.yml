@@ -5,7 +5,11 @@ rmd_files: [
   "04-ggplot.Rmd",
   "day1.Rmd",
   "05-bioconductor.Rmd",
-  "05-sequence-basics.Rmd"
+  "05-sequence-basics.Rmd",
+  "day2.Rmd",
+  "06-sequence-basics.Rmd",
+  "07-genomics-ranges.Rmd",
+  "99-tail.Rmd"
 ]
 book_filename: "KRIBBR"
 #repo: https://github.com/greendaygh/Rprog2020/
