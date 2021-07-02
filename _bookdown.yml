@@ -9,6 +9,7 @@ rmd_files: [
   "day2.Rmd",
   "06-sequence-basics.Rmd",
   "07-genomics-ranges.Rmd",
+  "day3.Rmd",
   "99-tail.Rmd"
 ]
 book_filename: "KRIBBR"

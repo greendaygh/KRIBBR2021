@@ -4308,6 +4308,491 @@ ORFfinder -in covid19.fasta -out output
   위에서 ORFfinder로 생성된 출력 결과를 읽어들이고 GenomicRanges 형태의 데이터로 만드시오
 \end{enumerate}
 
+\hypertarget{day3-uxac15uxc758-uxc815uxb9ac}{%
+\chapter{Day3 강의 정리}\label{day3-uxac15uxc758-uxc815uxb9ac}}
+
+\hypertarget{day3_class1}{%
+\section{Class 1 - NCBI 서열 download}\label{day3_class1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rentrez)}
+
+\FunctionTok{entrez\_dbs}\NormalTok{()}
+\NormalTok{covid\_paper }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_search}\NormalTok{(}\AttributeTok{db=}\StringTok{"pubmed"}\NormalTok{, }\AttributeTok{term=}\StringTok{"covid19"}\NormalTok{)}
+\FunctionTok{class}\NormalTok{(covid\_paper)}
+\FunctionTok{names}\NormalTok{(covid\_paper)}
+\NormalTok{covid\_paper}\SpecialCharTok{$}\NormalTok{ids}
+
+\NormalTok{covid\_link }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_link}\NormalTok{(}\AttributeTok{db=}\StringTok{"all"}\NormalTok{, }\AttributeTok{id=}\NormalTok{covid\_paper}\SpecialCharTok{$}\NormalTok{ids, }\AttributeTok{dbfrom=}\StringTok{"pubmed"}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(covid\_link}\SpecialCharTok{$}\NormalTok{links)}
+\NormalTok{covid\_link}\SpecialCharTok{$}\NormalTok{links}\SpecialCharTok{$}\NormalTok{pubmed\_pubmed}
+\end{Highlighting}
+\end{Shaded}
+
+실제 서열 데이터 다운로드는 \texttt{entrez\_fetch} 함수 이용. fetch 함수를 이용한 다운로드는 text 파일을 그대로 받아오기 때문에 이를 \texttt{fasta} 등 적절한 포멧의 파일로 저장하고 다시 읽어들여야 함.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{katipo\_search }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_search}\NormalTok{(}\AttributeTok{db=}\StringTok{"popset"}\NormalTok{, }\AttributeTok{term=}\StringTok{"Latrodectus katipo[Organism]"}\NormalTok{)}
+
+\FunctionTok{entrez\_db\_summary}\NormalTok{(}\StringTok{"popset"}\NormalTok{)}
+
+\NormalTok{katipo\_search}\SpecialCharTok{$}\NormalTok{ids}
+
+\NormalTok{katipo\_summs }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_summary}\NormalTok{(}\AttributeTok{db=}\StringTok{"popset"}\NormalTok{, }\AttributeTok{id=}\NormalTok{katipo\_search}\SpecialCharTok{$}\NormalTok{ids)}
+\FunctionTok{names}\NormalTok{(katipo\_summs)}
+\FunctionTok{names}\NormalTok{(katipo\_summs}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{41350664}\StringTok{\textasciigrave{}}\NormalTok{)}
+
+
+\NormalTok{COI\_ids }\OtherTok{\textless{}{-}}\NormalTok{ katipo\_search}\SpecialCharTok{$}\NormalTok{ids[}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{6}\NormalTok{)]}
+\NormalTok{trnL\_ids }\OtherTok{\textless{}{-}}\NormalTok{ katipo\_search}\SpecialCharTok{$}\NormalTok{ids[}\DecValTok{5}\NormalTok{]}
+
+\NormalTok{COI }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_fetch}\NormalTok{(}\AttributeTok{db=}\StringTok{"popset"}\NormalTok{, }\AttributeTok{id=}\NormalTok{COI\_ids, }\AttributeTok{rettype=}\StringTok{"fasta"}\NormalTok{)}
+\NormalTok{trnL }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_fetch}\NormalTok{(}\AttributeTok{db=}\StringTok{"popset"}\NormalTok{, }\AttributeTok{id=}\NormalTok{trnL\_ids, }\AttributeTok{rettype=}\StringTok{"fasta"}\NormalTok{)}
+
+\FunctionTok{write}\NormalTok{(COI, }\StringTok{"COI.fasta"}\NormalTok{)}
+\FunctionTok{write}\NormalTok{(trnL, }\StringTok{"trnl.fasta"}\NormalTok{)}
+
+
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"Biostrings"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(Biostrings)}
+
+\NormalTok{coi }\OtherTok{\textless{}{-}} \FunctionTok{readDNAStringSet}\NormalTok{(}\StringTok{"COI.fasta"}\NormalTok{)}
+\NormalTok{trnl }\OtherTok{\textless{}{-}} \FunctionTok{readDNAStringSet}\NormalTok{(}\StringTok{"trnl.fasta"}\NormalTok{)}
+
+\NormalTok{coi}
+\FunctionTok{class}\NormalTok{(coi)}
+\end{Highlighting}
+\end{Shaded}
+
+Covid19 accession 번호 탐색 후 관련 서열 다운로드
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{covid19 }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_fetch}\NormalTok{(}\AttributeTok{db=}\StringTok{"nuccore"}\NormalTok{, }\AttributeTok{id=}\StringTok{"NC\_045512"}\NormalTok{, }\AttributeTok{rettype=}\StringTok{"fasta"}\NormalTok{)}
+
+\FunctionTok{write}\NormalTok{(covid19, }\StringTok{"covid19.fasta"}\NormalTok{)}
+
+\NormalTok{covid19seq }\OtherTok{\textless{}{-}} \FunctionTok{readDNAStringSet}\NormalTok{(}\StringTok{"covid19.fasta"}\NormalTok{)}
+\FunctionTok{as.character}\NormalTok{(covid19seq)}
+
+
+\NormalTok{covid19 }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_fetch}\NormalTok{(}\AttributeTok{db=}\StringTok{"nuccore"}\NormalTok{, }\AttributeTok{id=}\StringTok{"NC\_045512"}\NormalTok{, }\AttributeTok{rettype=}\StringTok{"gb"}\NormalTok{)}
+\NormalTok{covid19}
+\FunctionTok{write}\NormalTok{(covid19, }\StringTok{"covid19.gb"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Genbank 형태의 데이터 다운로드.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"genbankr"}\NormalTok{)}
+
+
+\FunctionTok{library}\NormalTok{(genbankr)}
+
+\NormalTok{covid19gb }\OtherTok{\textless{}{-}} \FunctionTok{readGenBank}\NormalTok{(}\AttributeTok{file =} \StringTok{"covid19.gb"}\NormalTok{)}
+\FunctionTok{class}\NormalTok{(covid19gb)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"GenBankRecord"}\NormalTok{)}
+\FunctionTok{cds}\NormalTok{(covid19gb)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{day3_class2}{%
+\section{class 2 - sequence alignment}\label{day3_class2}}
+
+특정 패턴이 존재하는지 검사
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{DNAString}\NormalTok{(}\StringTok{"A"}\NormalTok{)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"DNAString"}\NormalTok{)}
+\NormalTok{?matchPattern}
+
+\NormalTok{coi}
+\FunctionTok{matchPattern}\NormalTok{(}\StringTok{"ATG"}\NormalTok{, coi[[}\DecValTok{1}\NormalTok{]])}
+\FunctionTok{vmatchPattern}\NormalTok{(}\StringTok{"ATG"}\NormalTok{, coi) }
+\end{Highlighting}
+\end{Shaded}
+
+두 서열의 비교를 위한 \texttt{pairwiseAlignment}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coi[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{aln }\OtherTok{\textless{}{-}} \FunctionTok{pairwiseAlignment}\NormalTok{(}\AttributeTok{pattern =}\NormalTok{ coi[[}\DecValTok{1}\NormalTok{]], }\AttributeTok{subject =}\NormalTok{ coi[[}\DecValTok{2}\NormalTok{]])}
+\FunctionTok{class}\NormalTok{(aln)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"PairwiseAlignmentsSingleSubject"}\NormalTok{)}
+\NormalTok{?PairwiseAlignmentsSingleSubject}
+\end{Highlighting}
+\end{Shaded}
+
+alignment된 서열을 효율적으로 가시화 해주는 툴 중에 하나 \texttt{DECIOHER}의 BrowseSeqs 함수
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"DECIPHER"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(DECIPHER)}
+\FunctionTok{BrowseSeqs}\NormalTok{(aln)}
+
+\FunctionTok{alignedPattern}\NormalTok{(aln)}
+\FunctionTok{alignedSubject}\NormalTok{(aln)}
+
+\NormalTok{alnseqs }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{alignedPattern}\NormalTok{(aln), }\FunctionTok{alignedSubject}\NormalTok{(aln))}
+\FunctionTok{class}\NormalTok{(alnseqs)}
+
+
+\FunctionTok{BrowseSeqs}\NormalTok{(alnseqs)}
+\FunctionTok{BrowseSeqs}\NormalTok{(alnseqs, }\AttributeTok{colWidth=}\DecValTok{100}\NormalTok{)}
+\FunctionTok{BrowseSeqs}\NormalTok{(alnseqs, }\AttributeTok{colWidth=}\DecValTok{100}\NormalTok{, }\AttributeTok{patterns =} \StringTok{"TCCTGCCCGGGGCCT"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+DECIPHER는 \texttt{AlignSeq}함수를 이용해서 MSA을 수행할 수도 있음
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(DECIPHER)}
+\NormalTok{dbConn }\OtherTok{\textless{}{-}} \FunctionTok{dbConnect}\NormalTok{(}\FunctionTok{SQLite}\NormalTok{(), }\StringTok{":memory:"}\NormalTok{)}
+\FunctionTok{Seqs2DB}\NormalTok{(coi, }\StringTok{"XStringSet"}\NormalTok{, dbConn, }\StringTok{"coi"}\NormalTok{)}
+\FunctionTok{BrowseDB}\NormalTok{(dbConn)}
+
+\FunctionTok{Seqs2DB}\NormalTok{(trnl, }\StringTok{"XStringSet"}\NormalTok{, dbConn, }\StringTok{"trnl"}\NormalTok{)}
+\FunctionTok{BrowseDB}\NormalTok{(dbConn)}
+
+\NormalTok{dna }\OtherTok{\textless{}{-}} \FunctionTok{SearchDB}\NormalTok{(dbConn, }\AttributeTok{identifier=}\StringTok{"coi"}\NormalTok{)}
+
+\FunctionTok{dbDisconnect}\NormalTok{(dbConn)}
+
+
+\NormalTok{alignedcoi }\OtherTok{\textless{}{-}} \FunctionTok{AlignSeqs}\NormalTok{(coi)}
+\FunctionTok{BrowseSeqs}\NormalTok{(alignedcoi, }\AttributeTok{colWidth =} \DecValTok{100}\NormalTok{)}
+\FunctionTok{class}\NormalTok{(alignedcoi)}
+\NormalTok{conseq }\OtherTok{\textless{}{-}} \FunctionTok{ConsensusSequence}\NormalTok{(alignedcoi)}
+\end{Highlighting}
+\end{Shaded}
+
+MSA 결과 각 서열간의 거리가 계산될 수 있고 이러한 값들은 clustering이나 phylogenetic tree를 그리는데 사용될 수 있음.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"ggtree"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(ggtree)}
+
+
+\NormalTok{alignedcoi }\OtherTok{\textless{}{-}} \FunctionTok{AlignSeqs}\NormalTok{(coi)}
+\FunctionTok{class}\NormalTok{(alignedcoi)}
+
+\NormalTok{dm }\OtherTok{\textless{}{-}} \FunctionTok{DistanceMatrix}\NormalTok{(alignedcoi)}
+\FunctionTok{dim}\NormalTok{(dm)}
+\NormalTok{tmp }\OtherTok{\textless{}{-}}\NormalTok{ dm[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]}
+
+\NormalTok{tree }\OtherTok{\textless{}{-}} \FunctionTok{IdClusters}\NormalTok{(dm, }\AttributeTok{cutoff=}\DecValTok{10}\NormalTok{, }\AttributeTok{method=}\StringTok{"NJ"}\NormalTok{, }\AttributeTok{showPlot=}\ConstantTok{TRUE}\NormalTok{, }\AttributeTok{type=}\StringTok{"dendrogram"}\NormalTok{)}
+\FunctionTok{class}\NormalTok{(tree)}
+
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"dendrogram"}\NormalTok{)}
+\NormalTok{tree2 }\OtherTok{\textless{}{-}} \FunctionTok{as.hclust}\NormalTok{(tree)}
+\FunctionTok{class}\NormalTok{(tree2)}
+
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"hclust"}\NormalTok{)}
+\NormalTok{tree3 }\OtherTok{\textless{}{-}} \FunctionTok{as.phylo}\NormalTok{(tree2)}
+\FunctionTok{class}\NormalTok{(tree3)}
+\end{Highlighting}
+\end{Shaded}
+
+만약 ggtree 실행이 잘 되지 않는 경우 다음 사이트를 참고해서 재설치 진행할 수 있음. \href{https://github.com/YuLab-SMU/ggtree/issues/395}{issues}, \href{https://github.com/YuLab-SMU/ggtree}{ggtree github}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{remotes}\SpecialCharTok{::}\FunctionTok{install\_github}\NormalTok{(}\StringTok{"YuLab{-}SMU/ggtree"}\NormalTok{)}
+
+\FunctionTok{ggtree}\NormalTok{(}\AttributeTok{tr =}\NormalTok{ tree3)}
+
+\FunctionTok{library}\NormalTok{(ggtree)}
+\FunctionTok{library}\NormalTok{(ape)}
+\NormalTok{tr }\OtherTok{\textless{}{-}} \FunctionTok{rtree}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\FunctionTok{class}\NormalTok{(tr)}
+
+\FunctionTok{require}\NormalTok{(ape) }
+\NormalTok{tr }\OtherTok{\textless{}{-}} \FunctionTok{rtree}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\FunctionTok{ggtree}\NormalTok{(tr)}
+
+\FunctionTok{ggtree}\NormalTok{(tr)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{day3_class3}{%
+\section{class 3 - genomic data with ranges}\label{day3_class3}}
+
+지놈스케일의 데이터를 분석할 때 IRanges 패키지를 사용. 바이오 데이터 분석에 필수로 사용되는 패키지이며 Bioconductor software 중 4위에 올라있음.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(IRanges)}
+
+\NormalTok{ir }\OtherTok{\textless{}{-}} \FunctionTok{IRanges}\NormalTok{(}\AttributeTok{start =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{), }\AttributeTok{end =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{7}\NormalTok{))}
+\NormalTok{ir}
+\FunctionTok{class}\NormalTok{(ir)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"IRanges"}\NormalTok{)}
+
+\FunctionTok{start}\NormalTok{(ir)}
+\FunctionTok{disjointBins}\NormalTok{(ir)}
+\end{Highlighting}
+\end{Shaded}
+
+기존에는 IRange 객체의 가시화를 위해 직접 함수를 만들어 썼으나 이제 \texttt{ggbio} 패키지를 이용하면 됨.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"ggbio"}\NormalTok{)}
+
+
+\FunctionTok{library}\NormalTok{(ggbio)}
+\NormalTok{ir }\OtherTok{\textless{}{-}} \FunctionTok{IRanges}\NormalTok{(}\AttributeTok{start =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{), }\AttributeTok{end =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{7}\NormalTok{))}
+\NormalTok{ir}
+\FunctionTok{autoplot}\NormalTok{(ir, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill=}\NormalTok{width)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+유전체 정보는 IRrange를 활용한 위치 정보만으로는 부족하며 다양한 high-throughput 데이터로부터 얻어지는 정도를 효율적으로 저장하고 관리하기 위해서 GenomicRanges라는 패키지를 사용함.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(GenomicRanges)}
+\NormalTok{gr }\OtherTok{\textless{}{-}} \FunctionTok{GRanges}\NormalTok{(}
+    \AttributeTok{seqnames =} \FunctionTok{Rle}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"chr1"}\NormalTok{, }\StringTok{"chr2"}\NormalTok{, }\StringTok{"chr1"}\NormalTok{, }\StringTok{"chr3"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{)),}
+    \AttributeTok{ranges =} \FunctionTok{IRanges}\NormalTok{(}\DecValTok{101}\SpecialCharTok{:}\DecValTok{110}\NormalTok{, }\AttributeTok{end =} \DecValTok{111}\SpecialCharTok{:}\DecValTok{120}\NormalTok{, }\AttributeTok{names =} \FunctionTok{head}\NormalTok{(letters, }\DecValTok{10}\NormalTok{)),}
+    \AttributeTok{strand =} \FunctionTok{Rle}\NormalTok{(}\FunctionTok{strand}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"{-}"}\NormalTok{, }\StringTok{"+"}\NormalTok{, }\StringTok{"*"}\NormalTok{, }\StringTok{"+"}\NormalTok{, }\StringTok{"{-}"}\NormalTok{)), }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{)),}
+    \AttributeTok{score =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}
+    \AttributeTok{GC =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\AttributeTok{length=}\DecValTok{10}\NormalTok{),}
+    \AttributeTok{product =} \FunctionTok{rep}\NormalTok{(}\StringTok{"Aa"}\NormalTok{, }\DecValTok{10}\NormalTok{))}
+\NormalTok{gr}
+\FunctionTok{rep}\NormalTok{(}\StringTok{"Aa"}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+GenomicRange 객체는 Rle와 IRange 객체를 조합해서 생성.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(IRanges)}
+\NormalTok{x }\OtherTok{\textless{}{-}} \StringTok{"GATTGCCCCCCTAG"}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{unlist}\NormalTok{(}\FunctionTok{strsplit}\NormalTok{(x, }\AttributeTok{split=}\StringTok{""}\NormalTok{))}
+\CommentTok{\#unlist(strsplit(x, split=""))}
+\NormalTok{y}
+\NormalTok{yrle }\OtherTok{\textless{}{-}} \FunctionTok{Rle}\NormalTok{(y)}
+\NormalTok{yrle}
+
+\FunctionTok{runLength}\NormalTok{(yrle)}
+\FunctionTok{runValue}\NormalTok{(yrle)}
+\FunctionTok{nrun}\NormalTok{(yrle)}
+
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{Rle}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{), }\AttributeTok{lengths =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{))}
+\FunctionTok{class}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+Meta data는 \texttt{mcols} 함수를 이용해서 관리
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gr }\OtherTok{\textless{}{-}} \FunctionTok{GRanges}\NormalTok{(}
+    \AttributeTok{seqnames =} \FunctionTok{Rle}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"chr1"}\NormalTok{, }\StringTok{"chr2"}\NormalTok{, }\StringTok{"chr1"}\NormalTok{, }\StringTok{"chr3"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{)),}
+    \AttributeTok{ranges =} \FunctionTok{IRanges}\NormalTok{(}\DecValTok{101}\SpecialCharTok{:}\DecValTok{110}\NormalTok{, }\AttributeTok{end =} \DecValTok{111}\SpecialCharTok{:}\DecValTok{120}\NormalTok{, }\AttributeTok{names =} \FunctionTok{head}\NormalTok{(letters, }\DecValTok{10}\NormalTok{)),}
+    \AttributeTok{strand =} \FunctionTok{Rle}\NormalTok{(}\FunctionTok{strand}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"{-}"}\NormalTok{, }\StringTok{"+"}\NormalTok{, }\StringTok{"*"}\NormalTok{, }\StringTok{"+"}\NormalTok{, }\StringTok{"{-}"}\NormalTok{)), }\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{)),}
+    \AttributeTok{score =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}
+    \AttributeTok{GC =} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\AttributeTok{length=}\DecValTok{10}\NormalTok{))}
+\NormalTok{gr}
+\FunctionTok{class}\NormalTok{(gr)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\StringTok{"GRanges"}\NormalTok{)}
+
+\FunctionTok{seqnames}\NormalTok{(gr)}
+\FunctionTok{range}\NormalTok{(gr)}
+
+\NormalTok{tmp }\OtherTok{\textless{}{-}} \FunctionTok{mcols}\NormalTok{(gr) }
+\NormalTok{tmp}\SpecialCharTok{$}\NormalTok{GC }
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{tidyverse}의 \texttt{dplyr} 패키지와 유사한 기능의 \texttt{plyranges} 패키지를 이용하면 genomicranges 데이터를 효율적으로 분석 가능.
+
+\hypertarget{exercise-11}{%
+\subsection{Exercise}\label{exercise-11}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  이번 시간 배운 일련의 패키지들을 이용해서 covid19 genbank 파일을 읽고 cds 서열을 추출한 후 autoplot을 이용해서 그래프를 그리시오.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"plyranges"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(plyranges)}
+\FunctionTok{library}\NormalTok{(genbankr)}
+\FunctionTok{library}\NormalTok{(DECIPHER)}
+\FunctionTok{library}\NormalTok{(ggbio)}
+
+\NormalTok{covid19 }\OtherTok{\textless{}{-}} \FunctionTok{readGenBank}\NormalTok{(}\StringTok{"covid19.gb"}\NormalTok{)}
+\FunctionTok{class}\NormalTok{(covid19)}
+\NormalTok{covid19cds }\OtherTok{\textless{}{-}} \FunctionTok{cds}\NormalTok{(covid19)}
+
+\NormalTok{covidseq }\OtherTok{\textless{}{-}}\NormalTok{ covid19}\SpecialCharTok{@}\NormalTok{sequence}
+\FunctionTok{ranges}\NormalTok{(covid19cds)}
+
+\NormalTok{?getSeq}
+\NormalTok{covidcds }\OtherTok{\textless{}{-}} \FunctionTok{getSeq}\NormalTok{(covidseq, covid19cds)}
+
+\FunctionTok{BrowseSeqs}\NormalTok{(covidcds, }\AttributeTok{colWidth =} \DecValTok{200}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(covidcds) }\OtherTok{\textless{}{-}} \FunctionTok{mcols}\NormalTok{(covid19cds)}\SpecialCharTok{$}\NormalTok{product}
+\FunctionTok{BrowseSeqs}\NormalTok{(covidcds, }\AttributeTok{colWidth =} \DecValTok{100}\NormalTok{)}
+
+\FunctionTok{autoplot}\NormalTok{(covid19cds)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  gene과product를 선택하고 gc ratio를 계산해서 metadata에 넣은 후 임의의 그룸으로 나누어 평균 gc 비율을 구하시오
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(plyranges)}
+
+\NormalTok{gcr }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(}\FunctionTok{letterFrequency}\NormalTok{(covidcds, }\AttributeTok{letters =} \FunctionTok{c}\NormalTok{(}\StringTok{"C"}\NormalTok{, }\StringTok{"G"}\NormalTok{), }\AttributeTok{as.prob =}\NormalTok{ T))}
+
+\NormalTok{tmpd }\OtherTok{\textless{}{-}}\NormalTok{ covid19cds }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(gene, product) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{gc =}\NormalTok{ gcr) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\AttributeTok{pattern =} \StringTok{"ORF"}\NormalTok{, gene)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{g =} \FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DecValTok{9}\NormalTok{, }\AttributeTok{replace=}\NormalTok{T)) }
+
+
+
+\NormalTok{gcmean }\OtherTok{\textless{}{-}}\NormalTok{ tmpd }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(g) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{m =} \FunctionTok{mean}\NormalTok{(gc))}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{png} 함수를 사용하면 특정 plot을 그린 후 png 파일로 저장할 수 있음. \texttt{dev.off}까지 실행해 주어야 하며 블록으로 설정 후 실행해 주어야함 (한줄 한줄 실행하면 저장되지 않음).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{png}\NormalTok{(}\StringTok{"covid19.png"}\NormalTok{, }\AttributeTok{width=}\DecValTok{10}\NormalTok{, }\AttributeTok{height=}\DecValTok{5}\NormalTok{, }\AttributeTok{units=}\StringTok{\textquotesingle{}in\textquotesingle{}}\NormalTok{, }\AttributeTok{res=}\DecValTok{300}\NormalTok{)}
+\FunctionTok{autoplot}\NormalTok{(tmpd, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill=}\NormalTok{g)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\FunctionTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{day3_class4}{%
+\section{class 4 - ORFfinder with docker}\label{day3_class4}}
+
+\hypertarget{exercise-12}{%
+\subsection{Exercise}\label{exercise-12}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  리눅스 실행이 필요한 경우 활용할 수 있는 docker를 활용해 ORFfinder를 실행해보고 앞에서 배운 방법들을 이용해 covid19 지놈의 예측된 ORF를 Genomic range 형태로 만들고 가시화 하시오
+\end{enumerate}
+
+파일브라우저로 작업 디렉토리에 (workding directory) 마우스 커서를 올리고 Shift + 마우스 오른쪽 버튼을 누르면 메뉴가 뜨고 그 중 Powershell 실행. 명령 프롬프트 상에서 아래와 같은 명령 실행. 참고로 docker는 사전에 설치되어 있어야 하며, unlhcc/orffinder 라는 아이디/프로그램파일명은 구글이나 docker hub 에서 orffinder로 검색해서 찾아볼 수 있음.
+
+이미지 다운로드
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{docker}\NormalTok{ pull unlhcc/orffinder}
+\end{Highlighting}
+\end{Shaded}
+
+다운로드 받은 이미지 리스트 확인
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{docker}\NormalTok{ images}
+\end{Highlighting}
+\end{Shaded}
+
+ORFfinder 실행
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\ExtensionTok{docker}\NormalTok{ run }\AttributeTok{{-}{-}rm} \AttributeTok{{-}v} \VariableTok{$\{PWD\}}\NormalTok{:/app }\AttributeTok{{-}w}\NormalTok{ /app unlhcc/orffinder:latest ORFfinder }\AttributeTok{{-}in}\NormalTok{ covid19.fasta }\AttributeTok{{-}out}\NormalTok{ covid19orf.fasta }\AttributeTok{{-}outfmt}\NormalTok{ 1}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{docker\ run\ -\/-rm\ -v\ \$\{PWD\}:/app\ -w\ /app\ unlhcc/orffinder:latest} 여기까지는 도커 컨테이너를 생성하는 부분이고 그 이후는 ORFfinder를 실행하는 명령어임. \texttt{\$\{PWD\}} 는 현재 directory (input file인 covid19.fasta가 있는 디렉토리)를 나타냄. 위 명령어를 실행하면 \texttt{covid19orf.fasta}가 생성되며 다음 코드로 genomic range 데이터를 생성함.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{covidorfs }\OtherTok{\textless{}{-}} \FunctionTok{readDNAStringSet}\NormalTok{(}\StringTok{"covid19orf.fasta"}\NormalTok{)}
+\FunctionTok{BrowseSeqs}\NormalTok{(covidorfs, }\AttributeTok{colWidth =} \DecValTok{100}\NormalTok{)}
+
+\DocumentationTok{\#\# average length }
+\NormalTok{mydat }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{len=}\FunctionTok{nchar}\NormalTok{(covidorfs))}
+\FunctionTok{ggplot}\NormalTok{(mydat, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{len)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins=}\DecValTok{300}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2000}\NormalTok{))}
+
+
+\DocumentationTok{\#\# extract start end position }
+\NormalTok{tmps }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(covidorfs)}
+\FunctionTok{strsplit}\NormalTok{(tmps[}\DecValTok{1}\NormalTok{], }\AttributeTok{split=}\StringTok{":"}\NormalTok{)}
+\NormalTok{tmpl }\OtherTok{\textless{}{-}} \FunctionTok{strsplit}\NormalTok{(tmps, }\AttributeTok{split=}\StringTok{":"}\NormalTok{)}
+\NormalTok{startpos }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(tmpl, }\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{c}\NormalTok{(x[}\DecValTok{3}\NormalTok{])\}) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ unlist }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ as.numeric}
+\NormalTok{endpos }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(tmpl, }\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{c}\NormalTok{(x[}\DecValTok{4}\NormalTok{])\}) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ unlist }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ as.numeric}
+\NormalTok{orfnames }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(tmpl, }\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{c}\NormalTok{(x[}\DecValTok{2}\NormalTok{])\}) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ unlist }
+
+\NormalTok{strnd }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\StringTok{"+"}\NormalTok{, }\FunctionTok{length}\NormalTok{(startpos))}
+\NormalTok{strnd[startpos}\SpecialCharTok{\textgreater{}}\NormalTok{endpos] }\OtherTok{\textless{}{-}} \StringTok{"{-}"}
+
+\DocumentationTok{\#\# swap startpos and endpos }
+\NormalTok{tmpp }\OtherTok{\textless{}{-}}\NormalTok{ startpos}
+\NormalTok{startpos[startpos}\SpecialCharTok{\textgreater{}}\NormalTok{endpos] }\OtherTok{\textless{}{-}}\NormalTok{ endpos[startpos}\SpecialCharTok{\textgreater{}}\NormalTok{endpos]}
+\NormalTok{endpos[tmpp}\SpecialCharTok{\textgreater{}}\NormalTok{endpos] }\OtherTok{\textless{}{-}}\NormalTok{ tmpp[tmpp}\SpecialCharTok{\textgreater{}}\NormalTok{endpos]}
+
+\DocumentationTok{\#\# generate grange }
+\NormalTok{covidorfir }\OtherTok{\textless{}{-}} \FunctionTok{IRanges}\NormalTok{(}\AttributeTok{start=}\NormalTok{startpos, }\AttributeTok{end=}\NormalTok{endpos)}
+\NormalTok{covidorfgr }\OtherTok{\textless{}{-}} \FunctionTok{GRanges}\NormalTok{(}\AttributeTok{seqnames =} \StringTok{"covid19"}\NormalTok{, covidorfir, strnd, orfnames)}
+
+\FunctionTok{autoplot}\NormalTok{(covidorfgr, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill=}\NormalTok{strand))}
+\end{Highlighting}
+\end{Shaded}
+
 \hypertarget{references}{%
 \chapter{References}\label{references}}
 
