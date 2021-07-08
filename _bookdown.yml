@@ -10,6 +10,7 @@ rmd_files: [
   "06-sequence-basics.Rmd",
   "07-genomics-ranges.Rmd",
   "day3.Rmd",
+  "08-bioconductor.Rmd",
   "99-tail.Rmd"
 ]
 book_filename: "KRIBBR"

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 15 Bioconductor Workflow (link) | 2021 연구데이터 분석과정</title>
+  <meta name="description" content="Lecture" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 15 Bioconductor Workflow (link) | 2021 연구데이터 분석과정" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Lecture" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 15 Bioconductor Workflow (link) | 2021 연구데이터 분석과정" />
+  
+  <meta name="twitter:description" content="Lecture" />
+  
+
+<meta name="author" content="한국생명공학연구원 김하성" />
+
+
+<meta name="date" content="2021-07-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="high-throughput-genomic-data.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">[2021 KRIBB 특강] R을 이용한 생명데이터 분석</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> 강의 개요</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#References_n_books"><i class="fa fa-check"></i><b>1.1</b> 참고 교제</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#References"><i class="fa fa-check"></i><b>1.2</b> 참고 자료</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#Schedule"><i class="fa fa-check"></i><b>1.3</b> 강의 계획</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html"><i class="fa fa-check"></i><b>2</b> R/Rstudio basics</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#what-is-r-rstudio"><i class="fa fa-check"></i><b>2.1</b> What is R / Rstudio</a></li>
+<li class="chapter" data-level="2.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-rstudio-installation"><i class="fa fa-check"></i><b>2.2</b> R / Rstudio Installation</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-설치"><i class="fa fa-check"></i><b>2.2.1</b> R 설치</a></li>
+<li class="chapter" data-level="2.2.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#rstudio-설치"><i class="fa fa-check"></i><b>2.2.2</b> Rstudio 설치</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#rstudio-interface"><i class="fa fa-check"></i><b>2.3</b> Rstudio interface</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#keyboard-shortcuts"><i class="fa fa-check"></i><b>2.3.1</b> Keyboard shortcuts</a></li>
+<li class="chapter" data-level="2.3.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise"><i class="fa fa-check"></i><b>2.3.2</b> Exercise</a></li>
+<li class="chapter" data-level="2.3.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#set-a-project"><i class="fa fa-check"></i><b>2.3.3</b> Set a project</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-programming"><i class="fa fa-check"></i><b>2.4</b> R programming</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#console-calculator"><i class="fa fa-check"></i><b>2.4.1</b> Console calculator</a></li>
+<li class="chapter" data-level="2.4.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-1"><i class="fa fa-check"></i><b>2.4.2</b> Exercise</a></li>
+<li class="chapter" data-level="2.4.3" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#variables-and-values"><i class="fa fa-check"></i><b>2.4.3</b> Variables and values</a></li>
+<li class="chapter" data-level="2.4.4" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-2"><i class="fa fa-check"></i><b>2.4.4</b> Exercise</a></li>
+<li class="chapter" data-level="2.4.5" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#functions"><i class="fa fa-check"></i><b>2.4.5</b> Functions</a></li>
+<li class="chapter" data-level="2.4.6" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#exercise-3"><i class="fa fa-check"></i><b>2.4.6</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#terminology"><i class="fa fa-check"></i><b>2.5</b> Terminology</a></li>
+<li class="chapter" data-level="2.6" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#supports"><i class="fa fa-check"></i><b>2.6</b> Supports</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#help"><i class="fa fa-check"></i><b>2.6.1</b> Help</a></li>
+<li class="chapter" data-level="2.6.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#cheatsheet"><i class="fa fa-check"></i><b>2.6.2</b> Cheatsheet</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-packages-and-dataset"><i class="fa fa-check"></i><b>2.7</b> R packages and Dataset</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#r-packages"><i class="fa fa-check"></i><b>2.7.1</b> R packages</a></li>
+<li class="chapter" data-level="2.7.2" data-path="rrstudio-basics.html"><a href="rrstudio-basics.html#data-sets"><i class="fa fa-check"></i><b>2.7.2</b> Data sets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html"><i class="fa fa-check"></i><b>3</b> Tidyverse for Data science</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#tibble-object-type"><i class="fa fa-check"></i><b>3.1</b> Tibble object type</a></li>
+<li class="chapter" data-level="3.2" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#tidy-data-structure"><i class="fa fa-check"></i><b>3.2</b> Tidy data structure</a></li>
+<li class="chapter" data-level="3.3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#pivoting"><i class="fa fa-check"></i><b>3.3</b> Pivoting</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex7.3.1"><i class="fa fa-check"></i><b>3.3.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#separating-and-uniting"><i class="fa fa-check"></i><b>3.4</b> Separating and uniting</a></li>
+<li class="chapter" data-level="3.5" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#dplyr-and-pipe-operator"><i class="fa fa-check"></i><b>3.5</b> dplyr and pipe operator</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex7.5.1"><i class="fa fa-check"></i><b>3.5.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#dplyr---important-functions"><i class="fa fa-check"></i><b>3.6</b> dplyr - Important functions</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#filter"><i class="fa fa-check"></i><b>3.6.1</b> filter</a></li>
+<li class="chapter" data-level="3.6.2" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#arrange"><i class="fa fa-check"></i><b>3.6.2</b> arrange</a></li>
+<li class="chapter" data-level="3.6.3" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#select"><i class="fa fa-check"></i><b>3.6.3</b> select</a></li>
+<li class="chapter" data-level="3.6.4" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#mutate"><i class="fa fa-check"></i><b>3.6.4</b> mutate</a></li>
+<li class="chapter" data-level="3.6.5" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#summarise"><i class="fa fa-check"></i><b>3.6.5</b> summarise</a></li>
+<li class="chapter" data-level="3.6.6" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#join"><i class="fa fa-check"></i><b>3.6.6</b> join</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#airquality-example"><i class="fa fa-check"></i><b>3.7</b> Airquality example</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="tidyverse-for-data-science.html"><a href="tidyverse-for-data-science.html#ex8.3.1"><i class="fa fa-check"></i><b>3.7.1</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html"><i class="fa fa-check"></i><b>4</b> ggplot2 for data visualization</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#basics"><i class="fa fa-check"></i><b>4.1</b> Basics</a></li>
+<li class="chapter" data-level="4.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#bar-graph"><i class="fa fa-check"></i><b>4.2</b> Bar graph</a></li>
+<li class="chapter" data-level="4.3" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#line-graph"><i class="fa fa-check"></i><b>4.3</b> Line graph</a></li>
+<li class="chapter" data-level="4.4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#smoothing"><i class="fa fa-check"></i><b>4.4</b> Smoothing</a></li>
+<li class="chapter" data-level="4.5" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#statstics-and-positions"><i class="fa fa-check"></i><b>4.5</b> Statstics and positions</a></li>
+<li class="chapter" data-level="4.6" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#facets"><i class="fa fa-check"></i><b>4.6</b> Facets</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.1"><i class="fa fa-check"></i><b>4.6.1</b> Exercise</a></li>
+<li class="chapter" data-level="4.6.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.2"><i class="fa fa-check"></i><b>4.6.2</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#themes-labels-and-scales"><i class="fa fa-check"></i><b>4.7</b> Themes, Labels, and Scales</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ex10.3"><i class="fa fa-check"></i><b>4.7.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#ggplot-examples"><i class="fa fa-check"></i><b>4.8</b> ggplot examples</a>
+<ul>
+<li class="chapter" data-level="4.8.1" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#violin-plot"><i class="fa fa-check"></i><b>4.8.1</b> Violin plot</a></li>
+<li class="chapter" data-level="4.8.2" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#bubble-plot"><i class="fa fa-check"></i><b>4.8.2</b> Bubble plot</a></li>
+<li class="chapter" data-level="4.8.3" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#barplot-with-errorbars"><i class="fa fa-check"></i><b>4.8.3</b> Barplot with errorbars</a></li>
+<li class="chapter" data-level="4.8.4" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#horizontal-barplot"><i class="fa fa-check"></i><b>4.8.4</b> horizontal barplot</a></li>
+<li class="chapter" data-level="4.8.5" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#circular-barplot"><i class="fa fa-check"></i><b>4.8.5</b> Circular barplot</a></li>
+<li class="chapter" data-level="4.8.6" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#stacked-area-chart"><i class="fa fa-check"></i><b>4.8.6</b> Stacked area chart</a></li>
+<li class="chapter" data-level="4.8.7" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#density-plot"><i class="fa fa-check"></i><b>4.8.7</b> Density plot</a></li>
+<li class="chapter" data-level="4.8.8" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#waffle-chart"><i class="fa fa-check"></i><b>4.8.8</b> Waffle chart</a></li>
+<li class="chapter" data-level="4.8.9" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#marginal-histogram"><i class="fa fa-check"></i><b>4.8.9</b> Marginal histogram</a></li>
+<li class="chapter" data-level="4.8.10" data-path="ggplot2-for-data-visualization.html"><a href="ggplot2-for-data-visualization.html#density-ridgeline-plots"><i class="fa fa-check"></i><b>4.8.10</b> Density ridgeline plots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html"><i class="fa fa-check"></i><b>5</b> Day1 강의 정리</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#class-1---기초-사용법-프로그래밍"><i class="fa fa-check"></i><b>5.1</b> Class 1 - 기초, 사용법, 프로그래밍</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#목표"><i class="fa fa-check"></i><b>5.1.1</b> 목표</a></li>
+<li class="chapter" data-level="5.1.2" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#rstudio"><i class="fa fa-check"></i><b>5.1.2</b> Rstudio</a></li>
+<li class="chapter" data-level="5.1.3" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#rmarkdown-사용법"><i class="fa fa-check"></i><b>5.1.3</b> Rmarkdown 사용법</a></li>
+<li class="chapter" data-level="5.1.4" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#변수"><i class="fa fa-check"></i><b>5.1.4</b> 변수</a></li>
+<li class="chapter" data-level="5.1.5" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#함수"><i class="fa fa-check"></i><b>5.1.5</b> 함수</a></li>
+<li class="chapter" data-level="5.1.6" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#지역변수-광역변수"><i class="fa fa-check"></i><b>5.1.6</b> 지역변수 광역변수</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#class-2---데이터의-이해"><i class="fa fa-check"></i><b>5.2</b> Class 2 - 데이터의 이해</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#목표-1"><i class="fa fa-check"></i><b>5.2.1</b> 목표</a></li>
+<li class="chapter" data-level="5.2.2" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#tibble"><i class="fa fa-check"></i><b>5.2.2</b> tibble</a></li>
+<li class="chapter" data-level="5.2.3" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#tidy-data"><i class="fa fa-check"></i><b>5.2.3</b> tidy data</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#class-3---데이터-형변환의-이해"><i class="fa fa-check"></i><b>5.3</b> class 3 - 데이터 형변환의 이해</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#목표-2"><i class="fa fa-check"></i><b>5.3.1</b> 목표</a></li>
+<li class="chapter" data-level="5.3.2" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#파이프오퍼레이터"><i class="fa fa-check"></i><b>5.3.2</b> 파이프오퍼레이터</a></li>
+<li class="chapter" data-level="5.3.3" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#dplyr-사용"><i class="fa fa-check"></i><b>5.3.3</b> dplyr 사용</a></li>
+<li class="chapter" data-level="5.3.4" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#예제"><i class="fa fa-check"></i><b>5.3.4</b> 예제</a></li>
+<li class="chapter" data-level="5.3.5" data-path="day1-강의-정리.html"><a href="day1-강의-정리.html#스크립트-활용"><i class="fa fa-check"></i><b>5.3.5</b> 스크립트 활용</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>6</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bioconductor.html"><a href="bioconductor.html#packages"><i class="fa fa-check"></i><b>6.1</b> Packages</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="bioconductor.html"><a href="bioconductor.html#installation"><i class="fa fa-check"></i><b>6.1.1</b> Installation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="bioconductor.html"><a href="bioconductor.html#learning-and-support"><i class="fa fa-check"></i><b>6.2</b> Learning and support</a></li>
+<li class="chapter" data-level="6.3" data-path="bioconductor.html"><a href="bioconductor.html#class-object-and-method"><i class="fa fa-check"></i><b>6.3</b> Class, Object and Method</a></li>
+<li class="chapter" data-level="6.4" data-path="bioconductor.html"><a href="bioconductor.html#bioconductor의-oop"><i class="fa fa-check"></i><b>6.4</b> Bioconductor의 OOP</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="bioconductor.html"><a href="bioconductor.html#exercise-4"><i class="fa fa-check"></i><b>6.4.1</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html"><i class="fa fa-check"></i><b>7</b> Working with DNA sequences</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#biostrings"><i class="fa fa-check"></i><b>7.1</b> Biostrings</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#dnastring"><i class="fa fa-check"></i><b>7.1.1</b> DNAString</a></li>
+<li class="chapter" data-level="7.1.2" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#dnastringset"><i class="fa fa-check"></i><b>7.1.2</b> DNAStringSet</a></li>
+<li class="chapter" data-level="7.1.3" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#exercise-5"><i class="fa fa-check"></i><b>7.1.3</b> Exercise</a></li>
+<li class="chapter" data-level="7.1.4" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#apply-functions"><i class="fa fa-check"></i><b>7.1.4</b> Apply functions</a></li>
+<li class="chapter" data-level="7.1.5" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#xstringview"><i class="fa fa-check"></i><b>7.1.5</b> XStringView</a></li>
+<li class="chapter" data-level="7.1.6" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#sequence-read-and-write"><i class="fa fa-check"></i><b>7.1.6</b> sequence read and write</a></li>
+<li class="chapter" data-level="7.1.7" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#exercise-6"><i class="fa fa-check"></i><b>7.1.7</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#sequences-from-ncbi"><i class="fa fa-check"></i><b>7.2</b> Sequences from NCBI</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#exercise-7"><i class="fa fa-check"></i><b>7.2.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#sequence-statistics"><i class="fa fa-check"></i><b>7.3</b> Sequence statistics</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#exercise-8"><i class="fa fa-check"></i><b>7.3.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="working-with-dna-sequences.html"><a href="working-with-dna-sequences.html#align-two-sequences"><i class="fa fa-check"></i><b>7.4</b> Align two sequences</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html"><i class="fa fa-check"></i><b>8</b> Day2 강의 정리</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class1"><i class="fa fa-check"></i><b>8.1</b> Class 1 - ggplot 활용 1</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class1_objectives"><i class="fa fa-check"></i><b>8.1.1</b> 목표</a></li>
+<li class="chapter" data-level="8.1.2" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class1_grammar"><i class="fa fa-check"></i><b>8.1.2</b> ggplot 문법</a></li>
+<li class="chapter" data-level="8.1.3" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#facet-사용법"><i class="fa fa-check"></i><b>8.1.3</b> facet 사용법</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class2"><i class="fa fa-check"></i><b>8.2</b> Class 2 - ggplot 활용 2</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class2_objectives"><i class="fa fa-check"></i><b>8.2.1</b> 목적</a></li>
+<li class="chapter" data-level="8.2.2" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class2_theme"><i class="fa fa-check"></i><b>8.2.2</b> theme 사용</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class3"><i class="fa fa-check"></i><b>8.3</b> class 3 - S3 클래스 학습</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class3_objectives"><i class="fa fa-check"></i><b>8.3.1</b> 목적</a></li>
+<li class="chapter" data-level="8.3.2" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class3_class"><i class="fa fa-check"></i><b>8.3.2</b> S3 클래스 이해</a></li>
+<li class="chapter" data-level="8.3.3" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class3_biostrings"><i class="fa fa-check"></i><b>8.3.3</b> Biostrings 패키지</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class4_frequency"><i class="fa fa-check"></i><b>8.4</b> class 4 - Biostrings 활용</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="day2-강의-정리.html"><a href="day2-강의-정리.html#day2_class4_objectives"><i class="fa fa-check"></i><b>8.4.1</b> 목적</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="working-with-dna-sequences-ii.html"><a href="working-with-dna-sequences-ii.html"><i class="fa fa-check"></i><b>9</b> Working with DNA sequences II</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="working-with-dna-sequences-ii.html"><a href="working-with-dna-sequences-ii.html#sequences-from-ncbi-1"><i class="fa fa-check"></i><b>9.1</b> Sequences from NCBI</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="working-with-dna-sequences-ii.html"><a href="working-with-dna-sequences-ii.html#day3-chapter06-rentrez-exercise"><i class="fa fa-check"></i><b>9.1.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="working-with-dna-sequences-ii.html"><a href="working-with-dna-sequences-ii.html#pattern-matching"><i class="fa fa-check"></i><b>9.2</b> Pattern matching</a></li>
+<li class="chapter" data-level="9.3" data-path="working-with-dna-sequences-ii.html"><a href="working-with-dna-sequences-ii.html#align-two-sequences-1"><i class="fa fa-check"></i><b>9.3</b> Align two sequences</a></li>
+<li class="chapter" data-level="9.4" data-path="working-with-dna-sequences-ii.html"><a href="working-with-dna-sequences-ii.html#multiple-sequence-alignment"><i class="fa fa-check"></i><b>9.4</b> Multiple sequence alignment</a></li>
+<li class="chapter" data-level="9.5" data-path="working-with-dna-sequences-ii.html"><a href="working-with-dna-sequences-ii.html#phylogenetic-trees-with-clustering"><i class="fa fa-check"></i><b>9.5</b> Phylogenetic trees with clustering</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html"><i class="fa fa-check"></i><b>10</b> Genomic data analysis</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#iranges"><i class="fa fa-check"></i><b>10.1</b> IRanges</a></li>
+<li class="chapter" data-level="10.2" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#genomic-ranges"><i class="fa fa-check"></i><b>10.2</b> Genomic ranges</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#exercise-9"><i class="fa fa-check"></i><b>10.2.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#orfinder-with-docker"><i class="fa fa-check"></i><b>10.3</b> ORFinder with Docker</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="genomic-data-analysis.html"><a href="genomic-data-analysis.html#exercise-10"><i class="fa fa-check"></i><b>10.3.1</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="day3-강의-정리.html"><a href="day3-강의-정리.html"><i class="fa fa-check"></i><b>11</b> Day3 강의 정리</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="day3-강의-정리.html"><a href="day3-강의-정리.html#day3_class1"><i class="fa fa-check"></i><b>11.1</b> Class 1 - NCBI 서열 download</a></li>
+<li class="chapter" data-level="11.2" data-path="day3-강의-정리.html"><a href="day3-강의-정리.html#day3_class2"><i class="fa fa-check"></i><b>11.2</b> class 2 - sequence alignment</a></li>
+<li class="chapter" data-level="11.3" data-path="day3-강의-정리.html"><a href="day3-강의-정리.html#day3_class3"><i class="fa fa-check"></i><b>11.3</b> class 3 - genomic data with ranges</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="day3-강의-정리.html"><a href="day3-강의-정리.html#exercise-11"><i class="fa fa-check"></i><b>11.3.1</b> Exercise</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="day3-강의-정리.html"><a href="day3-강의-정리.html#day3_class4"><i class="fa fa-check"></i><b>11.4</b> class 4 - ORFfinder with docker</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="day3-강의-정리.html"><a href="day3-강의-정리.html#exercise-12"><i class="fa fa-check"></i><b>11.4.1</b> Exercise</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="day4-exercise.html"><a href="day4-exercise.html"><i class="fa fa-check"></i><b>12</b> Practice for review</a></li>
+<li class="chapter" data-level="13" data-path="blast-on-local-machine.html"><a href="blast-on-local-machine.html"><i class="fa fa-check"></i><b>13</b> BLAST on local machine</a></li>
+<li class="chapter" data-level="14" data-path="high-throughput-genomic-data.html"><a href="high-throughput-genomic-data.html"><i class="fa fa-check"></i><b>14</b> High-throughput genomic data</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="high-throughput-genomic-data.html"><a href="high-throughput-genomic-data.html#sequence-read-archive"><i class="fa fa-check"></i><b>14.1</b> Sequence Read Archive</a></li>
+<li class="chapter" data-level="14.2" data-path="high-throughput-genomic-data.html"><a href="high-throughput-genomic-data.html#gene-expression-omnibus-geo"><i class="fa fa-check"></i><b>14.2</b> Gene expression omnibus (GEO)</a></li>
+<li class="chapter" data-level="14.3" data-path="high-throughput-genomic-data.html"><a href="high-throughput-genomic-data.html#summarizedexperiment-class"><i class="fa fa-check"></i><b>14.3</b> SummarizedExperiment Class</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="bioconductor-workflow-link.html"><a href="bioconductor-workflow-link.html"><i class="fa fa-check"></i><b>15</b> Bioconductor Workflow (link)</a></li>
+<li class="chapter" data-level="16" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>16</b> References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">2021 연구데이터 분석과정</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bioconductor-workflow-link" class="section level1" number="15">
+<h1><span class="header-section-number">Chapter 15</span> Bioconductor Workflow (link)</h1>
+<p>Bioconductor에서는 다양한 생물학적 데이터를 분석하기 위한 툴이 개발되고 있으며 이러한 툴들은 RNA-seq과 같은 특정 목적을 위해 반복적으로 또는 순차적으로 수행되어야 하고 이러한 일련의 툴 사용 방법을 workflow로 만들어 제공하고 있습니다. 일부 워크플로에 대해서 간단히 리뷰하며 마치도록 하겠습니다.</p>
+<p><a href="http://bioconductor.org/packages/release/BiocViews.html#___Workflow">workflow</a></p>
+<hr />
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="high-throughput-genomic-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["KRIBBR.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

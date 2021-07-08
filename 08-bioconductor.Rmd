@@ -1,0 +1,479 @@
+
+
+# Practice for review {#day4-exercise}
+
+1) [NC_000913.3](https://www.ncbi.nlm.nih.gov/nuccore/NC_000913.3)은 미생물 연구에서 잘 알려진 Escherichia coli str. K-12 substr. MG1655 균주의 Reference sequence 입니다. 해당 지놈 서열의 `fasta`와 `gb` 형태의 포맷으로 `rentrez` 패키지를 사용해서 다운로드 하고 `ecoli-k12.fasta`, `ecoli-k12.gb` 파일로 각각 저장하시오. 참고로 genbank 포맷의 full version은 `rettype=` 옵션을 `gbwithparts`로 해야함. 
+
+
+```{r, eval=F, echo=F}
+library(rentrez)
+
+ecoli <- entrez_fetch("nuccore", "NC_000913.3", rettype = "fasta")
+write(ecoli, "ecoli-k12.fasta")
+
+ecoli <- entrez_fetch("nuccore", "NC_000913.3", rettype = "gbwithparts")
+write(ecoli, "ecoli-k12.gb")
+
+```
+
+
+2) `genbankr` 패키지를 사용해서 `ecoli-k12.gb` 파일을 읽어들이고 Coding sequence 를 추출해서 `ecolicds` 라는 변수에 저장하시오
+
+
+```{r, eval=F, echo=F}
+library(genbankr)
+
+ecoligb <- readGenBank("ecoli-k12.gb")
+ecolicds <- cds(ecoligb)
+
+```
+
+3) `plyranges`패키지의 filter 함수를 이용해서 ompR 이라는 유전자가 있는지 찾으시오 
+
+
+```{r, eval=F, echo=F}
+library(plyranges)
+
+ecolicds %>% 
+  filter(gene == "ompR")
+
+```
+
+4) ecolicds에서 다음 12개의 TF에 대한 정보를 추출하시오  
+
+~~~
+"araC" "sgrR" "leuO" "cra"  "mraZ" "pdhR" "cdaR" "rclR" "betI" "pdeL" "cynR" "lacI"
+~~~
+
+```{r, eval=F, echo=F}
+tmp <- read.table("ecolitflist.csv", sep=",")
+tmp2 <- strsplit(tmp[[1]], split=" ")
+tmp3 <- unlist(lapply(tmp2, function(x){x[length(x)]}))
+tmp4 <- ecolicds %>% 
+  filter(tolower(gene) %in% tolower(tmp3)) %>% 
+  select(gene) %>% 
+  mcols 
+  
+
+```
+
+
+5) [NC_010572.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_010572.1?from=5569768&to=5570805&report=genbank)는 celR이라는 전사인자 단백질로서 cellulase 분해 유전자들의 발현을 제어함. 다음 서열을 `celR.fasta` 파일로 저장하고 `Biostrings` 패키지를 사용해서 읽어들이시오. 
+
+
+~~~
+>NC_010572.1 celR Streptomyces griseus subsp.
+ATGGCGGCATCGCGAGTACGGAACGGCGGGCGGCCCACGCTCGAAGAGGTCGCGGCACGGGCCGGGGTCG
+GCCGGGGCACCGCCTCACGGGTCATCAACGGCTCGCCCCGGGTCAGCGACGCCACCCGGCAGGCCGTCGA
+GGCGGCCGTCGCCGAACTGGGGTACGTCCCCAACCGCGCCGCCCGCGCCCTGGCGGGCAACCGCACCGAC
+GCCATCGCGCTGGTGGTCCCCGAGCCGGAGACCCGCTTCTTCGCCGAGCCCTACTTCTCCGCCATAGTGC
+GCGGTGTCGGGGCGGCCCTGGCCGACACCGAGATGCAGCTGCTCCTCACCCTCGTCGGCAACGACCGCGA
+GCGCCGCAGGCTCGCCCAGTACCTCACCGCCCACCGCGTCGACGGGGTCCTCCTGGTCGCCGTGCACGCC
+GATGACCCGCTGCCGGAGCTCCTGGAGCAGCTGGGCATGCCCTGCGTGATCAGCGGCGCCCGGCACGCGG
+CCGAGACGCTGCCCTCGGTCGACTCCGACAACTTCGAGGGCGCGCGGGCCGCCGTGGAGCACCTGGTCTC
+CCGGGGCCGCCGCCAGGTGGCCACCATCACCGGCCGCCTGGAGGTCTACGGCGCCCAGCGCCGCCTGGAC
+GGCTACCGCGCCGCGGTCTCCGCCGCCGGCCTGGCCCCCGACGAGCGCCTGATCGCCCCGGCCGACTTCA
+CCGAGGAGGGCGGCGCCCGGGCCATGCGCGACCTCCTGGCCCGCCGCCCCGGCCTCGACGCCGTCTTCGT
+GGCCTCCGACGTGATGGCCGCGGGCGCCCGCCAGGTCCTGCGCGAGGCGGACCGCCGCATCCCCGAGGAC
+GTGGCCCTGATCGGCTTCGACGACTCGGTGGTCGCCCGCCACATGCACCCGGCCCTCACCAGCGTCCGCC
+AGCCCATCGAGGAGATGGGCCGCCGGATGGCCCAGCTCCTCCTGGACGAGATCGCGGGCCGGGCCCCGGG
+CGACGAGCGCCCCTCGGTGGTCCTGCCCACGGAGCTGGTGGTCCGCGACTCGTCGTGA
+~~~
+
+
+
+```{r, eval=F, echo=F}
+library(Biostrings)
+
+celr <- readDNAStringSet("celr.fasta")
+
+```
+
+6) 앞서 ecoli의 전체 지놈 서열을 추출하고 ecoli 지놈에 celr 서열과 유사 서열이 있는지 `Biostrings`의 `pairwiseAlignment` 함수를 이용해서 탐색하시오 
+
+```{r, eval=F, echo=F}
+
+#methods(class="GenBankRecord")
+ecoliseq <- getSeq(ecoligb)
+pairwiseAlignment(celr, ecoliseq)
+
+```
+
+
+
+# BLAST on local machine 
+
+일반적으로 유사 서열을 탐색할 경우 ncbi의 blast을 사용합니다. rBLAST는 BLAST local을 설치한 컴퓨터에서 R을 활용해서 blast를 수행할 수 있게 만든 패키지입니다. local blast 설치는 [BLAST Command Line Applications User Manual](https://www.ncbi.nlm.nih.gov/books/NBK279690/)을 참고하거나 [docker 이미지](https://hub.docker.com/r/ncbi/blast), [docker blast manual](https://github.com/ncbi/blast_plus_docs)을 사용해도 되겠습니다. 
+
+~~~
+docker pull ncbi/blast
+docker images
+~~~
+
+```{r, eval=F}
+library(Biostrings)
+dbfile <- "ecolicdsseq.fasta"
+ecolicdssec <- getSeq(ecoliseq, ecolicds)
+writeXStringSet(ecolicdssec, dbfile)
+
+targetfile <- "celrseq.fasta"
+writeXStringSet(celr, targetfile)
+
+
+```
+
+
+파일탐색기에서 working directory로 이동한 후 cmd 실행. 다음 명령어로 blastn 실행 가능. 
+
+~~~
+docker run --rm -v %cd%:/myhome ncbi/blast blastn 
+~~~
+
+
+데이터베이스 만들기, dbtype은 핵산의 경우에는 'nucl', 단백질의 경우에는 'prot'. `%cd%`는 윈도우 cmd 환경에서 현재 디렉토리를 나타내는 문자 
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast makeblastdb -in ecolicdsseq.fasta -dbtype nucl -out ecoli
+~~~
+
+blastn 수행 
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query celrseq.fasta -db ecoli -out blast_output.txt
+~~~
+
+
+다음 서열을 ribosomalprot.fasta 파일로 저장
+
+~~~
+>X02130.1 E. coli genes rpsI and rplM for ribosomal proteins S9 and L13
+AACACTCGTCCGAGAATAACGAGTGGATCTTTGACCCCGACTTCTCTATAATCCTGCGACCCCACGTTAC
+AAGAAAGTTTTTTTCCCAAAACTTTTTGTGTGCTGGCATAGGCTATTCGAAGGGGTAGGTTTGCCGGACT
+TTGTCGTGTGAACCTCAACAATTGAAGACGTTTGGGTGTTCACCAACGTGTAACTATTTATTGGGTAAGC
+TTTTAATGAAAACTTTTACAGCTAAACCAGAAACCGTAAAACGCGACTGGTATGTTGTTGACGCGACCGG
+TAAAACTCTGGGCCGTCTGGCTACTGAACTGGCTCGTCGCCTGCGCGGTAAGCACAAAGCGGAATACACT
+CCGCACGTAGATACCGGTGATTACATCATCGTTCTGAACGCTGACAAAGTTGCTGTAACCGGCAACAAGC
+GTACTGACAAAGTGTACTATCACCACACCGGCCACATCGGTGGTATCAAACAAGCGACCTTTGAAGAGAT
+GATTGCTCGCCGTCCTGAGCGTGTGATTGAAATCGCGGTTAAAGGCATGTTGCCAAAAGGCCCGCTGGGT
+CGTGCTATGTTCCGTAAACTGAAAGTTTACGCGGGTAACGAGCACAACCACGCGGCACAGCAACCGCAAG
+TTCTTGACATCTAATCGGATTATAGGCAATGGCTGAAAATCAATACTACGGCACTGGTCGCCGCAAAAGT
+TCCGCAGCTCGCGTTTTCATCAAACCGGGCAACGGTAAAATCGTAATCAACCAACGTTCTCTGGAACAGT
+ACTTCGGTCGTGAAACTGCCCGCATGGTAGTTCGTCAGCCGCTGGAACTGGTCGACATGGTTGAGAAACT
+GGACCTGTACATCACCGTTAAAGGTGGTGGTATCTCTGGTCAGGCTGGTGCGATCCGTCACGGTATCACC
+CGCGCTCTGATGGAATACGACGAGTCCCTGCGTTCTGAACTGCGTAAAGCTGGCTTCGTTACTCGTGACG
+CTCGTCAGGTTGAACGTAAGAAAGTCGGTCTGCGTAAAGCACGTCGTCGTCCGCAGTTCTCCAAACGTTA
+ATTGGCTTCTGCTCCGGCAGAAAACAATTTTCGAAAAAACCCGCTTCGGCGGGTTTTTTTATAGGGAAGG
+TGCGAACAAGTCCCTGATATGAGATCATGTTTGTCATCTGGAGCCATAGAACAGGGTTCATCAT
+
+>X04022.1 E. coli genes rpsF, rpsR and rplI for ribosomal proteins S6, S18, L9
+CAAGCTTTGCACATCGTCCATATTTCTGGCCTGGTGGTTATTAATTTCAATGGCTGCCCATGTATTTGCA
+CTTAGCAAAAGCACAGCCAGAAGGGCTAAAACACGACTGAACATAGATACCTCCTCGACGGCTGACTTTG
+TGTGCTCTCCTTCCTCGTGATGATCTTCTCGATTTAATTTTAATCAATGATAAAGAAGTTGATGGTGACC
+ATTTCTGATGCAGTTGTTCAAAAAAACCACCATGATGAAGTGTGATGAACTTCAAATCAGCGTGTTAGAG
+GTTAATTGCGAAAGGGGAGATTTATTTCGGCTCTGCCCTTGAGTTTAGCGAGGCATACAAGTACTATAAC
+GGCGTCATTTTTCAGCCGACCTTTAACACGTTCCTTGCCTCCCCGGGATTCGGCTGACCCAGACAGGAGG
+CGTGAATAATCCGTAAGGAGCAATTCGATGCGTCATTACGAAATCGTTTTTATGGTCCATCCTGATCAGA
+GCGAACAGGTTCCGGGCATGATCGAGCGCTACACTGCTGCCATCACTGGTGCAGAAGGCAAGATCCACCG
+TCTGGAAGACTGGGGCCGCCGTCAGCTGGCTTACCCGATCAACAAACTGCACAAAGCACACTACGTTTTG
+ATGAATGTTGAAGCTCCGCAGGAAGTGATCGATGAGCTGGAAACTACCTTCCGCTTCAACGATGCCGTTA
+TCCGCAGCATGGTTATGCGTACCAAGCACGCTGTTACCGAAGCATCTCCGATGGTTAAAGCGAAAGACGA
+GCGCCGTGAGCGTCGCGATGATTTCGCAAACGAAACCGCTGATGATGCTGAAGCTGGGGATTCTGAAGAG
+TAATTTCTGATGACCAACCGTCTGGTGTTGTCCGGCACCGTGTGCAGGGCTCCCCTTCGAAAGGTCAGTC
+CATCAGGAATTCCTCACTGCCAGTTCGTGCTTGAGCATCGTTCTGTGCAGGAGGAAGCCGGCTTTCACCG
+GCAGGCGTGGTGTCAAATGCCCGTTATTGTTAGCGGACACGAAAACCAGGCCATTACTCACAGTATAACG
+GTCGGCAGTCGCATAACCGTTCAGGGGTTCATTTCATGCCACAAGGCAAAGAACGGACTGAGCAAAATGG
+TTTTGCATGCCGAGCAGATTGAATTGATAGATTCTGGAGACTAGCCATATGGCACGTTATTTCCGTCGTC
+GCAAGTTCTGCCGTTTCACCGCGGAAGGCGTTCAAGAGATCGACTATAAAGATATCGCTACGCTGAAAAA
+CTACATCACCGAAAGCGGTAAGATTGTCCCAAGCCGTATCACCGGTACCCGTGCAAAATACCAGCGTCAG
+CTGGCTCGCGCTATCAAACGCGCTCGCTACCTGTCCCTGCTGCCGTACACTGATCGCCATCAGTAATCGG
+TCACAGGTCCATTAATACGACTTTGAGAGGATAAGGTAATGCAAGTTATTCTGCTTGATAAAGTAGCAAA
+CCTGGGTAGCCTGGGTGATCAGGTAAACGTTAAAGCGGGCTATGCTCGTAACTTCCTGGTACCGCAGGGT
+AAAGCTGTTCCAGCTACCAAGAAAAACATTGAATTCTTCGAAGCTCGTCGCGCTGAACTGGAAGCTAAAC
+TGGCTGAAGTTCTGGCAGCTGCTAATGCTCGCGCTGAGAAAATCAATGCACTGGAAACTGTTACCATCGC
+GTCTAAAGCTGGCGACGAAGGTAAACTGTTCGGTTCCATCGGTACTCGCGACATCGCTGACGCTGTAACT
+GCAGCTGGCGTTGAAGTGGCTAAGAGCGAAGTTCGTCTGCCGAACGGCGTTCTGCGTACCACTGGCGAAC
+ACGAAGTGAGCTTCCAGGTTCACAGCGAAGTATTCGCGAAAGTGATCGTAAACGTAGTAGCTGAATAATT
+CGTTATTCAACGAGACGTAAAAAGCGCCCGACCATTGGTCGGCGTTTTGCTTTCTATTTTTCGTCAGGTA
+TTAGTTTCGCAAGTAGATC
+
+>J01677.1 E.coli rpmB and rpmG genes coding for ribosomal proteins L28 and L33
+GGATTTAACCCGCTATGCGCGATCCTTCGGGATCTTTGTCTGTTCGGGACTTGAGCACATCGCTGAGTCA
+GCGTATACTACGCCACCTTTGAGAATCTCGGGTTTGGCATTTGGGCCTGGCAATCGAGAGTTCACAGAAC
+TGCGATGACCGGGCTGTAAAGACCTGACGAGGCGCCAATACCCCATACGAAGCTCGAGCTAATTTGATTT
+TTGGAGAATAGACATGTCCCGAGTCTGCCAAGTTACTGGCAAGCGTCCGGTGACCGGTAACAACCGTTCC
+CACGCACTGAACGCGACTAAACGCCGTTTCCTGCCGAACCTGCACTCTCACCGTTTCTGGGTTGAGAGCG
+AGAAGCGTTTTGTCACCCTGCGCGTATCTGCTAAAGGCATGCGTGTAATCGATAAAAAAGGCATCGATAC
+AGTTCTGGCTGAACTGCGTGCCCGTGGCGAAAAGTACTAAGTACTTAGAGGAAATAAATCATGGCTAAAG
+GTATTCGTGAGAAAATCAAGCTGGTTTCTTCTGCTGGTACTGGTCACTTCTATACCACTACGAAGAACAA
+ACGTACTAAGCCGGAAAAACTGGAACTGAAAAAATTCGATCCAGTTGTTCGCCAGCACGTGATCTACAAA
+GAAGCGAAAATCAAATAATTCTCGCTTTGATGTAACAAAAAACCCCGCCCCGGCGGGGTTTTTTGTTATC
+TGCTTGCCCCCATATTGACTGCATCTGTTCATTCCTGGAGATGCTATGCCTGAATTACCCGAAG
+~~~
+
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db ecoli -out blast_output.txt
+~~~
+
+출력물 분석위한 옵션 설정 
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db ecoli -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue stitle" -out blast_output.txt
+~~~
+
+출력물을 읽어들여 아래와 같이 각 hit (서열) 별로 서열 및 관련 단백질 title 정리 
+
+
+```{r, eval=F}
+library(dplyr)
+
+blastout <- read.delim("blast_output.txt", header = F)
+
+tmplist <- blastout %>% 
+  mutate(query=factor(V1)) %>% 
+  group_by(query) %>% 
+  group_split()
+
+seqid <- lapply(tmplist, function(x){paste(x[1,1])}) %>% unlist
+hit_seqid <- lapply(tmplist, function(x){paste(x[1,2])}) %>% unlist
+hit_evalue <- lapply(tmplist, function(x){paste(x[1,11])}) %>% unlist
+hit_prot_title <- lapply(tmplist, function(x){paste(x[1,12])}) %>% unlist
+
+hitdat <- data.frame(seqid, hit_seqid, hit_prot_title, hit_evalue)
+write.table(hitdat, file = "target_blastout_table.tab", sep="\t", quote = F, row.names = F)
+
+
+```
+
+
+# High-throughput genomic data
+
+
+## Sequence Read Archive
+
+[SRA](https://www.ncbi.nlm.nih.gov/sra) SRA (Sequence Read Archive)는 High-throughput 시퀀싱 데이터의 공개 데이터베이스 중 가장 큰 규모의 미국 국립 보건원(NIH)의 1차 데이터베이스로서 서열데이터 뿐만 아니라 메타데이터, 유전체, 및 환경 데이터를 포함합니다. NCBI와 EBI(European Bioinformatics Institute), DDBJ(DNA Database of Japan) 간 국제적 제휴를 통해 세 기관에서 제출 받은 데이터는 서로 공유되고 있습니다. 
+
+
+간략한 사용법은 [NBK569238](https://www.ncbi.nlm.nih.gov/books/NBK569238/) 또는 [SRA download 문서](https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/) 이곳을 참고하시기 바랍니다. 
+
+
+데이터를 다운로드 할 수 있는 [NCBI SRA Toolkit](https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software)을 제공하며 이 중 [MS Windows 64 bit architecture](https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.11.0/sratoolkit.2.11.0-win64.zip) 를 다운로드 받아 적당한 디렉토리에 압축을 풀어둡니다. `D:\sratoolkit.2.11.0-win64`이 곳에 풀어두었다면 해당 경로를 path로 잡아주는 과정이 필요합니다. 설정 위치는 다음과 같습니다. "내PC > 속성 > 고급 시스템 설정 > 환경변수 > path 설정"
+
+파일 탐색기로 작업 디렉토리로 이동한 후 주소창에 `cmd`이라고 입력해서 프롬프트가 있는 명령창을 실행합니다. 
+
+fastq-dump.exe를 사용해서 다운로드 받을 수 있으며 최근에는 [fasterq-dump](https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump)를 사용해서 더욱 빠르게 다운로드를 받을 수 있습니다. 
+
+[GSE148719](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE148719) 데이터를 다운로드 해보겠습니다. 화면 하단의 SRA Run Selector 라는 링크가 있고 이를 클릭하면 다음과 같은 화면이 보입니다. 
+
+![](images/sra.PNG){width=600}
+
+Metadata와 Accession list를 파일 형태로 다운로드 받은 후 적절한 전처리 후 사용하면 되겠습니다. 본 강의에서는 하나의 fastq 데이터만 다운로드 받아서 사용하겠습니다. 
+
+~~~
+prefetch SRR11549076
+~~~
+
+~~~
+prefetch --option-file Sra_Acc_List.txt
+~~~
+
+이후 fasta 파일로 변환해 줍니다 
+
+~~~
+fasterq-dump --split-files SRR11549076
+~~~
+
+100000개 read만 별도로 저장 
+
+~~~
+fastq-dump -X 100000 --split-files SRR11549076
+~~~
+
+
+
+## Gene expression omnibus (GEO)
+
+GEO는 microarray, next-generation sequencing 등의 high-throughput 유전체 데이터를 보유한 공공 저장소입니다. 
+
+* 대규모 기능유전체 데이터베이스 
+* 데이터 기탁 쉽게 만들고 고수준 QC 유지
+* 사용하기 쉬운 인터페이스 유지
+
+[GEO](https://www.ncbi.nlm.nih.gov/geo/)
+
+![](images/04/geo_overview.jpg){width=600}
+위 세 가지 타입 외에 Datasets 이 있으며 Datasets은 GDSxxx 아이디를 가지며 큐레이션된 GEO 데이터들을 별도로 관리합니다. [브라우져](https://www.ncbi.nlm.nih.gov/geo/summary/)를 통해 쉽게 검색할 수 있습니다. Bioconductor에서는 `GEOquery`라는 패키지로 관련 파일들을 다운로드 받을 수 있습니다.  
+
+
+```{r, eval=F}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("GEOquery")
+
+library(GEOquery)
+#browseVignettes("GEOquery")
+```
+
+The `GDS` class
+```{r, eval=F}
+gds <- getGEO(filename=system.file("extdata/GDS507.soft.gz",package="GEOquery"))
+class(gds)
+methods(class=class(gds))
+Table(gds)
+dataTable(gds)
+show(gds)
+Columns(gds)
+```
+
+The `GSM` class - 샘플의 실제 측정값과 실험 조건 등 샘플별 정보 포함
+
+
+```{r, eval=F}
+gsm <- getGEO(filename=system.file("extdata/GSM11805.txt.gz",package="GEOquery"))
+methods(class=class(gsm))
+head(Meta(gsm))
+Table(gsm)[1:5,]
+dim(Table(gsm))
+Columns(gsm)
+
+```
+
+The `GSE` class - 관련된 샘플들의 집합 (실험) 
+
+```{r, eval=F}
+gse <- getGEO(filename=system.file("extdata/GSE781_family.soft.gz",package="GEOquery"))
+methods(class=class(gse))
+head(Meta(gse))
+names(GSMList(gse))
+class(GSMList(gse)[[1]])
+```
+
+ExpressionSet class의 GES 데이터 받기 [GSE2553](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE2553) 
+
+```{r, eval=F}
+gse2553 <- getGEO('GSE2553',GSEMatrix=TRUE)
+gse2553
+class(gse2553)
+class(gse2553[[1]])
+mygse <- gse2553[[1]]
+pData(mygse)[1:10,1:3]
+```
+
+GDS 데이터를 ExpressionSet class로 변환하기 
+```{r, eval=F}
+gds <- getGEO(filename=system.file("extdata/GDS507.soft.gz",package="GEOquery"))
+class(gds)
+eset <- GDS2eSet(gds, do.log2=TRUE)
+eset
+
+```
+
+
+급성 림프구성 백혈병 데이터 (Annotation)
+```{r, eval=F}
+library(ALL)
+data(ALL)
+ALL
+featureData(ALL)
+
+## 
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("hgu95av2.db")
+library(hgu95av2.db)
+
+browseVignettes("hgu95av2.db")
+help(package="hgu95av2.db")
+
+featureNames(ALL)[1:10]
+ids <- featureNames(ALL)[1:10]
+as.list(hgu95av2ENTREZID[ids])
+
+```
+
+
+## SummarizedExperiment Class
+
+`Biobase` 패키지는 지놈 데이터를 관리하기 위한 표준화된 데이터 구조 class인 `ExpressionSet`를 제공합니다. ExpressionSet은 HT assay 데이터와 실험 meta를 포함하고 있습니다. 많은 데이터가 ExpressionSet 형식으로 만들어져 관리되고 있지만 최근에는 새로운 버전인 [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html) class를 이용합니다. 
+
+
+![](images/summarizedexp.PNG)
+
+
+다음 예제는 [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html)의 내용과 같습니다. 
+
+```{r, eval=F}
+library(SummarizedExperiment)
+data(airway, package="airway")
+se <- airway
+se
+
+# Row (regions-of-interest) data
+rowRanges(se)
+
+# Column (sample) data
+colData(se)
+
+# Experiment-wide metadata
+metadata(se)
+
+
+```
+
+
+`SummarizedExperiment` 생성
+
+
+```{r, eval=F}
+nrows <- 200
+ncols <- 6
+counts <- matrix(runif(nrows * ncols, 1, 1e4), nrows)
+rowRanges <- GRanges(rep(c("chr1", "chr2"), c(50, 150)),
+                     IRanges(floor(runif(200, 1e5, 1e6)), width=100),
+                     strand=sample(c("+", "-"), 200, TRUE),
+                     feature_id=sprintf("ID%03d", 1:200))
+colData <- DataFrame(Treatment=rep(c("ChIP", "Input"), 3),
+                     row.names=LETTERS[1:6])
+
+SummarizedExperiment(assays=list(counts=counts),
+                     rowRanges=rowRanges, colData=colData)
+```
+
+
+
+```{r, eval=F}
+se[1:5, 1:3]
+se[, se$cell == "N61311"]
+
+counts <- matrix(1:15, 5, 3, dimnames=list(LETTERS[1:5], LETTERS[1:3]))
+
+dates <- SummarizedExperiment(assays=list(counts=counts),
+                              rowData=DataFrame(month=month.name[1:5], day=1:5))
+
+# Subset all January assays
+dates[rowData(dates)$month == "January", ]
+
+assays(se)
+
+roi <- GRanges(seqnames="1", ranges=100000:1100000)
+subsetByOverlaps(se, roi)
+
+
+```
+
+
+
+# Bioconductor Workflow (link)
+
+Bioconductor에서는 다양한 생물학적 데이터를 분석하기 위한 툴이 개발되고 있으며 이러한 툴들은 RNA-seq과 같은 특정 목적을 위해 반복적으로 또는 순차적으로 수행되어야 하고 이러한 일련의 툴 사용 방법을 workflow로 만들어 제공하고 있습니다. 일부 워크플로에 대해서 간단히 리뷰하며 마치도록 하겠습니다. 
+
+[workflow](http://bioconductor.org/packages/release/BiocViews.html#___Workflow)
+
+
+
+---
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="크리에이티브 커먼즈 라이선스" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />이 저작물은 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스</a>에 따라 이용할 수 있습니다.
+

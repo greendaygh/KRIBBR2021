@@ -132,7 +132,7 @@
 \makeatother
 \subtitle{생명정보학을 위한 R프로그래밍(중급과정)}
 \author{한국생명공학연구원 김하성}
-\date{2021-07-01}
+\date{2021-07-08}
 
 \begin{document}
 \maketitle
@@ -4792,6 +4792,438 @@ ORFfinder 실행
 \FunctionTok{autoplot}\NormalTok{(covidorfgr, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill=}\NormalTok{strand))}
 \end{Highlighting}
 \end{Shaded}
+
+\hypertarget{day4-exercise}{%
+\chapter{Practice for review}\label{day4-exercise}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \href{https://www.ncbi.nlm.nih.gov/nuccore/NC_000913.3}{NC\_000913.3}은 미생물 연구에서 잘 알려진 Escherichia coli str. K-12 substr. MG1655 균주의 Reference sequence 입니다. 해당 지놈 서열의 \texttt{fasta}와 \texttt{gb} 형태의 포맷으로 \texttt{rentrez} 패키지를 사용해서 다운로드 하고 \texttt{ecoli-k12.fasta}, \texttt{ecoli-k12.gb} 파일로 각각 저장하시오. 참고로 genbank 포맷의 full version은 \texttt{rettype=} 옵션을 \texttt{gbwithparts}로 해야함.
+\item
+  \texttt{genbankr} 패키지를 사용해서 \texttt{ecoli-k12.gb} 파일을 읽어들이고 Coding sequence 를 추출해서 \texttt{ecolicds} 라는 변수에 저장하시오
+\item
+  \texttt{plyranges}패키지의 filter 함수를 이용해서 ompR 이라는 유전자가 있는지 찾으시오
+\item
+  ecolicds에서 다음 12개의 TF에 대한 정보를 추출하시오
+\end{enumerate}
+
+\begin{verbatim}
+"araC" "sgrR" "leuO" "cra"  "mraZ" "pdhR" "cdaR" "rclR" "betI" "pdeL" "cynR" "lacI"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  \href{https://www.ncbi.nlm.nih.gov/nuccore/NC_010572.1?from=5569768\&to=5570805\&report=genbank}{NC\_010572.1}는 celR이라는 전사인자 단백질로서 cellulase 분해 유전자들의 발현을 제어함. 다음 서열을 \texttt{celR.fasta} 파일로 저장하고 \texttt{Biostrings} 패키지를 사용해서 읽어들이시오.
+\end{enumerate}
+
+\begin{verbatim}
+>NC_010572.1 celR Streptomyces griseus subsp.
+ATGGCGGCATCGCGAGTACGGAACGGCGGGCGGCCCACGCTCGAAGAGGTCGCGGCACGGGCCGGGGTCG
+GCCGGGGCACCGCCTCACGGGTCATCAACGGCTCGCCCCGGGTCAGCGACGCCACCCGGCAGGCCGTCGA
+GGCGGCCGTCGCCGAACTGGGGTACGTCCCCAACCGCGCCGCCCGCGCCCTGGCGGGCAACCGCACCGAC
+GCCATCGCGCTGGTGGTCCCCGAGCCGGAGACCCGCTTCTTCGCCGAGCCCTACTTCTCCGCCATAGTGC
+GCGGTGTCGGGGCGGCCCTGGCCGACACCGAGATGCAGCTGCTCCTCACCCTCGTCGGCAACGACCGCGA
+GCGCCGCAGGCTCGCCCAGTACCTCACCGCCCACCGCGTCGACGGGGTCCTCCTGGTCGCCGTGCACGCC
+GATGACCCGCTGCCGGAGCTCCTGGAGCAGCTGGGCATGCCCTGCGTGATCAGCGGCGCCCGGCACGCGG
+CCGAGACGCTGCCCTCGGTCGACTCCGACAACTTCGAGGGCGCGCGGGCCGCCGTGGAGCACCTGGTCTC
+CCGGGGCCGCCGCCAGGTGGCCACCATCACCGGCCGCCTGGAGGTCTACGGCGCCCAGCGCCGCCTGGAC
+GGCTACCGCGCCGCGGTCTCCGCCGCCGGCCTGGCCCCCGACGAGCGCCTGATCGCCCCGGCCGACTTCA
+CCGAGGAGGGCGGCGCCCGGGCCATGCGCGACCTCCTGGCCCGCCGCCCCGGCCTCGACGCCGTCTTCGT
+GGCCTCCGACGTGATGGCCGCGGGCGCCCGCCAGGTCCTGCGCGAGGCGGACCGCCGCATCCCCGAGGAC
+GTGGCCCTGATCGGCTTCGACGACTCGGTGGTCGCCCGCCACATGCACCCGGCCCTCACCAGCGTCCGCC
+AGCCCATCGAGGAGATGGGCCGCCGGATGGCCCAGCTCCTCCTGGACGAGATCGCGGGCCGGGCCCCGGG
+CGACGAGCGCCCCTCGGTGGTCCTGCCCACGGAGCTGGTGGTCCGCGACTCGTCGTGA
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  앞서 ecoli의 전체 지놈 서열을 추출하고 ecoli 지놈에 celr 서열과 유사 서열이 있는지 \texttt{Biostrings}의 \texttt{pairwiseAlignment} 함수를 이용해서 탐색하시오
+\end{enumerate}
+
+\hypertarget{blast-on-local-machine}{%
+\chapter{BLAST on local machine}\label{blast-on-local-machine}}
+
+일반적으로 유사 서열을 탐색할 경우 ncbi의 blast을 사용합니다. rBLAST는 BLAST local을 설치한 컴퓨터에서 R을 활용해서 blast를 수행할 수 있게 만든 패키지입니다. local blast 설치는 \href{https://www.ncbi.nlm.nih.gov/books/NBK279690/}{BLAST Command Line Applications User Manual}을 참고하거나 \href{https://hub.docker.com/r/ncbi/blast}{docker 이미지}, \href{https://github.com/ncbi/blast_plus_docs}{docker blast manual}을 사용해도 되겠습니다.
+
+\begin{verbatim}
+docker pull ncbi/blast
+docker images
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(Biostrings)}
+\NormalTok{dbfile }\OtherTok{\textless{}{-}} \StringTok{"ecolicdsseq.fasta"}
+\NormalTok{ecolicdssec }\OtherTok{\textless{}{-}} \FunctionTok{getSeq}\NormalTok{(ecoliseq, ecolicds)}
+\FunctionTok{writeXStringSet}\NormalTok{(ecolicdssec, dbfile)}
+
+\NormalTok{targetfile }\OtherTok{\textless{}{-}} \StringTok{"celrseq.fasta"}
+\FunctionTok{writeXStringSet}\NormalTok{(celr, targetfile)}
+\end{Highlighting}
+\end{Shaded}
+
+파일탐색기에서 working directory로 이동한 후 cmd 실행. 다음 명령어로 blastn 실행 가능.
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome ncbi/blast blastn 
+\end{verbatim}
+
+데이터베이스 만들기, dbtype은 핵산의 경우에는 `nucl', 단백질의 경우에는 `prot'. \texttt{\%cd\%}는 윈도우 cmd 환경에서 현재 디렉토리를 나타내는 문자
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast makeblastdb -in ecolicdsseq.fasta -dbtype nucl -out ecoli
+\end{verbatim}
+
+blastn 수행
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query celrseq.fasta -db ecoli -out blast_output.txt
+\end{verbatim}
+
+다음 서열을 ribosomalprot.fasta 파일로 저장
+
+\begin{verbatim}
+>X02130.1 E. coli genes rpsI and rplM for ribosomal proteins S9 and L13
+AACACTCGTCCGAGAATAACGAGTGGATCTTTGACCCCGACTTCTCTATAATCCTGCGACCCCACGTTAC
+AAGAAAGTTTTTTTCCCAAAACTTTTTGTGTGCTGGCATAGGCTATTCGAAGGGGTAGGTTTGCCGGACT
+TTGTCGTGTGAACCTCAACAATTGAAGACGTTTGGGTGTTCACCAACGTGTAACTATTTATTGGGTAAGC
+TTTTAATGAAAACTTTTACAGCTAAACCAGAAACCGTAAAACGCGACTGGTATGTTGTTGACGCGACCGG
+TAAAACTCTGGGCCGTCTGGCTACTGAACTGGCTCGTCGCCTGCGCGGTAAGCACAAAGCGGAATACACT
+CCGCACGTAGATACCGGTGATTACATCATCGTTCTGAACGCTGACAAAGTTGCTGTAACCGGCAACAAGC
+GTACTGACAAAGTGTACTATCACCACACCGGCCACATCGGTGGTATCAAACAAGCGACCTTTGAAGAGAT
+GATTGCTCGCCGTCCTGAGCGTGTGATTGAAATCGCGGTTAAAGGCATGTTGCCAAAAGGCCCGCTGGGT
+CGTGCTATGTTCCGTAAACTGAAAGTTTACGCGGGTAACGAGCACAACCACGCGGCACAGCAACCGCAAG
+TTCTTGACATCTAATCGGATTATAGGCAATGGCTGAAAATCAATACTACGGCACTGGTCGCCGCAAAAGT
+TCCGCAGCTCGCGTTTTCATCAAACCGGGCAACGGTAAAATCGTAATCAACCAACGTTCTCTGGAACAGT
+ACTTCGGTCGTGAAACTGCCCGCATGGTAGTTCGTCAGCCGCTGGAACTGGTCGACATGGTTGAGAAACT
+GGACCTGTACATCACCGTTAAAGGTGGTGGTATCTCTGGTCAGGCTGGTGCGATCCGTCACGGTATCACC
+CGCGCTCTGATGGAATACGACGAGTCCCTGCGTTCTGAACTGCGTAAAGCTGGCTTCGTTACTCGTGACG
+CTCGTCAGGTTGAACGTAAGAAAGTCGGTCTGCGTAAAGCACGTCGTCGTCCGCAGTTCTCCAAACGTTA
+ATTGGCTTCTGCTCCGGCAGAAAACAATTTTCGAAAAAACCCGCTTCGGCGGGTTTTTTTATAGGGAAGG
+TGCGAACAAGTCCCTGATATGAGATCATGTTTGTCATCTGGAGCCATAGAACAGGGTTCATCAT
+
+>X04022.1 E. coli genes rpsF, rpsR and rplI for ribosomal proteins S6, S18, L9
+CAAGCTTTGCACATCGTCCATATTTCTGGCCTGGTGGTTATTAATTTCAATGGCTGCCCATGTATTTGCA
+CTTAGCAAAAGCACAGCCAGAAGGGCTAAAACACGACTGAACATAGATACCTCCTCGACGGCTGACTTTG
+TGTGCTCTCCTTCCTCGTGATGATCTTCTCGATTTAATTTTAATCAATGATAAAGAAGTTGATGGTGACC
+ATTTCTGATGCAGTTGTTCAAAAAAACCACCATGATGAAGTGTGATGAACTTCAAATCAGCGTGTTAGAG
+GTTAATTGCGAAAGGGGAGATTTATTTCGGCTCTGCCCTTGAGTTTAGCGAGGCATACAAGTACTATAAC
+GGCGTCATTTTTCAGCCGACCTTTAACACGTTCCTTGCCTCCCCGGGATTCGGCTGACCCAGACAGGAGG
+CGTGAATAATCCGTAAGGAGCAATTCGATGCGTCATTACGAAATCGTTTTTATGGTCCATCCTGATCAGA
+GCGAACAGGTTCCGGGCATGATCGAGCGCTACACTGCTGCCATCACTGGTGCAGAAGGCAAGATCCACCG
+TCTGGAAGACTGGGGCCGCCGTCAGCTGGCTTACCCGATCAACAAACTGCACAAAGCACACTACGTTTTG
+ATGAATGTTGAAGCTCCGCAGGAAGTGATCGATGAGCTGGAAACTACCTTCCGCTTCAACGATGCCGTTA
+TCCGCAGCATGGTTATGCGTACCAAGCACGCTGTTACCGAAGCATCTCCGATGGTTAAAGCGAAAGACGA
+GCGCCGTGAGCGTCGCGATGATTTCGCAAACGAAACCGCTGATGATGCTGAAGCTGGGGATTCTGAAGAG
+TAATTTCTGATGACCAACCGTCTGGTGTTGTCCGGCACCGTGTGCAGGGCTCCCCTTCGAAAGGTCAGTC
+CATCAGGAATTCCTCACTGCCAGTTCGTGCTTGAGCATCGTTCTGTGCAGGAGGAAGCCGGCTTTCACCG
+GCAGGCGTGGTGTCAAATGCCCGTTATTGTTAGCGGACACGAAAACCAGGCCATTACTCACAGTATAACG
+GTCGGCAGTCGCATAACCGTTCAGGGGTTCATTTCATGCCACAAGGCAAAGAACGGACTGAGCAAAATGG
+TTTTGCATGCCGAGCAGATTGAATTGATAGATTCTGGAGACTAGCCATATGGCACGTTATTTCCGTCGTC
+GCAAGTTCTGCCGTTTCACCGCGGAAGGCGTTCAAGAGATCGACTATAAAGATATCGCTACGCTGAAAAA
+CTACATCACCGAAAGCGGTAAGATTGTCCCAAGCCGTATCACCGGTACCCGTGCAAAATACCAGCGTCAG
+CTGGCTCGCGCTATCAAACGCGCTCGCTACCTGTCCCTGCTGCCGTACACTGATCGCCATCAGTAATCGG
+TCACAGGTCCATTAATACGACTTTGAGAGGATAAGGTAATGCAAGTTATTCTGCTTGATAAAGTAGCAAA
+CCTGGGTAGCCTGGGTGATCAGGTAAACGTTAAAGCGGGCTATGCTCGTAACTTCCTGGTACCGCAGGGT
+AAAGCTGTTCCAGCTACCAAGAAAAACATTGAATTCTTCGAAGCTCGTCGCGCTGAACTGGAAGCTAAAC
+TGGCTGAAGTTCTGGCAGCTGCTAATGCTCGCGCTGAGAAAATCAATGCACTGGAAACTGTTACCATCGC
+GTCTAAAGCTGGCGACGAAGGTAAACTGTTCGGTTCCATCGGTACTCGCGACATCGCTGACGCTGTAACT
+GCAGCTGGCGTTGAAGTGGCTAAGAGCGAAGTTCGTCTGCCGAACGGCGTTCTGCGTACCACTGGCGAAC
+ACGAAGTGAGCTTCCAGGTTCACAGCGAAGTATTCGCGAAAGTGATCGTAAACGTAGTAGCTGAATAATT
+CGTTATTCAACGAGACGTAAAAAGCGCCCGACCATTGGTCGGCGTTTTGCTTTCTATTTTTCGTCAGGTA
+TTAGTTTCGCAAGTAGATC
+
+>J01677.1 E.coli rpmB and rpmG genes coding for ribosomal proteins L28 and L33
+GGATTTAACCCGCTATGCGCGATCCTTCGGGATCTTTGTCTGTTCGGGACTTGAGCACATCGCTGAGTCA
+GCGTATACTACGCCACCTTTGAGAATCTCGGGTTTGGCATTTGGGCCTGGCAATCGAGAGTTCACAGAAC
+TGCGATGACCGGGCTGTAAAGACCTGACGAGGCGCCAATACCCCATACGAAGCTCGAGCTAATTTGATTT
+TTGGAGAATAGACATGTCCCGAGTCTGCCAAGTTACTGGCAAGCGTCCGGTGACCGGTAACAACCGTTCC
+CACGCACTGAACGCGACTAAACGCCGTTTCCTGCCGAACCTGCACTCTCACCGTTTCTGGGTTGAGAGCG
+AGAAGCGTTTTGTCACCCTGCGCGTATCTGCTAAAGGCATGCGTGTAATCGATAAAAAAGGCATCGATAC
+AGTTCTGGCTGAACTGCGTGCCCGTGGCGAAAAGTACTAAGTACTTAGAGGAAATAAATCATGGCTAAAG
+GTATTCGTGAGAAAATCAAGCTGGTTTCTTCTGCTGGTACTGGTCACTTCTATACCACTACGAAGAACAA
+ACGTACTAAGCCGGAAAAACTGGAACTGAAAAAATTCGATCCAGTTGTTCGCCAGCACGTGATCTACAAA
+GAAGCGAAAATCAAATAATTCTCGCTTTGATGTAACAAAAAACCCCGCCCCGGCGGGGTTTTTTGTTATC
+TGCTTGCCCCCATATTGACTGCATCTGTTCATTCCTGGAGATGCTATGCCTGAATTACCCGAAG
+\end{verbatim}
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db ecoli -out blast_output.txt
+\end{verbatim}
+
+출력물 분석위한 옵션 설정
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db ecoli -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue stitle" -out blast_output.txt
+\end{verbatim}
+
+출력물을 읽어들여 아래와 같이 각 hit (서열) 별로 서열 및 관련 단백질 title 정리
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\NormalTok{blastout }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\StringTok{"blast\_output.txt"}\NormalTok{, }\AttributeTok{header =}\NormalTok{ F)}
+
+\NormalTok{tmplist }\OtherTok{\textless{}{-}}\NormalTok{ blastout }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{query=}\FunctionTok{factor}\NormalTok{(V1)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(query) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_split}\NormalTok{()}
+
+\NormalTok{seqid }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(tmplist, }\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{paste}\NormalTok{(x[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{])\}) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ unlist}
+\NormalTok{hit\_seqid }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(tmplist, }\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{paste}\NormalTok{(x[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{])\}) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ unlist}
+\NormalTok{hit\_evalue }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(tmplist, }\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{paste}\NormalTok{(x[}\DecValTok{1}\NormalTok{,}\DecValTok{11}\NormalTok{])\}) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ unlist}
+\NormalTok{hit\_prot\_title }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(tmplist, }\ControlFlowTok{function}\NormalTok{(x)\{}\FunctionTok{paste}\NormalTok{(x[}\DecValTok{1}\NormalTok{,}\DecValTok{12}\NormalTok{])\}) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ unlist}
+
+\NormalTok{hitdat }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(seqid, hit\_seqid, hit\_prot\_title, hit\_evalue)}
+\FunctionTok{write.table}\NormalTok{(hitdat, }\AttributeTok{file =} \StringTok{"target\_blastout\_table.tab"}\NormalTok{, }\AttributeTok{sep=}\StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\AttributeTok{quote =}\NormalTok{ F, }\AttributeTok{row.names =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{high-throughput-genomic-data}{%
+\chapter{High-throughput genomic data}\label{high-throughput-genomic-data}}
+
+\hypertarget{sequence-read-archive}{%
+\section{Sequence Read Archive}\label{sequence-read-archive}}
+
+\href{https://www.ncbi.nlm.nih.gov/sra}{SRA} SRA (Sequence Read Archive)는 High-throughput 시퀀싱 데이터의 공개 데이터베이스 중 가장 큰 규모의 미국 국립 보건원(NIH)의 1차 데이터베이스로서 서열데이터 뿐만 아니라 메타데이터, 유전체, 및 환경 데이터를 포함합니다. NCBI와 EBI(European Bioinformatics Institute), DDBJ(DNA Database of Japan) 간 국제적 제휴를 통해 세 기관에서 제출 받은 데이터는 서로 공유되고 있습니다.
+
+간략한 사용법은 \href{https://www.ncbi.nlm.nih.gov/books/NBK569238/}{NBK569238} 또는 \href{https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/}{SRA download 문서} 이곳을 참고하시기 바랍니다.
+
+데이터를 다운로드 할 수 있는 \href{https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=software}{NCBI SRA Toolkit}을 제공하며 이 중 \href{https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.11.0/sratoolkit.2.11.0-win64.zip}{MS Windows 64 bit architecture} 를 다운로드 받아 적당한 디렉토리에 압축을 풀어둡니다. \texttt{D:\textbackslash{}sratoolkit.2.11.0-win64}이 곳에 풀어두었다면 해당 경로를 path로 잡아주는 과정이 필요합니다. 설정 위치는 다음과 같습니다. ``내PC \textgreater{} 속성 \textgreater{} 고급 시스템 설정 \textgreater{} 환경변수 \textgreater{} path 설정''
+
+파일 탐색기로 작업 디렉토리로 이동한 후 주소창에 \texttt{cmd}이라고 입력해서 프롬프트가 있는 명령창을 실행합니다.
+
+fastq-dump.exe를 사용해서 다운로드 받을 수 있으며 최근에는 \href{https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump}{fasterq-dump}를 사용해서 더욱 빠르게 다운로드를 받을 수 있습니다.
+
+\href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE148719}{GSE148719} 데이터를 다운로드 해보겠습니다. 화면 하단의 SRA Run Selector 라는 링크가 있고 이를 클릭하면 다음과 같은 화면이 보입니다.
+
+\includegraphics[width=6.25in,height=\textheight]{images/sra.PNG}
+
+Metadata와 Accession list를 파일 형태로 다운로드 받은 후 적절한 전처리 후 사용하면 되겠습니다. 본 강의에서는 하나의 fastq 데이터만 다운로드 받아서 사용하겠습니다.
+
+\begin{verbatim}
+prefetch SRR11549076
+\end{verbatim}
+
+\begin{verbatim}
+prefetch --option-file Sra_Acc_List.txt
+\end{verbatim}
+
+이후 fasta 파일로 변환해 줍니다
+
+\begin{verbatim}
+fasterq-dump --split-files SRR11549076
+\end{verbatim}
+
+100000개 read만 별도로 저장
+
+\begin{verbatim}
+fastq-dump -X 100000 --split-files SRR11549076
+\end{verbatim}
+
+\hypertarget{gene-expression-omnibus-geo}{%
+\section{Gene expression omnibus (GEO)}\label{gene-expression-omnibus-geo}}
+
+GEO는 microarray, next-generation sequencing 등의 high-throughput 유전체 데이터를 보유한 공공 저장소입니다.
+
+\begin{itemize}
+\tightlist
+\item
+  대규모 기능유전체 데이터베이스
+\item
+  데이터 기탁 쉽게 만들고 고수준 QC 유지
+\item
+  사용하기 쉬운 인터페이스 유지
+\end{itemize}
+
+\href{https://www.ncbi.nlm.nih.gov/geo/}{GEO}
+
+\includegraphics[width=6.25in,height=\textheight]{images/04/geo_overview.jpg}
+위 세 가지 타입 외에 Datasets 이 있으며 Datasets은 GDSxxx 아이디를 가지며 큐레이션된 GEO 데이터들을 별도로 관리합니다. \href{https://www.ncbi.nlm.nih.gov/geo/summary/}{브라우져}를 통해 쉽게 검색할 수 있습니다. Bioconductor에서는 \texttt{GEOquery}라는 패키지로 관련 파일들을 다운로드 받을 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"GEOquery"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(GEOquery)}
+\CommentTok{\#browseVignettes("GEOquery")}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{GDS} class
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gds }\OtherTok{\textless{}{-}} \FunctionTok{getGEO}\NormalTok{(}\AttributeTok{filename=}\FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata/GDS507.soft.gz"}\NormalTok{,}\AttributeTok{package=}\StringTok{"GEOquery"}\NormalTok{))}
+\FunctionTok{class}\NormalTok{(gds)}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\FunctionTok{class}\NormalTok{(gds))}
+\FunctionTok{Table}\NormalTok{(gds)}
+\FunctionTok{dataTable}\NormalTok{(gds)}
+\FunctionTok{show}\NormalTok{(gds)}
+\FunctionTok{Columns}\NormalTok{(gds)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{GSM} class - 샘플의 실제 측정값과 실험 조건 등 샘플별 정보 포함
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gsm }\OtherTok{\textless{}{-}} \FunctionTok{getGEO}\NormalTok{(}\AttributeTok{filename=}\FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata/GSM11805.txt.gz"}\NormalTok{,}\AttributeTok{package=}\StringTok{"GEOquery"}\NormalTok{))}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\FunctionTok{class}\NormalTok{(gsm))}
+\FunctionTok{head}\NormalTok{(}\FunctionTok{Meta}\NormalTok{(gsm))}
+\FunctionTok{Table}\NormalTok{(gsm)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,]}
+\FunctionTok{dim}\NormalTok{(}\FunctionTok{Table}\NormalTok{(gsm))}
+\FunctionTok{Columns}\NormalTok{(gsm)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{GSE} class - 관련된 샘플들의 집합 (실험)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gse }\OtherTok{\textless{}{-}} \FunctionTok{getGEO}\NormalTok{(}\AttributeTok{filename=}\FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata/GSE781\_family.soft.gz"}\NormalTok{,}\AttributeTok{package=}\StringTok{"GEOquery"}\NormalTok{))}
+\FunctionTok{methods}\NormalTok{(}\AttributeTok{class=}\FunctionTok{class}\NormalTok{(gse))}
+\FunctionTok{head}\NormalTok{(}\FunctionTok{Meta}\NormalTok{(gse))}
+\FunctionTok{names}\NormalTok{(}\FunctionTok{GSMList}\NormalTok{(gse))}
+\FunctionTok{class}\NormalTok{(}\FunctionTok{GSMList}\NormalTok{(gse)[[}\DecValTok{1}\NormalTok{]])}
+\end{Highlighting}
+\end{Shaded}
+
+ExpressionSet class의 GES 데이터 받기 \href{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE2553}{GSE2553}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gse2553 }\OtherTok{\textless{}{-}} \FunctionTok{getGEO}\NormalTok{(}\StringTok{\textquotesingle{}GSE2553\textquotesingle{}}\NormalTok{,}\AttributeTok{GSEMatrix=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{gse2553}
+\FunctionTok{class}\NormalTok{(gse2553)}
+\FunctionTok{class}\NormalTok{(gse2553[[}\DecValTok{1}\NormalTok{]])}
+\NormalTok{mygse }\OtherTok{\textless{}{-}}\NormalTok{ gse2553[[}\DecValTok{1}\NormalTok{]]}
+\FunctionTok{pData}\NormalTok{(mygse)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+GDS 데이터를 ExpressionSet class로 변환하기
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gds }\OtherTok{\textless{}{-}} \FunctionTok{getGEO}\NormalTok{(}\AttributeTok{filename=}\FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata/GDS507.soft.gz"}\NormalTok{,}\AttributeTok{package=}\StringTok{"GEOquery"}\NormalTok{))}
+\FunctionTok{class}\NormalTok{(gds)}
+\NormalTok{eset }\OtherTok{\textless{}{-}} \FunctionTok{GDS2eSet}\NormalTok{(gds, }\AttributeTok{do.log2=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{eset}
+\end{Highlighting}
+\end{Shaded}
+
+급성 림프구성 백혈병 데이터 (Annotation)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ALL)}
+\FunctionTok{data}\NormalTok{(ALL)}
+\NormalTok{ALL}
+\FunctionTok{featureData}\NormalTok{(ALL)}
+
+\DocumentationTok{\#\# }
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"hgu95av2.db"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(hgu95av2.db)}
+
+\FunctionTok{browseVignettes}\NormalTok{(}\StringTok{"hgu95av2.db"}\NormalTok{)}
+\FunctionTok{help}\NormalTok{(}\AttributeTok{package=}\StringTok{"hgu95av2.db"}\NormalTok{)}
+
+\FunctionTok{featureNames}\NormalTok{(ALL)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\NormalTok{ids }\OtherTok{\textless{}{-}} \FunctionTok{featureNames}\NormalTok{(ALL)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\FunctionTok{as.list}\NormalTok{(hgu95av2ENTREZID[ids])}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{summarizedexperiment-class}{%
+\section{SummarizedExperiment Class}\label{summarizedexperiment-class}}
+
+\texttt{Biobase} 패키지는 지놈 데이터를 관리하기 위한 표준화된 데이터 구조 class인 \texttt{ExpressionSet}를 제공합니다. ExpressionSet은 HT assay 데이터와 실험 meta를 포함하고 있습니다. 많은 데이터가 ExpressionSet 형식으로 만들어져 관리되고 있지만 최근에는 새로운 버전인 \href{https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html}{SummarizedExperiment} class를 이용합니다.
+
+\includegraphics{images/summarizedexp.PNG}
+
+다음 예제는 \href{https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html}{SummarizedExperiment}의 내용과 같습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(SummarizedExperiment)}
+\FunctionTok{data}\NormalTok{(airway, }\AttributeTok{package=}\StringTok{"airway"}\NormalTok{)}
+\NormalTok{se }\OtherTok{\textless{}{-}}\NormalTok{ airway}
+\NormalTok{se}
+
+\CommentTok{\# Row (regions{-}of{-}interest) data}
+\FunctionTok{rowRanges}\NormalTok{(se)}
+
+\CommentTok{\# Column (sample) data}
+\FunctionTok{colData}\NormalTok{(se)}
+
+\CommentTok{\# Experiment{-}wide metadata}
+\FunctionTok{metadata}\NormalTok{(se)}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{SummarizedExperiment} 생성
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nrows }\OtherTok{\textless{}{-}} \DecValTok{200}
+\NormalTok{ncols }\OtherTok{\textless{}{-}} \DecValTok{6}
+\NormalTok{counts }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{runif}\NormalTok{(nrows }\SpecialCharTok{*}\NormalTok{ ncols, }\DecValTok{1}\NormalTok{, }\FloatTok{1e4}\NormalTok{), nrows)}
+\NormalTok{rowRanges }\OtherTok{\textless{}{-}} \FunctionTok{GRanges}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"chr1"}\NormalTok{, }\StringTok{"chr2"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{150}\NormalTok{)),}
+                     \FunctionTok{IRanges}\NormalTok{(}\FunctionTok{floor}\NormalTok{(}\FunctionTok{runif}\NormalTok{(}\DecValTok{200}\NormalTok{, }\FloatTok{1e5}\NormalTok{, }\FloatTok{1e6}\NormalTok{)), }\AttributeTok{width=}\DecValTok{100}\NormalTok{),}
+                     \AttributeTok{strand=}\FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"+"}\NormalTok{, }\StringTok{"{-}"}\NormalTok{), }\DecValTok{200}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{),}
+                     \AttributeTok{feature\_id=}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"ID\%03d"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{200}\NormalTok{))}
+\NormalTok{colData }\OtherTok{\textless{}{-}} \FunctionTok{DataFrame}\NormalTok{(}\AttributeTok{Treatment=}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"ChIP"}\NormalTok{, }\StringTok{"Input"}\NormalTok{), }\DecValTok{3}\NormalTok{),}
+                     \AttributeTok{row.names=}\NormalTok{LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{])}
+
+\FunctionTok{SummarizedExperiment}\NormalTok{(}\AttributeTok{assays=}\FunctionTok{list}\NormalTok{(}\AttributeTok{counts=}\NormalTok{counts),}
+                     \AttributeTok{rowRanges=}\NormalTok{rowRanges, }\AttributeTok{colData=}\NormalTok{colData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{se[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\NormalTok{se[, se}\SpecialCharTok{$}\NormalTok{cell }\SpecialCharTok{==} \StringTok{"N61311"}\NormalTok{]}
+
+\NormalTok{counts }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{3}\NormalTok{, }\AttributeTok{dimnames=}\FunctionTok{list}\NormalTok{(LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]))}
+
+\NormalTok{dates }\OtherTok{\textless{}{-}} \FunctionTok{SummarizedExperiment}\NormalTok{(}\AttributeTok{assays=}\FunctionTok{list}\NormalTok{(}\AttributeTok{counts=}\NormalTok{counts),}
+                              \AttributeTok{rowData=}\FunctionTok{DataFrame}\NormalTok{(}\AttributeTok{month=}\NormalTok{month.name[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], }\AttributeTok{day=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{))}
+
+\CommentTok{\# Subset all January assays}
+\NormalTok{dates[}\FunctionTok{rowData}\NormalTok{(dates)}\SpecialCharTok{$}\NormalTok{month }\SpecialCharTok{==} \StringTok{"January"}\NormalTok{, ]}
+
+\FunctionTok{assays}\NormalTok{(se)}
+
+\NormalTok{roi }\OtherTok{\textless{}{-}} \FunctionTok{GRanges}\NormalTok{(}\AttributeTok{seqnames=}\StringTok{"1"}\NormalTok{, }\AttributeTok{ranges=}\DecValTok{100000}\SpecialCharTok{:}\DecValTok{1100000}\NormalTok{)}
+\FunctionTok{subsetByOverlaps}\NormalTok{(se, roi)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{bioconductor-workflow-link}{%
+\chapter{Bioconductor Workflow (link)}\label{bioconductor-workflow-link}}
+
+Bioconductor에서는 다양한 생물학적 데이터를 분석하기 위한 툴이 개발되고 있으며 이러한 툴들은 RNA-seq과 같은 특정 목적을 위해 반복적으로 또는 순차적으로 수행되어야 하고 이러한 일련의 툴 사용 방법을 workflow로 만들어 제공하고 있습니다. 일부 워크플로에 대해서 간단히 리뷰하며 마치도록 하겠습니다.
+
+\href{http://bioconductor.org/packages/release/BiocViews.html\#___Workflow}{workflow}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+이 저작물은 크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스에 따라 이용할 수 있습니다.
 
 \hypertarget{references}{%
 \chapter{References}\label{references}}
