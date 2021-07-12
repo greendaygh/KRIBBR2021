@@ -405,6 +405,13 @@ as.list(hgu95av2ENTREZID[ids])
 
 ```{r, eval=F}
 library(SummarizedExperiment)
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("airway")
+
+library(airway)
 data(airway, package="airway")
 se <- airway
 se
@@ -417,7 +424,6 @@ colData(se)
 
 # Experiment-wide metadata
 metadata(se)
-
 
 ```
 
@@ -436,8 +442,18 @@ rowRanges <- GRanges(rep(c("chr1", "chr2"), c(50, 150)),
 colData <- DataFrame(Treatment=rep(c("ChIP", "Input"), 3),
                      row.names=LETTERS[1:6])
 
-SummarizedExperiment(assays=list(counts=counts),
+se <- SummarizedExperiment(assays=list(counts=counts),
                      rowRanges=rowRanges, colData=colData)
+
+# Row (regions-of-interest) data
+rowRanges(se)
+
+# Column (sample) data
+colData(se)
+
+# Experiment-wide metadata
+metadata(se)
+
 ```
 
 

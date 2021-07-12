@@ -1,8 +1,8 @@
 --- 
-title: "2021 연구데이터 분석과정"
+title: "2021 한국생명공학연구원 연구데이터 분석과정"
 subtitle: "생명정보학을 위한 R프로그래밍(중급과정)"
-author: "한국생명공학연구원 김하성"
-date: "`r Sys.Date()`"
+author: "합성생물학전문연구단 김하성"
+date: "2021.07.08"
 site: bookdown::bookdown_site
 #mainfont: Nanum Myeongjo
 documentclass: book

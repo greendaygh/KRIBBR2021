@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2021.6.17)  8 JUL 2021 01:31
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/Debian) (preloaded format=xelatex 2021.6.17)  12 JUL 2021 03:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1802,7 +1802,14 @@ File: images/summarizedexp.PNG Graphic file (type bmp)
 
 Underfull \vbox (badness 5260) has occurred while \output is active []
 
-[87] [88] [89] [90
+[87]
+Underfull \vbox (badness 1817) detected at line 5211
+ []
+
+
+Underfull \vbox (badness 1424) has occurred while \output is active []
+
+[88] [89] [90
 
 ]
 Chapter 15.
@@ -1810,26 +1817,66 @@ Chapter 15.
 
 ]
 Chapter 16.
+Missing character: There is no 추 in font [lmmonolt10-boldoblique]:!
+Missing character: There is no 출 in font [lmmonolt10-boldoblique]:!
+Missing character: There is no 추 in font [lmmonolt10-boldoblique]:!
+Missing character: There is no 출 in font [lmmonolt10-boldoblique]:!
+[93] [94]
+Overfull \hbox (70.60037pt too wide) in paragraph at lines 5430--5430
+[]\TU/lmtt/m/n/10 docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast makebla
+stdb -in ecolicdsseq.fasta -dbtype nucl -out ecoli[] 
+ []
+
+
+Overfull \hbox (65.35037pt too wide) in paragraph at lines 5436--5436
+[]\TU/lmtt/m/n/10 docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn 
+-query celR.fasta -db ecoli -out blast_output.txt[] 
+ []
+
+
+Overfull \hbox (112.60037pt too wide) in paragraph at lines 5445--5445
+[]\TU/lmtt/m/n/10 docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn 
+-query ribosomalprot.fasta -db ecoli -out blast_output.txt[] 
+ []
+
+
+Overfull \hbox (611.35037pt too wide) in paragraph at lines 5451--5451
+[]\TU/lmtt/m/n/10 docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn 
+-query ribosomalprot.fasta -db ecoli -outfmt "6 qseqid sseqid pident length mis
+match gapopen qstart qend sstart send evalue stitle" -out blast_output.txt[] 
+ []
+
+
+Overfull \hbox (595.60037pt too wide) in paragraph at lines 5492--5492
+[]\TU/lmtt/m/n/10 docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn 
+-query ribosomalprot.fasta -db nr -outfmt "6 qseqid sseqid pident length mismat
+ch gapopen qstart qend sstart send evalue stitle" -out blast_output.txt[] 
+ []
+
+[95] [96
+
+]
+Chapter 17.
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 5235.
-[93]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 5235.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 5506.
+[97]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 5506.
 (./KRIBBR.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 5235.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 5235.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 5506.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 5506.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 20075 strings out of 479819
- 350714 string characters out of 5895846
- 799337 words of memory out of 5000000
- 36849 multiletter control sequences out of 15000+600000
+ 20085 strings out of 479819
+ 350943 string characters out of 5895846
+ 800702 words of memory out of 5000000
+ 36859 multiletter control sequences out of 15000+600000
  538991 words of font info for 90 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  58i,6n,118p,805b,555s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on KRIBBR.pdf (93 pages).
+Output written on KRIBBR.pdf (97 pages).

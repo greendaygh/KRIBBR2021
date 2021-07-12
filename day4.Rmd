@@ -1,0 +1,260 @@
+
+# Day4 강의 정리 
+
+## class 1 - 학습내용리뷰
+
+연습문제 1 - NCBI 자료 다운로드 및 파일저장
+
+```{r, eval=F}
+library(rentrez)
+
+## ecoli-k12.fasta
+ecoli <- entrez_fetch(db = "nuccore", 
+                      id = "NC_000913.3",
+                      rettype = "fasta")
+write(ecoli, "ecoli-k12.fasta")
+
+
+## ecoli-k12.gb
+ecoli <- entrez_fetch(db = "nuccore", 
+                      id = "NC_000913.3",
+                      rettype = "gbwithparts")
+write(ecoli, "ecoli-k12.gb")
+
+
+```
+
+
+연습문제 2 - genbank 파일 포멧 및 GRanges 활용한 서열 추출
+
+
+```{r, eval=F}
+library(genbankr)
+library(GenomicRanges)
+library(BSgenome)
+
+
+## read ecoli-k12.gb
+ecoli <- readGenBank("ecoli-k12.gb")
+
+## CDS range 추출
+ecolicdsrange <- cds(ecoli)
+
+## sequence 추출
+ecoliseq <- getSeq(ecoli)
+ecolicds <- getSeq(ecoliseq, ecolicdsrange)
+
+
+```
+
+연습문제 3 - plyrange 활용 기술
+
+```{r, eval=F}
+library(plyranges)
+
+mcols(ecolicdsrange)$gene
+
+mcols(ecolicdsrange)$gene == "ompR"
+idx <- which(mcols(ecolicdsrange)$gene == "ompR")
+ecolicdsrange[idx,]
+
+ecolicdsrange %>% 
+  filter(gene == "ompR")
+
+```
+
+product에 transcription 이라는 단어가 들어간 유전자를 찾고싶을 경우
+
+```{r, eval=F}
+
+ecolicdsrange %>% 
+  filter(grepl("transcription", product))
+
+```
+
+
+연습문제 4 - match 함수 
+
+```{r, eval=F}
+
+selgenes <- c("araC",
+              "sgrR",
+              "leuO",
+              "cra",
+              "mraZ",
+              "pdhR",
+              "cdaR",
+              "rclR",
+              "betI",
+              "pdeL",
+              "cynR",
+              "lacI")
+
+
+#ecolicdsrange %>% 
+#  filter(genes == selgenes) 
+
+c(1, 2, 3, 4, 5) %in% c(2, 4)
+  
+mcols(ecolicdsrange)$gene %in% selgenes
+
+ecolicdsrange %>% 
+  filter(gene %in% selgenes)
+
+
+```
+
+
+
+임의의 발현데이터 생성 후 plot 그리기 
+
+
+```{r, eval=F}
+library(ggplot2)
+
+ecolicdsrange %>% 
+  select(gene) %>% 
+  mutate(exp=rnorm(n(), 0, 1)) %>% 
+  mcols %>% 
+  data.frame %>% 
+  ggplot(aes(x=gene, y=exp)) +
+  geom_bar(stat="identity")
+
+```
+
+
+ex5)
+
+```{r, eval=F}
+celr <- readDNAStringSet("celR.fasta")
+celr
+
+ecoliseq
+```
+
+
+연습문제 6 - pairwiseAlignment 수행 
+
+```{r, eval=F}
+pairwiseAlignment(celr, ecoliseq)
+```
+
+
+
+
+## class 2 - docker based blast
+
+파일탐색기에서 작업 디렉토리로 이동 후 주소창에서 cmd 입력. 다음 명령 수행 (컴퓨터에 docker가 설치되어 있고 데몬이 실행되고 있는 것을 가정)
+
+Cmd 창에서 설치된 이미지를 확인하기 위해서 다음 명령 실행
+
+```{bash, eval=F}
+docker images
+```
+
+blast 이미지 다운로드 받기 위해 다음 명령 실행
+
+```{bash, eval=F}
+docker pull ncbi/blast
+```
+
+`docker images` 명령으로 다운로드된 blast 이미지 확인
+
+기본적인 blast 실행은 query와 db 데이터가 필요함. query는 탐색을 원하는 서열이고 db는 해당 서열과 유사한 서열이 존재하는지 찾아볼 서열의 집합임. 본 강의에서는 ecoli 지놈을 db로 만들고 celR 서열을 query로 해서 blast를 수행함. 
+
+ecoli cds 4324개 blast DB로 생성
+
+```{r, eval=F}
+
+## sequence for database
+writeXStringSet(ecolicds, "ecolicdsseq.fasta")
+
+## query 
+# use celR.fasta
+
+```
+
+docker blast 실행 (명령어만 실행해서 blastn이 실행 되는지 확인하는 과정). 다음과 같은 명령어를 cmd에서 입력하면 query 등이 없다는 에러 메세지가 뜨긴 하지만 blastn 이 실행되는 것을 확인할 수있음. 
+
+~~~
+docker run --rm -v %cd%:/myhome ncbi/blast blastn 
+~~~
+
+db 만들기 (window에서는 한 줄로 입력해야함)
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast makeblastdb -in ecolicdsseq.fasta -dbtype nucl -out ecoli
+~~~
+
+blast 실행 (Query와 db 지정)
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query celR.fasta -db ecoli -out blast_output.txt
+~~~
+
+
+## class 3 - Blast 출력 분석
+
+ribosomal protein 서열을 query로 blastn 수행 
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db ecoli -out blast_output.txt
+~~~
+
+[blast output format](https://www.metagenomics.wiki/tools/blast/blastn-output-format-6)
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db ecoli -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue stitle" -out blast_output.txt
+~~~
+
+
+blast ooutput으로부터 원하는 서열 추출 
+
+```{r, eval=F}
+blastout <- read.delim("blast_output.txt", header = F)
+
+## strand
+hitstrand <- rep("+", nrow(blastout))
+strt <- blastout$V9
+ed <- blastout$V10
+hitstrand[strt > ed] <- "-"
+
+## 
+#IRanges(start=s, end=e)
+tmp <- strt
+idx <- which(strt>ed)
+strt[idx] <- ed[idx]
+ed[idx] <- tmp[idx]
+
+ir <- IRanges(start=strt, end=ed)
+gr <- GRanges("K-12", ir, hitstrand)
+
+gr <- gr %>% 
+  mutate(id=blastout$V2)
+
+rp <- getSeq(ecoliseq, gr)
+
+```
+
+일반적으로 blast db는 update_blastdb.pl (blast 설치시 같이 설치됨)를 사용해서 NCBI에서 직접 다운로드 받을 수 있으며 강의중에는 시스템에서 다운로드가 막혀있어 실습하지 못 했으나 다음 코드와 같이 swissprot DB 다운로드 할 수 있음. 
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast update_blastdb.pl swissprot nr nt
+~~~
+
+이후 nr database에 대해서 blastn 수행
+
+~~~
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db nr -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue stitle" -out blast_output.txt
+~~~
+
+
+## class 4 - Bioconductor workflow 리뷰
+
+
+금번 강의를 통해서 R을 활용한 데이터 분석의 기본인 Tidyverse와 바이오데이터 분석의 핵심인 Biostrings, GenomicRanges 등의 활용법에 대해서 학습했습니다. High-throughput 데이터 분석에 관한 내용은 포함되지 않았지만 위 주요 패키지들과 클래스 개념, 그리고 Bioconductor에서 제공하는 HT 데이터 분석의 기본 클래스인 [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html)를 이해한다면 어렵지 않게 다양한 바이오데이터 분석을 따라서 수행할 수 있을 것입니다. 
+
+
+
+
+

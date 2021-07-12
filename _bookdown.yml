@@ -11,6 +11,7 @@ rmd_files: [
   "07-genomics-ranges.Rmd",
   "day3.Rmd",
   "08-bioconductor.Rmd",
+  "day4.Rmd",
   "99-tail.Rmd"
 ]
 book_filename: "KRIBBR"

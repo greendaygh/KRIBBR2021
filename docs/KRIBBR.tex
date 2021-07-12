@@ -36,8 +36,8 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={2021 연구데이터 분석과정},
-  pdfauthor={한국생명공학연구원 김하성},
+  pdftitle={2021 한국생명공학연구원 연구데이터 분석과정},
+  pdfauthor={합성생물학전문연구단 김하성},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
@@ -123,7 +123,7 @@
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
-\title{2021 연구데이터 분석과정}
+\title{2021 한국생명공학연구원 연구데이터 분석과정}
 \usepackage{etoolbox}
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
@@ -131,8 +131,8 @@
 }
 \makeatother
 \subtitle{생명정보학을 위한 R프로그래밍(중급과정)}
-\author{한국생명공학연구원 김하성}
-\date{2021-07-08}
+\author{합성생물학전문연구단 김하성}
+\date{2021.07.08}
 
 \begin{document}
 \maketitle
@@ -5160,6 +5160,13 @@ GDS 데이터를 ExpressionSet class로 변환하기
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(SummarizedExperiment)}
+
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{requireNamespace}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+
+\NormalTok{BiocManager}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{(}\StringTok{"airway"}\NormalTok{)}
+
+\FunctionTok{library}\NormalTok{(airway)}
 \FunctionTok{data}\NormalTok{(airway, }\AttributeTok{package=}\StringTok{"airway"}\NormalTok{)}
 \NormalTok{se }\OtherTok{\textless{}{-}}\NormalTok{ airway}
 \NormalTok{se}
@@ -5189,8 +5196,17 @@ GDS 데이터를 ExpressionSet class로 변환하기
 \NormalTok{colData }\OtherTok{\textless{}{-}} \FunctionTok{DataFrame}\NormalTok{(}\AttributeTok{Treatment=}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"ChIP"}\NormalTok{, }\StringTok{"Input"}\NormalTok{), }\DecValTok{3}\NormalTok{),}
                      \AttributeTok{row.names=}\NormalTok{LETTERS[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{])}
 
-\FunctionTok{SummarizedExperiment}\NormalTok{(}\AttributeTok{assays=}\FunctionTok{list}\NormalTok{(}\AttributeTok{counts=}\NormalTok{counts),}
+\NormalTok{se }\OtherTok{\textless{}{-}} \FunctionTok{SummarizedExperiment}\NormalTok{(}\AttributeTok{assays=}\FunctionTok{list}\NormalTok{(}\AttributeTok{counts=}\NormalTok{counts),}
                      \AttributeTok{rowRanges=}\NormalTok{rowRanges, }\AttributeTok{colData=}\NormalTok{colData)}
+
+\CommentTok{\# Row (regions{-}of{-}interest) data}
+\FunctionTok{rowRanges}\NormalTok{(se)}
+
+\CommentTok{\# Column (sample) data}
+\FunctionTok{colData}\NormalTok{(se)}
+
+\CommentTok{\# Experiment{-}wide metadata}
+\FunctionTok{metadata}\NormalTok{(se)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -5224,6 +5240,261 @@ Bioconductor에서는 다양한 생물학적 데이터를 분석하기 위한 �
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 이 저작물은 크리에이티브 커먼즈 저작자표시-비영리-변경금지 4.0 국제 라이선스에 따라 이용할 수 있습니다.
+
+\hypertarget{day4-uxac15uxc758-uxc815uxb9ac}{%
+\chapter{Day4 강의 정리}\label{day4-uxac15uxc758-uxc815uxb9ac}}
+
+\hypertarget{class-1---uxd559uxc2b5uxb0b4uxc6a9uxb9acuxbdf0}{%
+\section{class 1 - 학습내용리뷰}\label{class-1---uxd559uxc2b5uxb0b4uxc6a9uxb9acuxbdf0}}
+
+연습문제 1 - NCBI 자료 다운로드 및 파일저장
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rentrez)}
+
+\DocumentationTok{\#\# ecoli{-}k12.fasta}
+\NormalTok{ecoli }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_fetch}\NormalTok{(}\AttributeTok{db =} \StringTok{"nuccore"}\NormalTok{, }
+                      \AttributeTok{id =} \StringTok{"NC\_000913.3"}\NormalTok{,}
+                      \AttributeTok{rettype =} \StringTok{"fasta"}\NormalTok{)}
+\FunctionTok{write}\NormalTok{(ecoli, }\StringTok{"ecoli{-}k12.fasta"}\NormalTok{)}
+
+
+\DocumentationTok{\#\# ecoli{-}k12.gb}
+\NormalTok{ecoli }\OtherTok{\textless{}{-}} \FunctionTok{entrez\_fetch}\NormalTok{(}\AttributeTok{db =} \StringTok{"nuccore"}\NormalTok{, }
+                      \AttributeTok{id =} \StringTok{"NC\_000913.3"}\NormalTok{,}
+                      \AttributeTok{rettype =} \StringTok{"gbwithparts"}\NormalTok{)}
+\FunctionTok{write}\NormalTok{(ecoli, }\StringTok{"ecoli{-}k12.gb"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+연습문제 2 - genbank 파일 포멧 및 GRanges 활용한 서열 추출
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(genbankr)}
+\FunctionTok{library}\NormalTok{(GenomicRanges)}
+\FunctionTok{library}\NormalTok{(BSgenome)}
+
+
+\DocumentationTok{\#\# read ecoli{-}k12.gb}
+\NormalTok{ecoli }\OtherTok{\textless{}{-}} \FunctionTok{readGenBank}\NormalTok{(}\StringTok{"ecoli{-}k12.gb"}\NormalTok{)}
+
+\DocumentationTok{\#\# CDS range 추출}
+\NormalTok{ecolicdsrange }\OtherTok{\textless{}{-}} \FunctionTok{cds}\NormalTok{(ecoli)}
+
+\DocumentationTok{\#\# sequence 추출}
+\NormalTok{ecoliseq }\OtherTok{\textless{}{-}} \FunctionTok{getSeq}\NormalTok{(ecoli)}
+\NormalTok{ecolicds }\OtherTok{\textless{}{-}} \FunctionTok{getSeq}\NormalTok{(ecoliseq, ecolicdsrange)}
+\end{Highlighting}
+\end{Shaded}
+
+연습문제 3 - plyrange 활용 기술
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(plyranges)}
+
+\FunctionTok{mcols}\NormalTok{(ecolicdsrange)}\SpecialCharTok{$}\NormalTok{gene}
+
+\FunctionTok{mcols}\NormalTok{(ecolicdsrange)}\SpecialCharTok{$}\NormalTok{gene }\SpecialCharTok{==} \StringTok{"ompR"}
+\NormalTok{idx }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{mcols}\NormalTok{(ecolicdsrange)}\SpecialCharTok{$}\NormalTok{gene }\SpecialCharTok{==} \StringTok{"ompR"}\NormalTok{)}
+\NormalTok{ecolicdsrange[idx,]}
+
+\NormalTok{ecolicdsrange }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(gene }\SpecialCharTok{==} \StringTok{"ompR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+product에 transcription 이라는 단어가 들어간 유전자를 찾고싶을 경우
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ecolicdsrange }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{grepl}\NormalTok{(}\StringTok{"transcription"}\NormalTok{, product))}
+\end{Highlighting}
+\end{Shaded}
+
+연습문제 4 - match 함수
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{selgenes }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"araC"}\NormalTok{,}
+              \StringTok{"sgrR"}\NormalTok{,}
+              \StringTok{"leuO"}\NormalTok{,}
+              \StringTok{"cra"}\NormalTok{,}
+              \StringTok{"mraZ"}\NormalTok{,}
+              \StringTok{"pdhR"}\NormalTok{,}
+              \StringTok{"cdaR"}\NormalTok{,}
+              \StringTok{"rclR"}\NormalTok{,}
+              \StringTok{"betI"}\NormalTok{,}
+              \StringTok{"pdeL"}\NormalTok{,}
+              \StringTok{"cynR"}\NormalTok{,}
+              \StringTok{"lacI"}\NormalTok{)}
+
+
+\CommentTok{\#ecolicdsrange \%\textgreater{}\% }
+\CommentTok{\#  filter(genes == selgenes) }
+
+\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+  
+\FunctionTok{mcols}\NormalTok{(ecolicdsrange)}\SpecialCharTok{$}\NormalTok{gene }\SpecialCharTok{\%in\%}\NormalTok{ selgenes}
+
+\NormalTok{ecolicdsrange }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(gene }\SpecialCharTok{\%in\%}\NormalTok{ selgenes)}
+\end{Highlighting}
+\end{Shaded}
+
+임의의 발현데이터 생성 후 plot 그리기
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{ecolicdsrange }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(gene) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{exp=}\FunctionTok{rnorm}\NormalTok{(}\FunctionTok{n}\NormalTok{(), }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  mcols }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  data.frame }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{gene, }\AttributeTok{y=}\NormalTok{exp)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ex5)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{celr }\OtherTok{\textless{}{-}} \FunctionTok{readDNAStringSet}\NormalTok{(}\StringTok{"celR.fasta"}\NormalTok{)}
+\NormalTok{celr}
+
+\NormalTok{ecoliseq}
+\end{Highlighting}
+\end{Shaded}
+
+연습문제 6 - pairwiseAlignment 수행
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pairwiseAlignment}\NormalTok{(celr, ecoliseq)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{class-2---docker-based-blast}{%
+\section{class 2 - docker based blast}\label{class-2---docker-based-blast}}
+
+파일탐색기에서 작업 디렉토리로 이동 후 주소창에서 cmd 입력. 다음 명령 수행 (컴퓨터에 docker가 설치되어 있고 데몬이 실행되고 있는 것을 가정)
+
+Cmd 창에서 설치된 이미지를 확인하기 위해서 다음 명령 실행
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{docker}\NormalTok{ images}
+\end{Highlighting}
+\end{Shaded}
+
+blast 이미지 다운로드 받기 위해 다음 명령 실행
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{docker}\NormalTok{ pull ncbi/blast}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{docker\ images} 명령으로 다운로드된 blast 이미지 확인
+
+기본적인 blast 실행은 query와 db 데이터가 필요함. query는 탐색을 원하는 서열이고 db는 해당 서열과 유사한 서열이 존재하는지 찾아볼 서열의 집합임. 본 강의에서는 ecoli 지놈을 db로 만들고 celR 서열을 query로 해서 blast를 수행함.
+
+ecoli cds 4324개 blast DB로 생성
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# sequence for database}
+\FunctionTok{writeXStringSet}\NormalTok{(ecolicds, }\StringTok{"ecolicdsseq.fasta"}\NormalTok{)}
+
+\DocumentationTok{\#\# query }
+\CommentTok{\# use celR.fasta}
+\end{Highlighting}
+\end{Shaded}
+
+docker blast 실행 (명령어만 실행해서 blastn이 실행 되는지 확인하는 과정). 다음과 같은 명령어를 cmd에서 입력하면 query 등이 없다는 에러 메세지가 뜨긴 하지만 blastn 이 실행되는 것을 확인할 수있음.
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome ncbi/blast blastn 
+\end{verbatim}
+
+db 만들기 (window에서는 한 줄로 입력해야함)
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast makeblastdb -in ecolicdsseq.fasta -dbtype nucl -out ecoli
+\end{verbatim}
+
+blast 실행 (Query와 db 지정)
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query celR.fasta -db ecoli -out blast_output.txt
+\end{verbatim}
+
+\hypertarget{class-3---blast-uxcd9cuxb825-uxbd84uxc11d}{%
+\section{class 3 - Blast 출력 분석}\label{class-3---blast-uxcd9cuxb825-uxbd84uxc11d}}
+
+ribosomal protein 서열을 query로 blastn 수행
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db ecoli -out blast_output.txt
+\end{verbatim}
+
+\href{https://www.metagenomics.wiki/tools/blast/blastn-output-format-6}{blast output format}
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db ecoli -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue stitle" -out blast_output.txt
+\end{verbatim}
+
+blast ooutput으로부터 원하는 서열 추출
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{blastout }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\StringTok{"blast\_output.txt"}\NormalTok{, }\AttributeTok{header =}\NormalTok{ F)}
+
+\DocumentationTok{\#\# strand}
+\NormalTok{hitstrand }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\StringTok{"+"}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(blastout))}
+\NormalTok{strt }\OtherTok{\textless{}{-}}\NormalTok{ blastout}\SpecialCharTok{$}\NormalTok{V9}
+\NormalTok{ed }\OtherTok{\textless{}{-}}\NormalTok{ blastout}\SpecialCharTok{$}\NormalTok{V10}
+\NormalTok{hitstrand[strt }\SpecialCharTok{\textgreater{}}\NormalTok{ ed] }\OtherTok{\textless{}{-}} \StringTok{"{-}"}
+
+\DocumentationTok{\#\# }
+\CommentTok{\#IRanges(start=s, end=e)}
+\NormalTok{tmp }\OtherTok{\textless{}{-}}\NormalTok{ strt}
+\NormalTok{idx }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(strt}\SpecialCharTok{\textgreater{}}\NormalTok{ed)}
+\NormalTok{strt[idx] }\OtherTok{\textless{}{-}}\NormalTok{ ed[idx]}
+\NormalTok{ed[idx] }\OtherTok{\textless{}{-}}\NormalTok{ tmp[idx]}
+
+\NormalTok{ir }\OtherTok{\textless{}{-}} \FunctionTok{IRanges}\NormalTok{(}\AttributeTok{start=}\NormalTok{strt, }\AttributeTok{end=}\NormalTok{ed)}
+\NormalTok{gr }\OtherTok{\textless{}{-}} \FunctionTok{GRanges}\NormalTok{(}\StringTok{"K{-}12"}\NormalTok{, ir, hitstrand)}
+
+\NormalTok{gr }\OtherTok{\textless{}{-}}\NormalTok{ gr }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{id=}\NormalTok{blastout}\SpecialCharTok{$}\NormalTok{V2)}
+
+\NormalTok{rp }\OtherTok{\textless{}{-}} \FunctionTok{getSeq}\NormalTok{(ecoliseq, gr)}
+\end{Highlighting}
+\end{Shaded}
+
+일반적으로 blast db는 update\_blastdb.pl (blast 설치시 같이 설치됨)를 사용해서 NCBI에서 직접 다운로드 받을 수 있으며 강의중에는 시스템에서 다운로드가 막혀있어 실습하지 못 했으나 다음 코드와 같이 swissprot DB 다운로드 할 수 있음.
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast update_blastdb.pl swissprot nr nt
+\end{verbatim}
+
+이후 nr database에 대해서 blastn 수행
+
+\begin{verbatim}
+docker run --rm -v %cd%:/myhome -w /myhome ncbi/blast blastn -query ribosomalprot.fasta -db nr -outfmt "6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue stitle" -out blast_output.txt
+\end{verbatim}
+
+\hypertarget{class-4---bioconductor-workflow-uxb9acuxbdf0}{%
+\section{class 4 - Bioconductor workflow 리뷰}\label{class-4---bioconductor-workflow-uxb9acuxbdf0}}
+
+금번 강의를 통해서 R을 활용한 데이터 분석의 기본인 Tidyverse와 바이오데이터 분석의 핵심인 Biostrings, GenomicRanges 등의 활용법에 대해서 학습했습니다. High-throughput 데이터 분석에 관한 내용은 포함되지 않았지만 위 주요 패키지들과 클래스 개념, 그리고 Bioconductor에서 제공하는 HT 데이터 분석의 기본 클래스인 \href{https://bioconductor.org/packages/release/bioc/vignettes/SummarizedExperiment/inst/doc/SummarizedExperiment.html}{SummarizedExperiment}를 이해한다면 어렵지 않게 다양한 바이오데이터 분석을 따라서 수행할 수 있을 것입니다.
 
 \hypertarget{references}{%
 \chapter{References}\label{references}}
